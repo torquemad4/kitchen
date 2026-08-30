@@ -1,0 +1,10 @@
+name = "kitchen-torquemada"
+pages_build_output_dir = "public"
+compatibility_date = "2026-08-30"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "clousto"
+# ⚠️ REPLACE THIS. Placeholder so `npm run dev` works out of the box;
+# deploy.sh writes the real id in on the first successful run.
+database_id = "00000000-0000-4000-8000-000000000001"

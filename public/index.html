@@ -1,0 +1,913 @@
+<meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<div id="bootbar" class="bootbar" hidden>Loading this week…</div>
+<title>Clousto Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style id="clousto-css">
+.bootbar{position:sticky;top:0;z-index:60;padding:11px 14px;font-size:14px;
+  background:var(--accent-soft);color:var(--accent-ink);border-bottom:1px solid var(--line)}
+.bootbar.bad{background:var(--stop-soft);color:var(--stop)}
+
+:root{
+  --paper:#F3F5EE; --surface:#FFFFFF; --sunk:#E9ECE1;
+  --ink:#14180F; --ink-2:#4A5142; --ink-3:#7C8471;
+  --line:#DBE0D0; --line-2:#C6CDB8;
+  --accent:#3E6B2F; --accent-soft:#E4EEDC; --accent-ink:#2C4D21;
+  --warn:#8A5A0B; --warn-soft:#F6ECD6;
+  --stop:#8E3221; --stop-soft:#F7E3DE;
+  --held:#3B5C6B; --held-soft:#DFEAEF;
+  --shadow:0 1px 2px rgba(20,24,15,.06),0 8px 24px -12px rgba(20,24,15,.18);
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#101310; --surface:#181C17; --sunk:#1F241D;
+    --ink:#EAEEE3; --ink-2:#AEB6A4; --ink-3:#7E8776;
+    --line:#2B3128; --line-2:#3C4438;
+    --accent:#8FC178; --accent-soft:#23301D; --accent-ink:#A9D294;
+    --warn:#D9A94F; --warn-soft:#2E2617;
+    --stop:#E38B75; --stop-soft:#331E19;
+    --held:#8FBACD; --held-soft:#182730;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#101310; --surface:#181C17; --sunk:#1F241D;
+  --ink:#EAEEE3; --ink-2:#AEB6A4; --ink-3:#7E8776;
+  --line:#2B3128; --line-2:#3C4438;
+  --accent:#8FC178; --accent-soft:#23301D; --accent-ink:#A9D294;
+  --warn:#D9A94F; --warn-soft:#2E2617;
+  --stop:#E38B75; --stop-soft:#331E19;
+  --held:#8FBACD; --held-soft:#182730;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px; line-height:1.5; -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:680px;margin:0 auto;padding:0 14px 96px}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque","Public Sans",sans-serif;text-wrap:balance;margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums}
+
+/* header */
+header.top{padding:22px 0 10px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+h1{font-size:29px;font-weight:800;letter-spacing:-.02em;line-height:1.05;margin:6px 0 6px}
+.sub{color:var(--ink-2);font-size:14.5px;max-width:60ch}
+
+/* tabs */
+nav.tabs{position:sticky;top:0;z-index:30;background:var(--paper);
+  display:flex;gap:4px;padding:8px 0 8px;margin:10px 0 4px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{
+  flex:0 0 auto;appearance:none;border:1px solid transparent;background:transparent;color:var(--ink-2);
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;
+  padding:8px 13px;border-radius:999px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+nav.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+section.panel{display:none;padding-top:12px}
+section.panel.on{display:block}
+
+/* cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px}
+.card-h{padding:13px 15px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.card-h h3{font-size:16.5px;font-weight:700;letter-spacing:-.01em}
+.card-b{padding:14px 15px}
+.grouptitle{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:22px 0 8px;display:flex;align-items:center;gap:10px}
+.grouptitle::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* shopping list */
+ul.list{list-style:none;margin:0;padding:0}
+ul.list li{border-bottom:1px solid var(--line)}
+ul.list li:last-child{border-bottom:0}
+.row{display:flex;align-items:flex-start;gap:12px;width:100%;padding:12px 15px;background:none;border:0;text-align:left;cursor:pointer;color:inherit;font:inherit}
+.row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.box{flex:0 0 auto;width:22px;height:22px;border:1.5px solid var(--line-2);border-radius:6px;margin-top:1px;display:grid;place-items:center;transition:background .12s,border-color .12s}
+.box svg{width:14px;height:14px;stroke:var(--surface);stroke-width:3;fill:none;opacity:0}
+.done .box{background:var(--accent);border-color:var(--accent)}
+.done .box svg{opacity:1}
+.rowmain{flex:1;min-width:0}
+.name{font-weight:600;font-size:15.5px;letter-spacing:-.005em}
+.done .name{text-decoration:line-through;color:var(--ink-3)}
+.det{font-size:13px;color:var(--ink-2);margin-top:2px}
+.price{flex:0 0 auto;font-family:"IBM Plex Mono",monospace;font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink-2);padding-top:2px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;background:var(--sunk);color:var(--ink-2);white-space:nowrap}
+.tag.fish{background:var(--held-soft);color:var(--held)}
+.tag.chick{background:var(--warn-soft);color:var(--warn)}
+.tag.beef{background:var(--stop-soft);color:var(--stop)}
+.tag.veg,.tag.slot{background:var(--accent-soft);color:var(--accent-ink)}
+.tag.floor{background:var(--stop-soft);color:var(--stop);font-weight:600}
+.tag.qty{background:transparent;border:1px solid var(--line-2);color:var(--ink-3)}
+
+/* totals bar */
+.totalbar{position:sticky;bottom:0;z-index:20;margin:0 -14px;padding:11px 18px;background:var(--surface);
+  border-top:1px solid var(--line-2);display:flex;justify-content:space-between;align-items:center;gap:12px;
+  font-family:"IBM Plex Mono",monospace;font-size:13px;box-shadow:0 -6px 20px -14px rgba(0,0,0,.4)}
+.totalbar strong{font-size:16px;font-weight:600}
+
+/* callouts */
+.note{border-radius:8px;padding:11px 13px;font-size:14px;margin:12px 0;border-left:3px solid}
+.note.warn{background:var(--warn-soft);border-color:var(--warn)}
+.note.stop{background:var(--stop-soft);border-color:var(--stop)}
+.note.held{background:var(--held-soft);border-color:var(--held)}
+.note.good{background:var(--accent-soft);border-color:var(--accent)}
+.note b{font-weight:600}
+
+/* day strip */
+.day{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow)}
+.day-h{padding:11px 15px;background:var(--sunk);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.day-h .d{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:15.5px}
+.day-h .w{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.slot{display:flex;gap:11px;padding:10px 15px;border-bottom:1px solid var(--line);align-items:flex-start}
+.slot:last-child{border-bottom:0}
+.slotkey{flex:0 0 34px;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;color:var(--accent-ink);background:var(--accent-soft);border-radius:5px;text-align:center;padding:3px 0;margin-top:1px}
+.slotbody{flex:1;min-width:0}
+.slotbody .t{font-size:14.5px;font-weight:600}
+.slotbody .m{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);margin-top:2px}
+.slot.away{opacity:.55}
+.slot.away .slotkey{background:var(--sunk);color:var(--ink-3)}
+
+/* options */
+.opt{border:1px solid var(--line);border-radius:9px;padding:12px 13px;margin-bottom:9px;background:var(--surface)}
+.opt.pick{border-color:var(--accent);border-width:1.5px;background:var(--accent-soft)}
+.opthead{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.optname{font-weight:600;font-size:15px}
+.optnum{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);letter-spacing:.06em}
+.optmac{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-2);margin-top:5px}
+.optdet{font-size:13.5px;color:var(--ink-2);margin-top:5px}
+.badge{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:4px;margin-left:6px;vertical-align:1px}
+.badge.buy{background:var(--warn-soft);color:var(--warn)}
+.badge.held{background:var(--held-soft);color:var(--held)}
+.badge.on{background:var(--accent);color:var(--surface)}
+
+/* recipe */
+.equip{background:var(--sunk);border-radius:8px;padding:12px 14px;margin:12px 0}
+.equip h4{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.equip ul{margin:0;padding-left:17px;font-size:14px}
+.equip li{margin-bottom:6px}
+.equip li:last-child{margin-bottom:0}
+.req{color:var(--stop);font-weight:600;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 16px 40px;font-size:15px}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:-1px;width:27px;height:27px;border-radius:50%;
+  background:var(--accent);color:var(--surface);display:grid;place-items:center;
+  font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600}
+ol.steps li em{font-style:normal;background:var(--accent-soft);color:var(--accent-ink);padding:0 3px;border-radius:3px;font-weight:500}
+.ing{font-size:14.5px;line-height:1.65}
+.plates{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}
+.plate{background:var(--sunk);border-radius:8px;padding:10px 12px}
+.plate .who{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.plate .amt{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:19px;margin-top:2px}
+.plate .mac{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2);margin-top:2px}
+
+/* tables */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:460px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;text-align:right}
+td.pos{color:var(--warn)} td.neg{color:var(--held)} td.ok{color:var(--accent-ink)}
+caption{caption-side:top;text-align:left;font-size:13px;color:var(--ink-2);padding-bottom:8px}
+
+.lockbar{position:sticky;top:0;z-index:40;margin:0 -14px 4px;padding:10px 16px;display:flex;gap:12px;
+  align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--sunk);border-bottom:1px solid var(--line)}
+.lockbar.dirty{background:var(--warn-soft);border-bottom-color:var(--warn)}
+.lockmsg{font-size:13px;color:var(--ink-2);flex:1;min-width:180px}
+.lockbtn{appearance:none;border:0;border-radius:8px;background:var(--accent);color:var(--surface);
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;
+  padding:9px 15px;cursor:pointer;white-space:nowrap}
+.lockbtn:disabled{opacity:.6;cursor:default}
+.lockbtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.badge.pickme{background:var(--sunk);color:var(--ink-3)}
+/* two-column week */
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 12px;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3)}
+.legend span{display:flex;align-items:center;gap:6px}
+.sw{width:16px;height:14px;border-radius:4px;background:var(--sunk);display:inline-block}
+.sw.sh{background:var(--accent);}
+.sw.yf{background:var(--held-soft);border:1px solid var(--held)}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+@media (max-width:520px){.twocol{grid-template-columns:1fr}}
+.col{background:var(--surface);padding:0 0 8px}
+.colh{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);
+  padding:9px 13px 7px;border-bottom:1px solid var(--line);background:var(--surface)}
+.colnote{font-size:12.5px;color:var(--ink-3);padding:6px 13px 0;font-style:italic}
+.mrow{display:flex;gap:9px;padding:8px 13px;align-items:flex-start}
+.mrow+.mrow{border-top:1px solid var(--line)}
+.mrow.away{opacity:.55}
+.mrow.fill{background:var(--sunk)}
+.mtag{flex:0 0 26px;text-align:center;font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;
+  padding:3px 0;border-radius:5px;background:var(--sunk);color:var(--ink-3);margin-top:1px}
+.mtag.sh{background:var(--accent);color:var(--surface)}
+.mtag.yf{background:var(--held-soft);color:var(--held)}
+.mbody{flex:1;min-width:0}
+.mt{display:block;font-size:14px;font-weight:600;line-height:1.3}
+.mm{display:block;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.splitbar{padding:10px 15px;background:var(--accent-soft);border-top:1px solid var(--line);font-size:13.5px;color:var(--accent-ink)}
+.splitbar b{font-weight:600}
+.whohead{font-family:"Bricolage Grotesque",sans-serif;font-size:22px;font-weight:800;letter-spacing:-.02em;
+  margin:26px 0 2px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
+.choice{cursor:pointer;transition:border-color .12s,box-shadow .12s;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden}
+.choice.pick{border-color:var(--accent);border-width:1.5px}
+.choice:hover{border-color:var(--line-2)}
+.choice.pick:hover{border-color:var(--accent)}
+.choice:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.choice-h{padding:12px 15px;border-bottom:1px solid var(--line);display:flex;gap:9px;align-items:baseline;justify-content:space-between}
+.choice-h .cn{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:16px;letter-spacing:-.01em;flex:1}
+.choice.pick .choice-h{background:var(--accent-soft)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:1px;background:var(--line)}
+.fact{background:var(--surface);padding:9px 14px}
+.fact .fl{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
+.fact .fv{font-family:"IBM Plex Mono",monospace;font-size:12.5px;margin-top:3px;line-height:1.35}
+.choice-b{padding:12px 15px;border-top:1px solid var(--line)}
+.clears{font-size:13.5px;color:var(--ink-2);margin-bottom:10px}
+.makes{margin:0;padding-left:17px;font-size:14px}
+.makes li{margin-bottom:7px}
+.makes li:last-child{margin-bottom:0}
+.mh{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);margin:0 0 7px}
+.foot{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3)}
+.reset{appearance:none;background:transparent;border:1px solid var(--line-2);color:var(--ink-2);border-radius:7px;
+  padding:6px 11px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;cursor:pointer}
+.reset:hover{border-color:var(--accent);color:var(--accent-ink)}
+.syncdot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ink-3);margin-right:6px;vertical-align:1px}
+.syncdot.live{background:var(--accent)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<script type="application/json" id="clousto-data">
+{"checked": [], "picks": {"mon": 0, "tue": 2, "wed": 2, "thu": 2, "k1": 1, "k2": 0, "k3": 2, "k4": 1, "kb": 0, "mb": 3, "ml": 0}, "savedAt": 1788096121136}
+</script>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* ------------------------------------------------------------------ *
+ * Clousto Kitchen — week of Sun 30 Aug 2026
+ * State lives in the JSON block above and the document is regenerated
+ * from CONTENT + state on every publish. The live DOM is never
+ * serialised.
+ * ------------------------------------------------------------------ */
+
+const SELF_SRC = document.currentScript.textContent;
+const PAGE_CSS = (function(){
+  const own = document.getElementById('clousto-css');
+  if(own && own.textContent.length > 2000) return own.textContent;
+  // fallback: the wrapper may inject its own reset <style> before ours, so take them all
+  return Array.prototype.map.call(document.querySelectorAll('style'), function(el){ return el.textContent; }).join('\n');
+})();
+
+let CONTENT = null;   /* fetched from /api/week at boot — the week is data now, not a literal. Republishing the document is no longer how a new week ships. */
+
+/* ---------- state ---------- */
+let LS_KEY = "clousto.week";   /* set from the fetched week id at boot */
+
+function readState(){
+  let doc = {checked:[], picks:{}, savedAt:0};
+  /* Stage 1 serves the week read-only, so there is no shared state document
+     to merge against. The per-device draft below is the only state there is.
+     Stage 2 replaces this with a read of /api/state. */
+  const el = document.getElementById("clousto-data");
+  if(el){ try{ doc = JSON.parse(el.textContent) || doc; }catch(e){} }
+  if(!Array.isArray(doc.checked)) doc.checked = [];
+  if(!doc.picks || typeof doc.picks !== "object") doc.picks = {};
+  doc.savedAt = doc.savedAt || 0;
+  // A per-device draft survives a refresh instantly. It only wins if it is NEWER
+  // than the last locked-in version, so someone else's lock is never clobbered.
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){
+      const local = JSON.parse(raw);
+      if(local && (local.ts || 0) > doc.savedAt){
+        return {checked: local.checked || [], picks: local.picks || {}, savedAt: doc.savedAt, dirty: true};
+      }
+    }
+  }catch(e){}
+  return doc;
+}
+function saveLocal(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify({checked:STATE.checked, picks:STATE.picks, ts:Date.now()})); }catch(e){}
+}
+function clearLocal(){ try{ localStorage.removeItem(LS_KEY); }catch(e){} }
+let STATE = readState();
+if(!Array.isArray(STATE.checked)) STATE.checked = [];
+if(!STATE.picks || typeof STATE.picks !== "object") STATE.picks = {};
+let artifactApi = null;
+let publishing = false;
+let dirty = !!STATE.dirty;
+let lockMsg = "";
+
+/* ---------- helpers ---------- */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const money = n => "£" + n.toFixed(2);
+const tagClass = t => /floor/i.test(t) ? "floor"
+                  : /salmon|fish|sarde|sardine|basa|Goan/i.test(t) ? "fish"
+                  : /chicken|stir-fry|pilaf/i.test(t) ? "chick"
+                  : /ragù|ragu|beef/i.test(t) ? "beef"
+                  : /S1|S2|S3|S4|shake|fuel|bagel|traybake|floor|bonus/i.test(t) ? "slot" : "";
+
+const PICKKEYS  = ["mon","tue","wed","thu"];
+const SLOTKEYS  = ["k1","k2","k3","k4","kb","mb","ml"];
+const ALLKEYS   = PICKKEYS.concat(SLOTKEYS);
+function chooseSet(key){
+  return CONTENT.choices.find(c => c.key === key) || CONTENT.slots.find(c => c.key === key);
+}
+function defaultIdx(key){
+  const i = chooseSet(key).opts.findIndex(o => o.pick);
+  return i < 0 ? 0 : i;
+}
+function pickIdx(key){
+  const n = STATE.picks[key];
+  return (typeof n === "number" && chooseSet(key).opts[n]) ? n : defaultIdx(key);
+}
+function picked(key){ return chooseSet(key).opts[pickIdx(key)]; }
+function isDefault(key){ return pickIdx(key) === defaultIdx(key); }
+const YFOOD = {k:400, p:25.0, c:31.0, f:18.0};
+function macAdd(t, o, n){ n = n || 1; t[0]+=o.k*n; t[1]+=o.p*n; t[2]+=o.c*n; t[3]+=o.f*n; return t; }
+
+const SLOTKEYS_CART = ["k1","k2","k3","k4","kb","mb","ml"];
+
+function shortName(n){
+  let x = n.split(" — ")[0].split(" with ")[0];
+  // only cut at a comma when what survives still identifies the dish
+  const head = x.split(",")[0];
+  if(head.length >= 10) x = head;
+  return x.length > 24 ? x.slice(0,22) + "…" : x;
+}
+const DAYTAG  = {mon:"MON", tue:"TUE", wed:"WED", thu:"THU"};
+const SLOTTAG = {k1:"S1", k2:"S2", k3:"S3", k4:"S4", kb:"BONUS", mb:"MARIA b", ml:"MARIA l"};
+
+function ingredientNeed(withSource){
+  const t = {}, src = {};
+  const add = (m, mult, label) => {
+    for(const k in m){
+      if(!m[k]) continue;
+      t[k] = (t[k]||0) + m[k]*mult;
+      if(label){ (src[k] = src[k] || []); if(src[k].indexOf(label) < 0) src[k].push(label); }
+    }
+  };
+  SLOTKEYS_CART.forEach(key => {
+    const i = pickIdx(key), days = CONTENT.dayCount[key];
+    if(key === "ml" && i === 0) add(CONTENT.use.ml[CONTENT.mlFallback], days - CONTENT.mlYfoodDays, SLOTTAG.ml + " " + shortName(chooseSet("ml").opts[CONTENT.mlFallback].n));
+    else add(CONTENT.use[key][i], days, SLOTTAG[key] + " " + shortName(picked(key).n));
+  });
+  add(CONTENT.mariaFill, 6, "Maria's top-up");
+  add(CONTENT.sunUse, 1, "SUN " + shortName(CONTENT.sunDinner.n));
+  PICKKEYS.forEach(d => add(CONTENT.dinUse[d][pickIdx(d)], 1, DAYTAG[d] + " " + shortName(picked(d).n)));
+  for(const k in CONTENT.fixed) add({[k]:CONTENT.fixed[k]}, 1, "staple");
+  // 🔒 the emergency-meal floor is a REQUIREMENT, not a hope: it is added to the
+  // need so the cart can never leave the house below it.
+  for(const k in CONTENT.floor) add({[k]:CONTENT.floor[k]}, 1, "🔒 emergency floor");
+  return withSource ? {t, src} : t;
+}
+
+function effectiveCart(){
+  const res = ingredientNeed(true), t = res.t, src = res.src, byGroup = {};
+  for(const k in t){
+    const held = CONTENT.held[k] || 0;
+    const short = t[k] - held;
+    if(short <= 1e-9) continue;
+    const p = CONTENT.packs[k];
+    if(!p) continue;
+    const packs = Math.ceil(short / p.size - 1e-9);
+    if(packs < 1) continue;
+    (byGroup[p.g] = byGroup[p.g] || []).push({
+      n: packs > 1 ? p.n + "  \u00d7" + packs : p.n,
+      d: p.d, p: +(packs * p.price).toFixed(2), est: p.est,
+      need: Math.round(short*10)/10 + (p.u || ""),
+      held: held ? Math.round(held*10)/10 + (p.u || "") : null,
+      tags: (src[k] || [])
+    });
+  }
+  const order = ["Fruit & veg","Meat & fish — eat in this order","Chilled","Bakery","Cupboard"];
+  return order.filter(g => byGroup[g]).map(g => ({g, items: byGroup[g]}));
+}
+function cartTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{t+=i.p;})); return t; }
+function remainingTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{ if(!STATE.checked.includes(i.n)) t+=i.p; })); return t; }
+const HELD_LABEL = {
+  rice:"rice", couscous:"couscous", noodles:"egg noodles", sultana:"sultanas", almond:"flaked almonds",
+  pb:"peanut butter", honey:"honey", tuna:"tinned tuna", sweetpot:"sweet potato", chickpea:"chickpeas",
+  pepper:"mixed peppers", bulgur:"bulgur", fava:"Lemnian fava", panko:"panko", flour:"plain flour",
+  sesame_oil:"toasted sesame oil"
+};
+function orphanLines(){
+  const t = ingredientNeed(), out = [];
+  for(const k in CONTENT.held){
+    if((t[k] || 0) > 0) continue;
+    out.push(HELD_LABEL[k] || k.replace(/_/g," "));
+  }
+  return out.sort();
+}
+function heldLines(){
+  const t = ingredientNeed(), out = [];
+  for(const k in t){
+    const held = CONTENT.held[k] || 0;
+    if(!held) continue;
+    const p = CONTENT.packs[k];
+    if(t[k] - held > 1e-9) continue;
+    out.push((p ? p.n.replace(/,.*$/,"") : k.replace(/_/g," ")) + " (" + Math.round(t[k]*10)/10 + " needed, held)");
+  }
+  return out.sort();
+}
+
+/* ---------- views ---------- */
+function viewShop(){
+  const changed = ALLKEYS.filter(k => !isDefault(k));
+  let h = '<div class="note good"><b>This list is calculated from your picks, not typed out.</b> Quantities come from what each chosen meal actually uses, multiplied by the days it runs, minus what is already in the house — then rounded up to how the shop sells it. Change anything on Choose or Slots and the lines and the total move with it.</div>';
+  if(changed.length) h += '<div class="note held"><b>' + changed.length + ' changed from the default plan.</b> Total is now <b>' + money(cartTotal()) + '</b>.</div>';
+  h += '<div class="note"><b>Only what is being bought.</b> Anything the house already holds in sufficient quantity is absent by design \u2014 there is no "already have it" column, and nothing here is a maybe.</div>';
+
+  effectiveCart().forEach(g => {
+    h += '<div class="grouptitle">' + esc(g.g) + '</div><div class="card"><ul class="list">';
+    g.items.forEach(i => {
+      const on = STATE.checked.includes(i.n);
+      h += '<li><button class="row' + (on ? " done" : "") + '" data-item="' + esc(i.n) + '" aria-pressed="' + on + '">' +
+           '<span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>' +
+           '<span class="rowmain"><span class="name">' + esc(i.n) + '</span>' +
+           (i.d ? '<span class="det">' + esc(i.d) + '</span>' : "") +
+           '<span class="tags">' +
+             i.tags.map(function(x){ return '<span class="tag ' + tagClass(x) + '">' + esc(x) + '</span>'; }).join("") +
+             '<span class="tag qty">needs ' + esc(i.need) + '</span>' +
+             (i.held ? '<span class="tag qty">' + esc(i.held) + ' held</span>' : "") + '</span>' +
+           '</span><span class="price">' + money(i.p) + (i.est ? "*" : "") + '</span></button></li>';
+    });
+    h += "</ul></div>";
+  });
+
+  const orphans = orphanLines();
+  if(orphans.length){
+    h += '<div class="note warn"><b>Held stock with no route this week: ' + orphans.map(esc).join(", ") + '.</b> ' +
+         'Not a shopping problem — nothing here is being bought — but the chickpeas and peppers were bought on 24 August for a dinner that got skipped, and this is the second week running they have no meal attached. Karl, 30 Aug: the stockpile gets drained deliberately next week. ' +
+         '⭐ Two of the Wednesday options use the peppers, and the plain flour has exactly one route in the whole library: the beef &amp; stout stew on Thursday, before it expires in October.</div>';
+  }
+
+  const held = heldLines();
+  if(held.length){
+    h += '<div class="grouptitle">Covered by the cupboard \u2014 not on the list</div>' +
+         '<div class="card"><div class="card-b"><p class="det" style="margin:0">' + held.map(esc).join(" \u00b7 ") + '</p></div></div>';
+  }
+
+  h += '<div class="grouptitle">Not from Aldi</div><div class="card"><div class="card-b">' +
+       '<div class="name">' + esc(CONTENT.offcart.n) + ' &nbsp;<span class="price">' + money(CONTENT.offcart.p) + '</span></div>' +
+       '<div class="det" style="margin-top:6px">' + esc(CONTENT.offcart.d) + '</div></div></div>';
+  h += '<p class="foot" style="border:0;padding-top:4px">* Priced from a category listing rather than a confirmed product page. Everything else is a verified Aldi price.</p>';
+  h += '<div class="totalbar"><span>Left to buy</span><strong id="remain">' + money(remainingTotal()) + '</strong>' +
+       '<span style="color:var(--ink-3)">of ' + money(cartTotal()) + '</span>' +
+       '<button class="reset" id="resetbtn">Reset</button></div>';
+  return h;
+}
+
+function karlDay(day){
+  const rows = [];
+  if(day.away) return rows;
+  (day.karl || []).forEach(k => {
+    const o = picked(k);
+    rows.push({tag: k.toUpperCase().replace("K","S"), t: o.n, m: o.k + " kcal · " + o.p.toFixed(1) + " g P"});
+  });
+  if(day.yfood){
+    rows.push({tag:"S3", t:"yfood ×2", m:"800 kcal · 50.0 g P", yf:true});
+    if(day.yfood > 2) rows.push({tag:"S4", t:"yfood ×1", m:"400 kcal · 25.0 g P", yf:true});
+  }
+  if(day.dinner){
+    const o = day.dinner === "sun" ? CONTENT.sunDinner : picked(day.dinner);
+    rows.push({tag:"S5", t:o.n, m:o.k + " kcal · " + o.p.toFixed(1) + " g P", shared:true, r:day.dinner});
+  } else if(day.id === "fri"){
+    rows.push({tag:"S5", t:"Eating out on the road", m:"assume ≥ 895 kcal", away:true});
+  }
+  return rows;
+}
+function mariaDay(day){
+  const rows = [];
+  if(day.away) return rows;
+  if(!day.mSkipBreakfast){
+    const b = picked("mb");
+    rows.push({tag:"B", t:b.n, m:b.k + " kcal"});
+  }
+  const l = mariaLunchFor(day);
+  rows.push({tag:"L", t:l.n, m:l.k + " kcal"});
+  if(day.dinner){
+    const o = day.dinner === "sun" ? CONTENT.sunDinner : picked(day.dinner);
+    rows.push({tag:"D", t:o.n, m:o.mk + " kcal · " + o.mp.toFixed(1) + " g P", shared:true, r:day.dinner});
+  } else if(day.id === "fri"){
+    rows.push({tag:"D", t:"Out", m:"", away:true});
+  }
+  if(day.id !== "sun"){
+    const tot = rows.reduce((a,r) => a + (parseInt(r.m,10) || 0), 0);
+    const gap = 1700 - tot;
+    if(gap > 60) rows.push({tag:"+", t:"An apple and a yoghurt", m:"~" + gap + " kcal to 1,700", fill:true});
+  }
+  return rows;
+}
+function colRows(rows){
+  if(!rows.length) return '<div class="mrow away"><span class="mtag">—</span><span class="mbody"><span class="mt">Away. Nothing provisioned.</span></span></div>';
+  return rows.map(r =>
+    '<div class="mrow' + (r.away ? " away" : "") + (r.fill ? " fill" : "") + '">' +
+      '<span class="mtag' + (r.shared ? " sh" : "") + (r.yf ? " yf" : "") + '">' + esc(r.tag) + '</span>' +
+      '<span class="mbody"><span class="mt">' + esc(r.t) +
+        (r.r ? ' <span class="badge on" data-goto="' + r.r + '" role="button" tabindex="0" style="cursor:pointer">card</span>' : "") +
+      '</span>' + (r.m ? '<span class="mm">' + esc(r.m) + '</span>' : "") + '</span></div>').join("");
+}
+
+function viewWeek(){
+  let h = '<div class="note good"><b>Two eaters, two different days.</b> Karl runs five wake-anchored slots; Maria runs three meals. <b>The only shared thing is dinner</b> — one dish, cooked once, cut three parts to two. Breakfast and lunch are individual for both, and everything on this tab follows what is picked on Choose and Slots.</div>';
+  h += '<div class="legend"><span><i class="sw sh"></i>shared, cut 3:2</span><span><i class="sw yf"></i>yfood</span><span><i class="sw"></i>individual</span></div>';
+  CONTENT.schedule.forEach(day => {
+    const kr = karlDay(day), mr = mariaDay(day);
+    h += '<div class="day"><div class="day-h"><span class="d">' + esc(day.d) + '</span><span class="w">' + esc(day.w) + '</span></div>';
+    h += '<div class="twocol">' +
+         '<div class="col"><div class="colh">Karl · 2,800 kcal</div>' + colRows(kr) +
+           (day.kNote ? '<div class="colnote">' + esc(day.kNote) + '</div>' : "") + '</div>' +
+         '<div class="col"><div class="colh">Maria · 1,700 kcal</div>' + colRows(mr) +
+           (day.mNote ? '<div class="colnote">' + esc(day.mNote) + '</div>' : "") + '</div>' +
+         '</div>';
+    if(day.dinner){
+      const o = day.dinner === "sun" ? CONTENT.sunDinner : picked(day.dinner);
+      h += '<div class="splitbar"><b>The cut:</b> ' + (o.split || "Karl 3 : Maria 2.") + '</div>';
+    }
+    h += '</div>';
+  });
+  return h;
+}
+
+function viewChoose(){
+  let h = '<div class="note good"><b>Tap any card to choose it.</b> The Shop, The week and Receipt tabs all follow your choice straight away — the cart adds and drops the right lines, and the receipt recalculates. Tonight is already settled: sesame-peanut noodles with crisp chilli chicken, card on the Recipes tab.</div>';
+  h += '<div class="note"><b>How to read a card.</b> <i>Clears</i> is what it takes out of the sachet drawer, which is the two-week goal. <i>What makes it</i> is the two or three steps that separate the good version from the dull one — the ones a rushed cook drops. Full step-by-step gets written for whatever you land on.</div>';
+  const changed = PICKKEYS.filter(k => !isDefault(k));
+  if(changed.length){
+    h += '<div class="note held"><b>' + changed.length + ' swapped.</b> ' +
+      changed.map(k => esc(chooseSet(k).day) + " → " + esc(picked(k).n)).join(" · ") +
+      '. Cart is now <b>' + money(cartTotal()) + '</b>.</div>';
+  }
+  CONTENT.choices.forEach(set => {
+    h += '<div class="grouptitle">' + esc(set.slot) + '</div>';
+    h += '<p class="det" style="margin:-2px 0 10px">' + esc(set.spec) + '</p>';
+    set.opts.forEach((o, oi) => {
+      const on = pickIdx(set.key) === oi;
+      h += '<div class="choice' + (on ? " pick" : "") + '" data-pick="' + set.key + '" data-idx="' + oi + '" role="button" tabindex="0" aria-pressed="' + on + '">' +
+           '<div class="choice-h"><span class="cn">' + esc(o.n) + '</span>' +
+           (on ? '<span class="badge on">chosen</span>' : '<span class="badge pickme">tap to choose</span>') +
+           (o.badge === "cart" ? '<span class="badge buy">changes the cart</span>' : "") + '</div>' +
+           '<div class="facts">' +
+             '<div class="fact"><div class="fl">Time</div><div class="fv">' + o.time + '</div></div>' +
+             '<div class="fact"><div class="fl">Cost</div><div class="fv">' + esc(o.cost) + '</div></div>' +
+             '<div class="fact"><div class="fl">Karl 3/5</div><div class="fv">' + o.k + ' kcal · ' + o.p.toFixed(1) + ' g P</div></div>' +
+             '<div class="fact"><div class="fl">Maria 2/5</div><div class="fv">' + o.mk + ' kcal · ' + o.mp.toFixed(1) + ' g P</div></div>' +
+           '</div>' +
+           '<div class="choice-b"><div class="clears"><b>Clears:</b> ' + o.clears + '</div>' +
+           '<p class="mh">What makes it</p><ul class="makes">' + o.makes.map(x => "<li>" + x + "</li>").join("") + '</ul>' +
+           (o.warn ? '<div class="note warn" style="margin:11px 0 0">' + o.warn + '</div>' : "") +
+           '</div></div>';
+    });
+  });
+  return h;
+}
+
+function viewSlots(){
+  let h = '<div class="note good"><b>Tap any card to choose it</b> — same as the dinners. These are the individual meals: Karl\'s five slots and Maria\'s two. Everything here feeds straight into The week and the Receipt.</div>';
+  ["Karl","Maria"].forEach(who => {
+    h += '<h2 class="whohead">' + who + '</h2>';
+    CONTENT.slots.filter(set => set.who === who).forEach(set => {
+      h += '<div class="grouptitle">' + esc(set.label) + '</div>';
+      h += '<p class="det" style="margin:-2px 0 10px">' + esc(set.spec) + '</p>';
+      set.opts.forEach((o, oi) => {
+        const on = pickIdx(set.key) === oi;
+        h += '<div class="choice' + (on ? " pick" : "") + '" data-pick="' + set.key + '" data-idx="' + oi + '" role="button" tabindex="0" aria-pressed="' + on + '">' +
+             '<div class="choice-h"><span class="cn">' + esc(o.n) + '</span>' +
+             (on ? '<span class="badge on">chosen</span>' : '<span class="badge pickme">tap to choose</span>') +
+             (o.badge === "cart" ? '<span class="badge buy">changes the cart</span>' : "") +
+             (o.badge === "held" ? '<span class="badge held">held stock</span>' : "") + '</div>' +
+             '<div class="facts">' +
+               '<div class="fact"><div class="fl">Energy</div><div class="fv">' + o.k + ' kcal</div></div>' +
+               '<div class="fact"><div class="fl">Protein</div><div class="fv">' + o.p.toFixed(1) + ' g</div></div>' +
+               '<div class="fact"><div class="fl">Carb</div><div class="fv">' + o.c.toFixed(1) + ' g</div></div>' +
+               '<div class="fact"><div class="fl">Fat</div><div class="fv">' + o.f.toFixed(1) + ' g</div></div>' +
+             '</div>' +
+             '<div class="choice-b"><p style="margin:0;font-size:14.5px">' + esc(o.d) + '</p>' +
+             (o.warn ? '<div class="note warn" style="margin:11px 0 0">' + esc(o.warn) + '</div>' : "") +
+             '</div></div>';
+      });
+    });
+  });
+  return h;
+}
+
+function recipeCardPending(key){
+  const o = picked(key), set = chooseSet(key);
+  return '<div class="card" id="r-' + key + '"><div class="card-h"><h3>' + esc(o.n) + '</h3></div><div class="card-b">' +
+    '<div class="eyebrow">' + esc(set.day) + ' · your pick</div>' +
+    '<div class="note warn" style="margin-top:10px"><b>The full step-by-step for this one is not written yet.</b> You changed the pick, so the card gets authored next — same treatment as the others: equipment named in every step, state cues instead of time cues, per-plate quantities. Everything below is enough to shop for it and to know what matters.</div>' +
+    '<div class="facts" style="margin:12px 0;border-radius:8px;overflow:hidden;border:1px solid var(--line)">' +
+      '<div class="fact"><div class="fl">Time</div><div class="fv">' + o.time + '</div></div>' +
+      '<div class="fact"><div class="fl">Cost</div><div class="fv">' + esc(o.cost) + '</div></div>' +
+      '<div class="fact"><div class="fl">Karl 3/5</div><div class="fv">' + o.k + ' kcal · ' + o.p.toFixed(1) + ' g P</div></div>' +
+      '<div class="fact"><div class="fl">Maria 2/5</div><div class="fv">' + o.mk + ' kcal · ' + o.mp.toFixed(1) + ' g P</div></div>' +
+    '</div>' +
+    (o.split ? '<div class="splitbar"><b>The cut:</b> ' + o.split + '</div>' : "") +
+    '<div class="clears" style="margin-top:12px"><b>Clears:</b> ' + o.clears + '</div>' +
+    '<p class="mh">What makes it</p><ul class="makes">' + o.makes.map(x => "<li>" + x + "</li>").join("") + '</ul>' +
+    (o.warn ? '<div class="note warn" style="margin:11px 0 0">' + o.warn + '</div>' : "") +
+    '</div></div>';
+}
+
+function viewRecipes(){
+  let h = '<div class="note good"><b>Only what is actually being cooked.</b> Change a dinner on Choose and this tab follows. Every card is a <b>shared</b> dish cut three parts to two — nothing here is cooked twice.</div>';
+  ["sun"].concat(PICKKEYS).forEach(key => {
+    if(key !== "sun" && !isDefault(key)){ h += recipeCardPending(key); return; }
+    const r = CONTENT.recipes[key];
+    if(!r) return;
+    const o = key === "sun" ? CONTENT.sunDinner : picked(key);
+    h += '<div class="card" id="r-' + key + '"><div class="card-h"><h3>' + esc(r.name) + '</h3></div><div class="card-b">' +
+         '<div class="eyebrow">' + esc(r.when) + '</div>' +
+         '<p class="det mono" style="margin:6px 0 12px">' + esc(r.meta) + '</p>' +
+         '<p style="font-size:15px;margin:0 0 4px">' + esc(r.lead) + '</p>';
+    (r.notes || []).forEach(n => { h += '<div class="note ' + n.k + '">' + n.t + '</div>'; });
+    h += '<div class="plates">' + r.plates.map(pl =>
+         '<div class="plate"><div class="who">' + esc(pl.who) + '</div><div class="amt">' + esc(pl.amt) + '</div><div class="mac">' + esc(pl.mac) + '</div></div>').join("") + '</div>';
+    if(o && o.split) h += '<div class="splitbar"><b>The cut:</b> ' + o.split + '</div>';
+    h += '<div class="grouptitle" style="margin-top:16px">Ingredients — for the whole dish</div><div class="ing">' +
+         r.ing.map(x => "• " + x).join("<br>") + '</div>';
+    h += '<div class="equip"><h4>Get these out first</h4><ul>' +
+         r.equip.map(e => "<li>" + (e.r ? '<span class="req">required</span> ' : "") + e.t + "</li>").join("") + "</ul></div>";
+    h += '<div class="grouptitle">Method</div><ol class="steps">' + r.steps.map(x => "<li>" + x + "</li>").join("") + "</ol>";
+    h += "</div></div>";
+  });
+  return h;
+}
+
+const TARGET = [2800,170,339,85];
+const MARIA_TARGET = 1700;
+
+function karlDayTotals(day){
+  const t = [0,0,0,0];
+  if(day.away) return t;
+  (day.karl || []).forEach(k => macAdd(t, picked(k)));
+  if(day.yfood) macAdd(t, YFOOD, day.yfood);
+  if(day.dinner) macAdd(t, day.dinner === "sun" ? CONTENT.sunDinner : picked(day.dinner));
+  return t;
+}
+function mariaLunchFor(day){
+  let l = picked("ml");
+  if(day.mLunchOverride === "real" && pickIdx("ml") === 0) l = chooseSet("ml").opts[CONTENT.mlFallback];
+  return l;
+}
+function mariaDayTotal(day){
+  if(day.away) return 0;
+  let t = (day.mSkipBreakfast ? 0 : picked("mb").k) + mariaLunchFor(day).k;
+  if(day.dinner) t += (day.dinner === "sun" ? CONTENT.sunDinner : picked(day.dinner)).mk;
+  return t;
+}
+const FULLDAYS = ["mon","tue","wed","thu"];
+function weekTotals(){
+  const t = [0,0,0,0];
+  CONTENT.schedule.filter(d => FULLDAYS.includes(d.id)).forEach(d => {
+    const x = karlDayTotals(d); for(let i=0;i<4;i++) t[i]+=x[i];
+  });
+  return t;
+}
+const sign = n => (n>=0 ? "+" : "\u2212") + Math.abs(n).toFixed(n===Math.round(n)?0:1);
+
+function viewReceipt(){
+  let h = '<div class="note good"><b>What this plan actually delivers</b>, against what Clophie asked for. <b>Every number here is computed from your picks</b> — change a breakfast or a dinner and this tab moves. Reported, not adjusted: the point is that a week quietly landing at 2,650 instead of 2,800 gets caught here rather than never.</div>';
+
+  const wt = weekTotals(), tg = TARGET.map(x => x*4);
+  const labels = ["Calories","Protein","Carbohydrate","Fat"], unit = ["","g","g","g"];
+  h += '<div class="grouptitle">Karl — weekly variance, the four full days</div>';
+  h += '<div class="tw"><table><caption>Mon 31 to Thu 3. Sunday, Friday, the weekend and Monday the 7th are partial or away days by design and are excluded, so the comparison is like for like.</caption>' +
+       '<tr><th>Measure</th><th>Delivered</th><th>Target</th><th>Variance</th><th>%</th></tr>' +
+       labels.map((l,i) => {
+         const d = wt[i]-tg[i], pc = 100*d/tg[i];
+         return '<tr><td>' + l + '</td><td class="n">' + Math.round(wt[i]).toLocaleString() + " " + unit[i] +
+                '</td><td class="n">' + tg[i].toLocaleString() + " " + unit[i] +
+                '</td><td class="n ' + (Math.abs(pc)<5 ? "ok" : (d>0?"pos":"neg")) + '">' + sign(d) + " " + unit[i] +
+                '</td><td class="n">' + (pc>=0?"+":"\u2212") + Math.abs(pc).toFixed(1) + '%</td></tr>';
+       }).join("") + "</table></div>";
+
+  h += '<div class="grouptitle">Per day, both of you</div><div class="tw"><table>' +
+       '<tr><th>Day</th><th>Karl kcal</th><th>P</th><th>C</th><th>F</th><th>vs 2,800</th><th>Maria kcal</th><th>vs 1,700</th></tr>' +
+       CONTENT.schedule.filter(d => !d.away).map(d => {
+         const k = karlDayTotals(d), mv = mariaDayTotal(d);
+         const partial = !FULLDAYS.includes(d.id);
+         return '<tr><td>' + esc(d.d.replace(" Aug","").replace(" Sep","")) + '</td><td class="n">' + Math.round(k[0]).toLocaleString() +
+                '</td><td class="n">' + k[1].toFixed(1) + '</td><td class="n">' + k[2].toFixed(0) + '</td><td class="n">' + k[3].toFixed(1) +
+                '</td><td class="n">' + (partial ? '<span style="color:var(--ink-3)">partial</span>' : sign(Math.round(k[0]-2800))) +
+                '</td><td class="n">' + Math.round(mv).toLocaleString() +
+                '</td><td class="n">' + (partial ? '<span style="color:var(--ink-3)">partial</span>' : sign(Math.round(mv-MARIA_TARGET))) + '</td></tr>';
+       }).join("") + "</table></div>";
+  h += '<p class="det" style="margin-top:-2px">Maria\'s figure excludes the daily fruit-and-yoghurt top-up shown on The week, which is what closes her to 1,700.</p>';
+
+  h += '<div class="grouptitle">Karl — per slot</div><div class="tw"><table><caption>kcal / protein. Protein per slot is the hard number, so it leads the variance column.</caption>' +
+       '<tr><th>Slot</th><th>Target</th><th>Delivered</th><th>Variance</th></tr>';
+  const st = {k1:[190,10], k2:[570,45], k3:[765,50], k4:[380,25]};
+  ["k1","k2","k3","k4"].forEach(key => {
+    const o = picked(key), t = st[key];
+    h += '<tr><td>' + key.toUpperCase().replace("K","S") + ' · ' + esc(o.n) + '</td><td class="n">' + t[0] + " / " + t[1] +
+         '</td><td class="n">' + o.k + " / " + o.p.toFixed(1) + '</td><td class="n">' + sign(o.k-t[0]) + " / " + sign(+(o.p-t[1]).toFixed(1)) + '</td></tr>';
+  });
+  h += '<tr><td>S3 office · yfood ×2</td><td class="n">765 / 50</td><td class="n">800 / 50.0</td><td class="n">+35 / 0</td></tr>' +
+       '<tr><td>S4 office · yfood ×1</td><td class="n">380 / 25</td><td class="n">400 / 25.0</td><td class="n">+20 / 0</td></tr>';
+  const kb = picked("kb");
+  h += '<tr><td>Bonus top-up · ' + esc(kb.n) + '</td><td class="n">200 / 20</td><td class="n">' + kb.k + " / " + kb.p.toFixed(1) +
+       '</td><td class="n">' + sign(kb.k-200) + " / " + sign(+(kb.p-20).toFixed(1)) + '</td></tr>';
+  CONTENT.schedule.filter(d => d.dinner).forEach(d => {
+    const o = d.dinner === "sun" ? CONTENT.sunDinner : picked(d.dinner);
+    h += '<tr><td>S5 ' + esc(d.d.split(" ").slice(0,2).join(" ")) + '</td><td class="n">895 / 40</td><td class="n">' +
+         o.k + " / " + o.p.toFixed(1) + '</td><td class="n">' + sign(o.k-895) + " / " + sign(+(o.p-40).toFixed(1)) + '</td></tr>';
+  });
+  h += "</table></div>";
+
+  const fatOver = wt[3]-tg[3];
+
+  // ⭐ Karl's own rule: where a slot misses, the fix is a NAMED top-up on his plate,
+  // never a change to the 3:2 ratio. So compute the top-up instead of just reporting the gap.
+  const carbGap = (tg[2] - wt[2]) / 4;
+  if(carbGap > 15){
+    h += '<div class="grouptitle">Your prescribed top-up</div>';
+    h += '<div class="note stop"><b>Carbohydrate is running ' + Math.round(carbGap) + ' g a day short on these picks.</b> ' +
+      'That is not a fault in the plan — it is what choosing the two richest dinners of the set does, and the answer you set yourself is a named top-up rather than a change to the 3:2 cut.<br><br>' +
+      '⭐ <b>Add roughly ' + Math.round(carbGap/0.78/10)*10 + ' g of dry rice, or three slices of bread, to your own plate each evening.</b> ' +
+      'It goes on your plate, not into the pot — Maria&rsquo;s portion is already right.' +
+      (fatOver > 20 ? '<br><br>⚠️ Fat is also <b>' + Math.round(fatOver/4) + ' g a day over</b>, which is the same cause: thighs and bacon on Tuesday, suet on Thursday, both on office days where three yfood have already spent 54 g of the 85 g budget. Calories still land within 1%, so this is a shape difference rather than a shortfall — but it is the collision escalated below, showing up in the actual numbers rather than in the abstract.' : "") +
+      '</div>';
+  }
+
+  h += '<div class="grouptitle">Unmet slots, and why</div>';
+  h += '<div class="note warn"><b>Friday 4 September, dinner — both of you.</b> Not provisioned; you are on the M1 at 17:30 and eating out, and Karl has confirmed he will take at least the 895 kcal the slot asks for. <b>Not counted as delivered</b>, because Clousto did not provide it and cannot verify it.</div>';
+  h += '<div class="note warn"><b>Saturday 5 and Sunday 6.</b> Away days. No target, nothing provisioned — the indulgence valve, working as specified.</div>';
+  h += '<div class="note warn"><b>Monday 7 September, S4 and S5.</b> Outside the requested scope. Thursday\'s spare covers dinner if you want it.</div>';
+
+  h += '<div class="grouptitle">Escalations to Karl</div>';
+  h += '<div class="note stop"><b>The fat budget and yfood are in tension on office days.</b> yfood is about 40% fat by calories, so three units spend 54 g of the 85 g daily allowance before anything solid is eaten, leaving roughly 18 g for the whole of dinner. That is why Tuesday takes chicken breast rather than thigh and Thursday takes 5% mince against every source that says otherwise. <b>The week currently lands ' + sign(Math.round(fatOver)) + ' g on fat.</b> It works, but it permanently constrains what the dinner rotation can be — Clousto\'s constraint colliding with Clophie\'s number, and per the interface that is your decision rather than a negotiation between systems.</div>';
+  h += '<div class="note stop"><b>The yfood subscription is under-supplying by half.</b> Set at six units a week, which matched two units on each of three office days. The plan now takes three on each of four: <b>eleven units in this stretch</b>, and a 1.07 kg bag is twelve. Left alone you run out mid-September. On its own dated task.</div>';
+  h += '<div class="note good"><b>Maria\'s record is complete as of 30 Aug 2026.</b> She stated her own 1,700 kcal target in this session — it had been recorded, wrongly, as Karl\'s figure for her. And she has now answered the restriction question directly: <b>dairy MILK only, and yoghurt and cheese are fine.</b> No other restrictions. <b>That closes the last NOT-ASKED field on her profile</b>, and it is the first time either eater\'s record has been complete and first-hand. ⭐ The milk carve-out is enforced as a block: dairy milk is never substituted into her food. Yoghurt, cheese, feta and halloumi are all explicitly permitted.</div>';
+
+  h += '<p class="foot">Figures are label-derived, not measured. yfood powder is taken at 400 kcal / 25 g protein per 85 g unit; the ready-to-drink bottle Maria is trialling is 500 kcal / 30 g.</p>';
+  return h;
+}
+
+/* ---------- render ---------- */
+const TABS = [
+  {id:"shop",  label:"Shop",     fn:viewShop},
+  {id:"week",  label:"The week", fn:viewWeek},
+  {id:"pick",  label:"Choose",   fn:viewChoose},
+  {id:"opts",  label:"Slots",    fn:viewSlots},
+  {id:"cook",  label:"Recipes",  fn:viewRecipes},
+  {id:"rec",   label:"Receipt",  fn:viewReceipt}
+];
+let active = "shop";
+
+function render(){
+  const app = document.getElementById("app");
+  const lockBar = (dirty || lockMsg)
+    ? '<div class="lockbar' + (dirty ? " dirty" : "") + '">' +
+        '<span class="lockmsg">' + (dirty
+            ? "<b>Unsaved changes.</b> Locked-in picks survive a refresh and reach Maria&rsquo;s phone."
+            : esc(lockMsg)) + '</span>' +
+        (dirty ? '<button class="lockbtn" id="lockbtn"' + (publishing ? " disabled" : "") + '>' +
+                   (publishing ? "Locking…" : "Lock picks in") + '</button>' : "") +
+      '</div>'
+    : "";
+  app.innerHTML = lockBar +
+    '<header class="top"><div class="eyebrow"><span class="syncdot' + (artifactApi ? " live" : "") + '"></span>' +
+    esc(CONTENT.store) + ' · ' + esc(CONTENT.week) + '</div>' +
+    '<h1>Clousto Kitchen</h1>' +
+    '<p class="sub">One shop today, nine days of food. <b>Four dinners still to choose</b> \u2014 see Choose.</p></header>' +
+    '<nav class="tabs" role="tablist">' + TABS.map(t =>
+      '<button role="tab" data-tab="' + t.id + '" aria-selected="' + (t.id === active) + '">' + t.label + "</button>").join("") + "</nav>" +
+    TABS.map(t => '<section class="panel' + (t.id === active ? " on" : "") + '" id="p-' + t.id + '">' + t.fn() + "</section>").join("");
+}
+
+/* ---------- publish ---------- */
+function stateBlob(){ return JSON.stringify({checked:STATE.checked, picks:STATE.picks, savedAt:Date.now()}); }
+function buildDocument(){
+  const s = "<" + "/script>";
+  return '<!doctype html><html lang="en"><head><meta charset="utf-8">'
+    + '<meta name="viewport" content="width=device-width,initial-scale=1">'
+    + '<title>Clousto Kitchen<' + '/title>'
+    + '<link rel="preconnect" href="https://fonts.googleapis.com">'
+    + '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+    + '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">'
+    + '<style id="clousto-css">' + PAGE_CSS + '<' + '/style></head><body>'
+    + '<script type="application/json" id="clousto-data">' + stateBlob() + s
+    + '<div class="wrap" id="app"></div>'
+    + '<script>' + SELF_SRC + s
+    + '</body></html>';
+}
+async function lockIn(){
+  if(publishing) return;
+  if(!artifactApi){
+    lockMsg = "Saved on this phone. Ticks do not sync to the other phone yet — that is stage 2, and it is the next thing being built.";
+    render(); return;
+  }
+  publishing = true; lockMsg = "Locking in…"; render();
+  try{
+    const doc = buildDocument();
+    if(!doc || doc.length < 40000 || PAGE_CSS.length < 2000){
+      lockMsg = "Not saved — the page was about to be published without its stylesheet, so nothing was sent. Your picks are safe on this device.";
+      publishing = false; render(); return;
+    }
+    await artifactApi.publish(doc);
+    dirty = false; clearLocal();
+    lockMsg = "Locked in. Both phones will see this.";
+  }catch(e){
+    const code = e && (e.code || e.name || "");
+    if(String(code).indexOf("conflict") > -1){
+      lockMsg = "Someone else locked in first — reload to see their version, then redo yours.";
+    }else if(String(code).indexOf("not_writer") > -1 || String(code).indexOf("not_granted") > -1){
+      lockMsg = "Saved on this device only — you have view access to this page, not edit.";
+    }else{
+      lockMsg = "Could not reach the shared page. Your picks are still saved on this device.";
+    }
+  }finally{ publishing = false; render(); }
+}
+function queue(){ dirty = true; saveLocal(); render(); }
+
+/* ---------- events ---------- */
+document.addEventListener("keydown", e => {
+  if(e.key !== "Enter" && e.key !== " ") return;
+  const t = e.target.closest("[data-pick],[data-goto]");
+  if(t){ e.preventDefault(); t.click(); }
+});
+
+document.addEventListener("click", e => {
+  const tab = e.target.closest("[data-tab]");
+  if(tab){ active = tab.dataset.tab; render(); window.scrollTo(0,0); return; }
+
+  const goto = e.target.closest("[data-goto]");
+  if(goto){ active = "cook"; render();
+    const el = document.getElementById("r-" + goto.dataset.goto);
+    if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+    return; }
+
+  const pk = e.target.closest("[data-pick]");
+  if(pk){
+    STATE.picks[pk.dataset.pick] = parseInt(pk.dataset.idx, 10);
+    lockMsg = "";
+    queue();
+    const el = document.querySelector('[data-pick="' + pk.dataset.pick + '"][data-idx="' + pk.dataset.idx + '"]');
+    if(el) el.scrollIntoView({block:"nearest"});
+    return;
+  }
+
+  const row = e.target.closest("[data-item]");
+  if(row){
+    const n = row.dataset.item;
+    const i = STATE.checked.indexOf(n);
+    if(i === -1) STATE.checked.push(n); else STATE.checked.splice(i,1);
+    row.classList.toggle("done");
+    row.setAttribute("aria-pressed", i === -1);
+    const rm = document.getElementById("remain");
+    if(rm) rm.textContent = "£" + remainingTotal().toFixed(2);
+    dirty = true; saveLocal();
+    const lb = document.querySelector(".lockbar");
+    if(!lb) render();
+    return;
+  }
+
+  if(e.target.closest("#lockbtn")){ lockIn(); return; }
+
+  if(e.target.closest("#resetbtn")){
+    STATE.checked = [];
+    queue();
+  }
+});
+
+/* ------------------------------------------------------------------ boot
+   The week arrives over the wire, so the boot is asynchronous. Nothing below
+   changes what the app does with the week once it has it — only where it
+   comes from. window.claude is gone: this host has no artifact API, and
+   pretending otherwise is how a tick silently fails to save. */
+(async () => {
+  const bar = document.getElementById("bootbar");
+  const say = (msg, bad) => {
+    if(!bar) return;
+    bar.textContent = msg;
+    bar.className = "bootbar" + (bad ? " bad" : "");
+    bar.hidden = false;
+  };
+  try{
+    const res = await fetch("/api/week", {cache:"no-store"});
+    if(!res.ok){
+      const body = await res.json().catch(() => null);
+      throw new Error((body && body.error) || ("the week endpoint returned HTTP " + res.status));
+    }
+    const payload = await res.json();
+    if(!payload || !payload.content || !payload.content.slots){
+      throw new Error("the published week has no slots in it");
+    }
+    CONTENT = payload.content;
+    LS_KEY  = "clousto.week." + payload.id;
+    STATE   = readState();
+    render();
+    if(bar) bar.hidden = true;
+  }catch(err){
+    /* No week, no list. Say so plainly rather than rendering an empty shop. */
+    say("This week could not be loaded — " + String((err && err.message) || err) +
+        ". Pull down to retry.", true);
+  }
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,7 @@
+node_modules/
+.wrangler/
+.dev.vars
+dist/
+.cf-access.env
+week-seed.json
+seed.sql

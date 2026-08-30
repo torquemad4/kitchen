@@ -1,0 +1,13 @@
+{
+  "name": "kitchen-torquemada",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Clousto Kitchen — the week, the aisle and the hob, on one durable URL",
+  "scripts": {
+    "dev": "wrangler pages dev",
+    "seed": "node seed-week.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
