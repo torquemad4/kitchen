@@ -252,18 +252,127 @@ caption{caption-side:top;text-align:left;font-size:13px;color:var(--ink-2);paddi
  * serialised.
  * ------------------------------------------------------------------ */
 
-const SELF_SRC = document.currentScript.textContent;
-const PAGE_CSS = (function(){
-  const own = document.getElementById('clousto-css');
-  if(own && own.textContent.length > 2000) return own.textContent;
-  // fallback: the wrapper may inject its own reset <style> before ours, so take them all
-  return Array.prototype.map.call(document.querySelectorAll('style'), function(el){ return el.textContent; }).join('\n');
-})();
-
 let CONTENT = null;   /* fetched from /api/week at boot — the week is data now, not a literal. Republishing the document is no longer how a new week ships. */
 
 /* ---------- state ---------- */
-let LS_KEY = "clousto.week";   /* set from the fetched week id at boot */
+let LS_KEY = "clousto.week";
+let WEEK_ID = null;
+/* A stable per-phone id, so a disagreement between the two phones is
+   diagnosable rather than mysterious. Not an identity, just a label. */
+const DEVICE = (function(){
+  try{
+    let d = localStorage.getItem("clousto.device");
+    if(!d){ d = "ph-" + Math.random().toString(36).slice(2,8); localStorage.setItem("clousto.device", d); }
+    return d;
+  }catch(e){ return "ph-nostore"; }
+})();
+let syncPending = 0, syncStatus = "idle", syncErr = "", flushing = false;   /* set from the fetched week id at boot */
+
+
+/* ------------------------------------------------------------ sync (stage 2)
+   Ticks go into a local queue first and drain to /api/state. The queue is the
+   point: a dead spot in the aisle must cost nothing, and the shop is exactly
+   where signal fails. One pending event per key — the last state of a tick is
+   the only one worth sending. */
+function QKEY(){ return "clousto.queue." + (WEEK_ID || "none"); }
+function loadQueue(){ try{ return JSON.parse(localStorage.getItem(QKEY())) || []; }catch(e){ return []; } }
+function saveQueue(q){ try{ localStorage.setItem(QKEY(), JSON.stringify(q)); }catch(e){} syncPending = q.length; }
+
+function queueEvent(kind, key, value){
+  const q = loadQueue();
+  const i = q.findIndex(e => e.kind === kind && e.key === key);
+  const ev = {kind: kind, key: key, value: value, ts: Date.now()};
+  if(i === -1) q.push(ev); else q[i] = ev;
+  saveQueue(q);
+  flush();
+}
+
+async function flush(){
+  if(flushing) return;
+  const q = loadQueue();
+  if(!q.length){ syncStatus = "idle"; syncErr = ""; return; }
+  if(typeof navigator !== "undefined" && navigator.onLine === false){
+    syncStatus = "offline"; render(); return;
+  }
+  flushing = true; syncStatus = "saving"; render();
+  try{
+    const res = await fetch("/api/state", {
+      method: "POST", headers: {"content-type": "application/json"},
+      body: JSON.stringify({weekId: WEEK_ID, device: DEVICE, events: q})
+    });
+    if(!res.ok) throw new Error("the server returned HTTP " + res.status);
+    /* Drop exactly what was sent. Anything tapped while the request was in
+       flight is still in the queue and survives. */
+    const sent = new Set(q.map(e => e.kind + "\u0000" + e.key + "\u0000" + e.ts));
+    saveQueue(loadQueue().filter(e => !sent.has(e.kind + "\u0000" + e.key + "\u0000" + e.ts)));
+    syncErr = "";
+    syncStatus = syncPending ? "saving" : "idle";
+    flushing = false;
+    if(syncPending) return flush();
+  }catch(err){
+    syncStatus = "error";
+    syncErr = String((err && err.message) || err);
+  }finally{
+    flushing = false;
+    render();
+  }
+}
+
+async function pullState(){
+  if(!WEEK_ID) return;
+  try{
+    const res = await fetch("/api/state?week=" + encodeURIComponent(WEEK_ID), {cache: "no-store"});
+    if(!res.ok) return;
+    const s = await res.json();
+    const serverCart  = s.cart  || {};
+    const serverPicks = s.picks || {};
+
+    /* ⭐ MIGRATION SAFETY. A phone that has been using the artifact already holds
+       real choices, and the first time it meets a server that has never seen
+       this week the server is empty. Overwriting local state with that emptiness
+       would silently discard what was actually chosen — which is exactly what
+       happened in testing: the real picks (Poulet basquaise, the stir-fry, the
+       beef & stout stew) would have been replaced by the week's defaults.
+       So: adopt the phone, do not erase it. */
+    const serverEmpty = !Object.keys(serverCart).length && !Object.keys(serverPicks).length;
+    const localHas = (STATE.checked || []).length || Object.keys(STATE.picks || {}).length;
+    if(serverEmpty && localHas){
+      (STATE.checked || []).forEach(function(n){ queueEvent("tick", n, "ticked"); });
+      Object.keys(STATE.picks || {}).forEach(function(k){ queueEvent("pick", k, STATE.picks[k]); });
+      return;
+    }
+
+    const checked = [];
+    for(const k in serverCart) if(serverCart[k].state === "ticked") checked.push(k);
+    const picks = {};
+    for(const k in serverPicks) picks[k] = serverPicks[k].idx;
+    /* Anything still queued here has not reached the server yet, so it is newer
+       than what the server just returned. Replay it over the top. */
+    for(const e of loadQueue()){
+      if(e.kind === "pick"){ picks[e.key] = e.value; }
+      else if(e.kind === "tick"){
+        const i = checked.indexOf(e.key);
+        if(e.value === "ticked" && i === -1) checked.push(e.key);
+        if(e.value !== "ticked" && i > -1) checked.splice(i, 1);
+      }
+    }
+    STATE.checked = checked;
+    STATE.picks = picks;
+    render();
+  }catch(e){ /* a failed pull is not worth interrupting a shop over */ }
+}
+
+function syncBarText(){
+  if(syncStatus === "error")
+    return "<b>Not saved to the other phone.</b> " + esc(syncErr) +
+           " &mdash; your changes are safe here and will go up on the next tap.";
+  if(syncStatus === "offline")
+    return "<b>Offline.</b> " + syncPending + " change" + (syncPending === 1 ? "" : "s") +
+           " waiting. They will sync by themselves when signal comes back.";
+  if(syncStatus === "saving")
+    return "Saving " + syncPending + " change" + (syncPending === 1 ? "" : "s") + "&hellip;";
+  return esc(lockMsg);
+}
 
 function readState(){
   let doc = {checked:[], picks:{}, savedAt:0};
@@ -291,12 +400,9 @@ function readState(){
 function saveLocal(){
   try{ localStorage.setItem(LS_KEY, JSON.stringify({checked:STATE.checked, picks:STATE.picks, ts:Date.now()})); }catch(e){}
 }
-function clearLocal(){ try{ localStorage.removeItem(LS_KEY); }catch(e){} }
 let STATE = readState();
 if(!Array.isArray(STATE.checked)) STATE.checked = [];
 if(!STATE.picks || typeof STATE.picks !== "object") STATE.picks = {};
-let artifactApi = null;
-let publishing = false;
 let dirty = !!STATE.dirty;
 let lockMsg = "";
 
@@ -760,17 +866,17 @@ let active = "shop";
 
 function render(){
   const app = document.getElementById("app");
-  const lockBar = (dirty || lockMsg)
-    ? '<div class="lockbar' + (dirty ? " dirty" : "") + '">' +
-        '<span class="lockmsg">' + (dirty
-            ? "<b>Unsaved changes.</b> Locked-in picks survive a refresh and reach Maria&rsquo;s phone."
-            : esc(lockMsg)) + '</span>' +
-        (dirty ? '<button class="lockbtn" id="lockbtn"' + (publishing ? " disabled" : "") + '>' +
-                   (publishing ? "Locking…" : "Lock picks in") + '</button>' : "") +
+  const barBad = (syncStatus === "error" || syncStatus === "offline");
+  const showBar = syncPending > 0 || barBad || !!lockMsg;
+  const lockBar = showBar
+    ? '<div class="lockbar' + (barBad ? " dirty" : "") + '">' +
+        '<span class="lockmsg">' + syncBarText() + '</span>' +
+        '<button class="lockbtn" id="lockbtn"' + (syncStatus === "saving" ? " disabled" : "") + '>' +
+          (syncStatus === "saving" ? "Saving…" : "Sync now") + '</button>' +
       '</div>'
     : "";
   app.innerHTML = lockBar +
-    '<header class="top"><div class="eyebrow"><span class="syncdot' + (artifactApi ? " live" : "") + '"></span>' +
+    '<header class="top"><div class="eyebrow"><span class="syncdot' + (syncStatus === "idle" ? " live" : "") + '" title="' + (syncStatus === "idle" ? "In sync with the other phone" : "Changes still to send") + '"></span>' +
     esc(CONTENT.store) + ' · ' + esc(CONTENT.week) + '</div>' +
     '<h1>Clousto Kitchen</h1>' +
     '<p class="sub">One shop today, nine days of food. <b>Four dinners still to choose</b> \u2014 see Choose.</p></header>' +
@@ -781,49 +887,6 @@ function render(){
 
 /* ---------- publish ---------- */
 function stateBlob(){ return JSON.stringify({checked:STATE.checked, picks:STATE.picks, savedAt:Date.now()}); }
-function buildDocument(){
-  const s = "<" + "/script>";
-  return '<!doctype html><html lang="en"><head><meta charset="utf-8">'
-    + '<meta name="viewport" content="width=device-width,initial-scale=1">'
-    + '<title>Clousto Kitchen<' + '/title>'
-    + '<link rel="preconnect" href="https://fonts.googleapis.com">'
-    + '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-    + '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">'
-    + '<style id="clousto-css">' + PAGE_CSS + '<' + '/style></head><body>'
-    + '<script type="application/json" id="clousto-data">' + stateBlob() + s
-    + '<div class="wrap" id="app"></div>'
-    + '<script>' + SELF_SRC + s
-    + '</body></html>';
-}
-async function lockIn(){
-  if(publishing) return;
-  if(!artifactApi){
-    lockMsg = "Saved on this phone. Ticks do not sync to the other phone yet — that is stage 2, and it is the next thing being built.";
-    render(); return;
-  }
-  publishing = true; lockMsg = "Locking in…"; render();
-  try{
-    const doc = buildDocument();
-    if(!doc || doc.length < 40000 || PAGE_CSS.length < 2000){
-      lockMsg = "Not saved — the page was about to be published without its stylesheet, so nothing was sent. Your picks are safe on this device.";
-      publishing = false; render(); return;
-    }
-    await artifactApi.publish(doc);
-    dirty = false; clearLocal();
-    lockMsg = "Locked in. Both phones will see this.";
-  }catch(e){
-    const code = e && (e.code || e.name || "");
-    if(String(code).indexOf("conflict") > -1){
-      lockMsg = "Someone else locked in first — reload to see their version, then redo yours.";
-    }else if(String(code).indexOf("not_writer") > -1 || String(code).indexOf("not_granted") > -1){
-      lockMsg = "Saved on this device only — you have view access to this page, not edit.";
-    }else{
-      lockMsg = "Could not reach the shared page. Your picks are still saved on this device.";
-    }
-  }finally{ publishing = false; render(); }
-}
-function queue(){ dirty = true; saveLocal(); render(); }
-
 /* ---------- events ---------- */
 document.addEventListener("keydown", e => {
   if(e.key !== "Enter" && e.key !== " ") return;
@@ -845,7 +908,9 @@ document.addEventListener("click", e => {
   if(pk){
     STATE.picks[pk.dataset.pick] = parseInt(pk.dataset.idx, 10);
     lockMsg = "";
-    queue();
+    saveLocal();
+    queueEvent("pick", pk.dataset.pick, parseInt(pk.dataset.idx, 10));
+    render();
     const el = document.querySelector('[data-pick="' + pk.dataset.pick + '"][data-idx="' + pk.dataset.idx + '"]');
     if(el) el.scrollIntoView({block:"nearest"});
     return;
@@ -860,17 +925,22 @@ document.addEventListener("click", e => {
     row.setAttribute("aria-pressed", i === -1);
     const rm = document.getElementById("remain");
     if(rm) rm.textContent = "£" + remainingTotal().toFixed(2);
-    dirty = true; saveLocal();
-    const lb = document.querySelector(".lockbar");
-    if(!lb) render();
+    saveLocal();
+    queueEvent("tick", n, i === -1 ? "ticked" : "untouched");
+    render();
     return;
   }
 
-  if(e.target.closest("#lockbtn")){ lockIn(); return; }
+  if(e.target.closest("#lockbtn")){ flush(); pullState(); return; }
 
   if(e.target.closest("#resetbtn")){
+    /* Clearing has to reach the other phone too, or it un-ticks here and
+       re-appears on the next pull. */
+    const was = STATE.checked.slice();
     STATE.checked = [];
-    queue();
+    saveLocal();
+    was.forEach(function(n){ queueEvent("tick", n, "untouched"); });
+    render();
   }
 });
 
@@ -899,9 +969,21 @@ document.addEventListener("click", e => {
     }
     CONTENT = payload.content;
     LS_KEY  = "clousto.week." + payload.id;
+    WEEK_ID = payload.id;
     STATE   = readState();
+    syncPending = loadQueue().length;
     render();
     if(bar) bar.hidden = true;
+
+    /* Drain anything left over from a previous visit, then take the other
+       phone's state. Order matters: our queue is newer than the server. */
+    await flush();
+    await pullState();
+
+    addEventListener("online", function(){ flush(); pullState(); });
+    document.addEventListener("visibilitychange", function(){
+      if(!document.hidden){ flush(); pullState(); }
+    });
   }catch(err){
     /* No week, no list. Say so plainly rather than rendering an empty shop. */
     say("This week could not be loaded — " + String((err && err.message) || err) +

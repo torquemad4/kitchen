@@ -31,17 +31,26 @@ CREATE TABLE IF NOT EXISTS picks (
   week_id    TEXT NOT NULL,
   slot_key   TEXT NOT NULL,            -- mon|tue|wed|thu|k1..k4|kb|mb|ml
   option_idx INTEGER NOT NULL,
-  ts         TEXT NOT NULL,            -- client clock; last write wins
+  ts         INTEGER NOT NULL,         -- client clock, ms; last write wins
   device     TEXT,                     -- kept so a disagreement is diagnosable
   PRIMARY KEY (week_id, slot_key)
 );
 
--- Aisle state per pack. Stage 2.
+-- Aisle state per shopping line. Stage 2.
+--
+-- item_key is the line's DISPLAY NAME, because that is what the cart renders
+-- and ticks against (data-item="<name>"). It is not the pack key, and calling
+-- the column pack_key would have been a lie about its contents. Ticks are
+-- scoped to a week, so a name changing between weeks costs nothing.
+--
+-- 'none' is reserved for the out-of-stock tap the Clousto hub page describes.
+-- ⚠️ That tap does NOT exist in the 30 Aug build — the column anticipates it so
+-- that adding it later is UI work with no migration.
 CREATE TABLE IF NOT EXISTS cart_state (
   week_id  TEXT NOT NULL,
-  pack_key TEXT NOT NULL,
+  item_key TEXT NOT NULL,
   state    TEXT NOT NULL,              -- ticked | none | untouched
-  ts       TEXT NOT NULL,
-  device   TEXT,
-  PRIMARY KEY (week_id, pack_key)
+  ts       INTEGER NOT NULL,           -- client clock, ms; last write wins
+  device   TEXT,                       -- kept so a disagreement is diagnosable
+  PRIMARY KEY (week_id, item_key)
 );
