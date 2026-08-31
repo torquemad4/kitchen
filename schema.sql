@@ -54,3 +54,112 @@ CREATE TABLE IF NOT EXISTS cart_state (
   device   TEXT,                       -- kept so a disagreement is diagnosable
   PRIMARY KEY (week_id, item_key)
 );
+
+-- ===========================================================================
+-- Stage 3. Long-lived entities, queried across weeks — unlike a week, which is
+-- a snapshot published whole. These are the tables the Notion databases become.
+-- ===========================================================================
+
+-- ⭐ The parameters a machine ENFORCES, each pointing at the Notion ruling that
+-- set it. The reasoning stays in Notion; the enforced value lives here, because
+-- a scheduled headless build may have no Notion auth at all. One writer per
+-- fact still holds: the ruling is written once, in prose there and as a value
+-- here, and the builder only ever reads here.
+CREATE TABLE IF NOT EXISTS params (
+  key        TEXT PRIMARY KEY,
+  value      TEXT NOT NULL,
+  kind       TEXT NOT NULL DEFAULT 'text',   -- text | number | json | bool
+  note       TEXT,                            -- what it means, in one line
+  ruling_url TEXT,                            -- the Notion page that settled it
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+-- One row per eater. restrictions_stated is NEVER paraphrased — the phrasing is
+-- the evidence. unclassified = 1 means enforce block-harm until a class is
+-- confirmed, which is the safe default and must not be silently cleared.
+CREATE TABLE IF NOT EXISTS profiles (
+  id                  TEXT PRIMARY KEY,
+  name                TEXT NOT NULL,
+  household           TEXT,
+  status              TEXT,        -- new | onboarding | shadow mode | active | paused
+  step                TEXT,
+  daily_kcal          REAL,
+  protein_g           REAL,
+  carbs_g             REAL,
+  fat_g               REAL,
+  macro_approach      TEXT,
+  restrictions_stated TEXT,
+  restrictions_source TEXT,        -- WHO said it, and when. Attribution is load-bearing.
+  classes_present     TEXT,        -- JSON array
+  unclassified        INTEGER NOT NULL DEFAULT 1,
+  cross_contamination INTEGER NOT NULL DEFAULT 0,
+  loves               TEXT,
+  dislikes            TEXT,
+  meal_patterns       TEXT,
+  cooks_per_week      REAL,
+  hands_on_ceiling_min REAL,
+  policy_accepted     INTEGER NOT NULL DEFAULT 0,
+  policy_version      TEXT,
+  policy_accepted_on  TEXT,
+  health_data_consent INTEGER NOT NULL DEFAULT 0,
+  notes               TEXT,
+  updated_at          TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Everything ever generated. `method` is VERBATIM and full: compressing a
+-- recipe is a defect, not tidying — week 2 lost the peppers from the stir-fry
+-- and the lemon from the salmon exactly that way.
+CREATE TABLE IF NOT EXISTS recipes (
+  id            TEXT PRIMARY KEY,
+  name          TEXT NOT NULL,
+  slot          TEXT,      -- fish | chicken | beef | pork | veg | breakfast | standby
+  status        TEXT,      -- cooked | generated | planned | retired
+  rating        TEXT,      -- great | good | fine | poor | unrated
+  ingredients   TEXT,
+  method        TEXT,      -- the full card, verbatim
+  source        TEXT,
+  est_min       REAL,
+  hands_on_min  REAL,
+  elapsed_min   REAL,
+  times_cooked  INTEGER DEFAULT 0,
+  last_cooked   TEXT,
+  uses_pantry   INTEGER NOT NULL DEFAULT 0,
+  vegan_variant INTEGER NOT NULL DEFAULT 0,
+  cooking_notes TEXT,
+  eating_notes  TEXT,
+  notion_url    TEXT,
+  updated_at    TEXT DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_recipes_slot ON recipes(slot, status);
+
+-- What is in the house. `level` keeps `unmeasured` as a real state and
+-- `how_checked` grades the evidence: photographed and counted are stronger than
+-- recalled and inferred, and flattening that into a number would start lying.
+CREATE TABLE IF NOT EXISTS pantry (
+  id           TEXT PRIMARY KEY,
+  item         TEXT NOT NULL,
+  category     TEXT,
+  level        TEXT,       -- plenty | ok | low | out | unmeasured
+  amount       TEXT,       -- free text on purpose: units differ by item
+  how_checked  TEXT,       -- photographed | counted | at-the-pan | recalled | inferred
+  last_checked TEXT,
+  floor        TEXT,
+  dated        INTEGER NOT NULL DEFAULT 0,
+  best_before  TEXT,
+  route        TEXT,       -- which dish consumes this, for orphaned stock
+  notes        TEXT,
+  notion_url   TEXT,
+  updated_at   TEXT DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_pantry_level ON pantry(level, category);
+
+-- Predicted against actual, shop by shop.
+CREATE TABLE IF NOT EXISTS cart_history (
+  week_id         TEXT PRIMARY KEY,
+  store           TEXT,
+  shopped_on      TEXT,
+  predicted_total REAL,
+  actual_total    REAL,
+  notes           TEXT,
+  updated_at      TEXT DEFAULT CURRENT_TIMESTAMP
+);
