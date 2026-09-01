@@ -1,10 +1,56 @@
 <meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
 <div id="bootbar" class="bootbar" hidden>Loading this week…</div>
+<div id="cook" class="cook" hidden aria-modal="true" role="dialog" aria-label="Cook mode"></div>
 <title>Clousto Kitchen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style id="clousto-css">
+.cook{position:fixed;inset:0;z-index:200;background:var(--paper);color:var(--ink);
+  display:flex;flex-direction:column;overflow:hidden}
+.cook .chead{display:flex;align-items:center;gap:12px;padding:14px 16px;
+  border-bottom:1px solid var(--line);background:var(--surface);flex:none}
+.cook .ctitle{font-weight:700;font-size:15px;flex:1;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cook .cx{appearance:none;border:1px solid var(--line);background:transparent;color:var(--ink);
+  border-radius:8px;min-width:44px;min-height:40px;font-size:15px;cursor:pointer}
+.cook .cbody{flex:1;overflow-y:auto;padding:20px 18px 24px;-webkit-overflow-scrolling:touch}
+.cook .phase{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.cook h2{font-size:22px;line-height:1.2;margin:0 0 16px}
+.cook .big{font-size:19px;line-height:1.55}
+.cook .big b{font-weight:700}
+.cook ul.clist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.cook ul.clist li{padding:13px 2px;border-bottom:1px solid var(--line);font-size:17px;
+  line-height:1.45;display:flex;gap:12px;align-items:baseline}
+.cook ul.clist li:last-child{border-bottom:0}
+.cook .qty{font-family:"IBM Plex Mono",monospace;font-weight:600;flex:none;min-width:74px;
+  color:var(--accent-ink)}
+.cook .heldtag{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--held);border:1px solid var(--line);border-radius:5px;
+  padding:1px 5px;margin-left:auto;flex:none;align-self:center}
+.cook .why{display:block;font-size:14px;color:var(--ink-3);margin-top:2px}
+.cook .derived{font-size:13px;color:var(--ink-3);margin-top:14px;font-style:italic}
+.cook .adapt{border-left:3px solid var(--warn);background:var(--warn-soft);color:var(--warn);
+  padding:12px 14px;border-radius:0 8px 8px 0;font-size:14.5px;line-height:1.5;margin-bottom:16px}
+.cook .tim{display:flex;align-items:center;gap:14px;margin:20px 0 4px;flex-wrap:wrap}
+.cook .clock{font-family:"IBM Plex Mono",monospace;font-size:40px;font-weight:600;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.cook .clock.in{color:var(--warn)} .cook .clock.over{color:var(--stop)}
+.cook .win{font-size:14px;color:var(--ink-3)}
+.cook .tbtn{appearance:none;border:0;border-radius:9px;background:var(--accent);
+  color:var(--surface);font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;padding:12px 18px;min-height:46px;cursor:pointer}
+.cook .tbtn.ghost{background:transparent;color:var(--ink-2);border:1px solid var(--line)}
+.cook .cfoot{display:flex;gap:10px;padding:12px 16px;border-top:1px solid var(--line);
+  background:var(--surface);flex:none;align-items:center}
+.cook .cfoot .nav{appearance:none;border:0;border-radius:9px;background:var(--accent);
+  color:var(--surface);font-size:16px;font-weight:600;padding:14px 20px;min-height:52px;
+  flex:1;cursor:pointer}
+.cook .cfoot .nav.ghost{background:transparent;color:var(--ink-2);border:1px solid var(--line);flex:0 0 90px}
+.cook .cfoot .nav:disabled{opacity:.45}
+.cook .prog{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);
+  flex:none;min-width:52px;text-align:center}
 .bootbar{position:sticky;top:0;z-index:60;padding:11px 14px;font-size:14px;
   background:var(--accent-soft);color:var(--accent-ink);border-bottom:1px solid var(--line)}
 .bootbar.bad{background:var(--stop-soft);color:var(--stop)}
@@ -75,6 +121,10 @@ section.panel.on{display:block}
 /* cards */
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px}
 .card-h{padding:13px 15px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.cookbtn{appearance:none;border:0;border-radius:8px;background:var(--accent);color:var(--surface);
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;padding:9px 13px;min-height:40px;cursor:pointer;flex:none;white-space:nowrap}
+.cookbtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .card-h h3{font-size:16.5px;font-weight:700;letter-spacing:-.01em}
 .card-b{padding:14px 15px}
 .grouptitle{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:22px 0 8px;display:flex;align-items:center;gap:10px}
@@ -268,6 +318,225 @@ const DEVICE = (function(){
 })();
 let syncPending = 0, syncStatus = "idle", syncErr = "", flushing = false;   /* set from the fetched week id at boot */
 
+
+/* ------------------------------------------------------------------ cook mode
+   Four phases, in the order a kitchen actually needs them: what to get out,
+   what to get ready, what to do before the heat goes on, then the steps one at
+   a time. Each step carries its own timer against the window the recipe gives,
+   and the actuals are posted at the end so estimates can be calibrated against
+   reality rather than against themselves. */
+var COOK = null;
+
+function cookFmt(s){
+  var m = Math.floor(s/60), r = s%60;
+  return m + ":" + (r<10?"0":"") + r;
+}
+
+async function openCook(name){
+  var el = document.getElementById("cook");
+  el.hidden = false;
+  el.innerHTML = '<div class="cbody"><p class="big">Loading the card…</p></div>';
+  try{
+    var res = await fetch("/api/recipe?name=" + encodeURIComponent(name), {cache:"no-store"});
+    var j = await res.json();
+    if(!res.ok) throw new Error(j && j.error ? j.error : ("HTTP " + res.status));
+    COOK = {
+      data: j, idx: 0, startedAt: new Date().toISOString(),
+      stepTimes: {}, running: null, elapsed: 0, tick: null, wake: null
+    };
+    /* Wet hands, and a screen that sleeps mid-braise is the whole reason the
+       hub promised this. Best effort — Safari has only supported it recently. */
+    try{ if(navigator.wakeLock) COOK.wake = await navigator.wakeLock.request("screen"); }catch(e){}
+    renderCook();
+  }catch(err){
+    el.innerHTML = '<div class="chead"><span class="ctitle">Cook mode</span>' +
+      '<button class="cx" data-cookclose="1">Close</button></div>' +
+      '<div class="cbody"><p class="big">No cook card for this one yet.</p>' +
+      '<p class="why">' + esc(String((err && err.message) || err)) + '</p></div>';
+  }
+}
+
+function closeCook(){
+  if(COOK){
+    stopStepTimer();
+    if(COOK.tick) clearInterval(COOK.tick);
+    try{ if(COOK.wake) COOK.wake.release(); }catch(e){}
+  }
+  COOK = null;
+  var el = document.getElementById("cook");
+  el.hidden = true; el.innerHTML = "";
+}
+
+function cookPhases(){
+  var c = COOK.data.cook;
+  var p = [{kind:"ingredients"},{kind:"equipment"},{kind:"prep"}];
+  c.steps.forEach(function(s,i){ p.push({kind:"step", i:i, step:s}); });
+  p.push({kind:"done"});
+  return p;
+}
+
+function startStepTimer(){
+  if(COOK.running !== null) return;
+  COOK.running = Date.now();
+  COOK.tick = setInterval(renderCook, 1000);
+  renderCook();
+}
+function stopStepTimer(){
+  if(COOK && COOK.running !== null){
+    var ph = cookPhases()[COOK.idx];
+    if(ph && ph.kind === "step"){
+      var add = Math.round((Date.now() - COOK.running)/1000);
+      COOK.stepTimes[ph.i] = (COOK.stepTimes[ph.i] || 0) + add;
+    }
+    COOK.running = null;
+    if(COOK.tick){ clearInterval(COOK.tick); COOK.tick = null; }
+  }
+}
+
+function stepSeconds(i){
+  var base = COOK.stepTimes[i] || 0;
+  var ph = cookPhases()[COOK.idx];
+  if(COOK.running !== null && ph && ph.kind === "step" && ph.i === i){
+    base += Math.round((Date.now() - COOK.running)/1000);
+  }
+  return base;
+}
+
+function renderCook(){
+  if(!COOK) return;
+  var el = document.getElementById("cook");
+  var d = COOK.data, c = d.cook, phases = cookPhases(), ph = phases[COOK.idx];
+  var stepCount = c.steps.length;
+  var body = "", phaseName = "", heading = "";
+
+  if(ph.kind === "ingredients"){
+    phaseName = "1 of 4 · get it out";
+    heading = "Ingredients";
+    body = (c.adaptations && c.adaptations.length
+        ? c.adaptations.map(function(a){ return '<div class="adapt">' + a + '</div>'; }).join("")
+        : "") +
+      '<ul class="clist">' + c.ingredients.map(function(g){
+        return '<li><span class="qty">' + esc(g.qty) + '</span><span>' + esc(g.item) +
+          (g.prep ? '<span class="why">' + esc(g.prep) + '</span>' : '') + '</span>' +
+          (g.held ? '<span class="heldtag">held</span>' : '') + '</li>';
+      }).join("") + '</ul>' +
+      (c.servesNote ? '<p class="derived">' + esc(c.servesNote) + '</p>' : '');
+  } else if(ph.kind === "equipment"){
+    phaseName = "2 of 4 · get it ready";
+    heading = "Kitchen equipment";
+    body = '<ul class="clist">' + c.equipment.map(function(g){
+        return '<li><span>' + esc(g.item) +
+          (g.why ? '<span class="why">' + esc(g.why) + '</span>' : '') + '</span></li>';
+      }).join("") + '</ul>' +
+      (c.equipmentDerived
+        ? '<p class="derived">This list was worked out from the method, not written by hand — ' +
+          'tell Claude if it is wrong or missing something.</p>' : '');
+  } else if(ph.kind === "prep"){
+    phaseName = "3 of 4 · before the heat";
+    heading = "Prep";
+    body = '<ul class="clist">' + c.prep.map(function(s,i){
+        return '<li><span class="qty">' + (i+1) + '</span><span>' + s + '</span></li>';
+      }).join("") + '</ul>';
+  } else if(ph.kind === "step"){
+    var s = ph.step, secs = stepSeconds(ph.i);
+    var lo = (s.min||0)*60, hi = (s.max||0)*60;
+    var cls = hi && secs > hi ? " over" : (lo && secs >= lo ? " in" : "");
+    phaseName = "4 of 4 · step " + (ph.i+1) + " of " + stepCount;
+    heading = "Step " + (ph.i+1);
+    body = '<p class="big">' + s.text + '</p>' +
+      '<div class="tim">' +
+        '<span class="clock' + cls + '">' + cookFmt(secs) + '</span>' +
+        (s.min ? '<span class="win">recipe says ' + s.min +
+            (s.max && s.max !== s.min ? "–" + s.max : "") + ' min' +
+            (hi && secs > hi ? ' · past the window, go by the cue' :
+             (lo && secs >= lo ? ' · start checking' : '')) + '</span>' : '') +
+      '</div>' +
+      '<div class="tim">' +
+        '<button class="tbtn" data-timer="' + (COOK.running !== null ? "stop" : "start") + '">' +
+          (COOK.running !== null ? "Pause" : (secs ? "Resume" : "Start timer")) + '</button>' +
+        (secs ? '<button class="tbtn ghost" data-timer="reset">Reset</button>' : '') +
+      '</div>';
+  } else {
+    phaseName = "done";
+    heading = "Finished";
+    var total = Object.keys(COOK.stepTimes).reduce(function(a,k){ return a + COOK.stepTimes[k]; }, 0);
+    body = '<p class="big">Timed ' + Math.round(total/60) + ' min across ' +
+      Object.keys(COOK.stepTimes).length + ' of ' + stepCount + ' steps. ' +
+      'The card estimated ' + (d.estMin || "?") + ' min elapsed.</p>' +
+      '<p class="why">Saving the actuals lets the estimate get better. Nothing else is recorded.</p>' +
+      '<div class="tim"><button class="tbtn" data-cooksave="1">Save what it took</button>' +
+      '<button class="tbtn ghost" data-cookclose="1">Close without saving</button></div>';
+  }
+
+  el.innerHTML =
+    '<div class="chead">' +
+      '<span class="ctitle">' + esc(d.name) + '</span>' +
+      '<button class="cx" data-cookclose="1">Close</button>' +
+    '</div>' +
+    '<div class="cbody"><p class="phase">' + phaseName + '</p><h2>' + esc(heading) + '</h2>' + body + '</div>' +
+    '<div class="cfoot">' +
+      '<button class="nav ghost" data-cooknav="-1"' + (COOK.idx === 0 ? " disabled" : "") + '>Back</button>' +
+      '<span class="prog">' + (COOK.idx+1) + '/' + phases.length + '</span>' +
+      '<button class="nav" data-cooknav="1"' + (COOK.idx >= phases.length-1 ? " disabled" : "") + '>' +
+        (ph.kind === "step" ? "Next step" : "Next") + '</button>' +
+    '</div>';
+}
+
+async function saveCook(){
+  if(!COOK) return;
+  stopStepTimer();
+  var d = COOK.data;
+  var steps = Object.keys(COOK.stepTimes).map(function(k){
+    return {step: Number(k)+1, seconds: COOK.stepTimes[k]};
+  });
+  try{
+    var res = await fetch("/api/cook", {
+      method:"POST", headers:{"content-type":"application/json"},
+      body: JSON.stringify({recipeId: d.id, weekId: WEEK_ID,
+        startedAt: COOK.startedAt, endedAt: new Date().toISOString(), stepTimes: steps})
+    });
+    var j = await res.json();
+    if(res.ok && j.ok){
+      var msg = "Saved. " + j.elapsedMin + " min against an estimate of " + j.estimatedMin;
+      if(j.deltaMin != null && j.deltaMin !== 0){
+        msg += " — " + Math.abs(j.deltaMin) + " min " + (j.deltaMin > 0 ? "over" : "under") + ".";
+      } else { msg += "."; }
+      alert(msg);
+    } else {
+      alert("Could not save the timings: " + ((j && j.error) || res.status));
+    }
+  }catch(e){
+    alert("No network — the timings were not saved.");
+  }
+  closeCook();
+}
+
+document.addEventListener("click", function(e){
+  var t = e.target;
+  if(t.closest("[data-cookclose]")){ closeCook(); return; }
+  if(t.closest("[data-cooksave]")){ saveCook(); return; }
+  var nav = t.closest("[data-cooknav]");
+  if(nav && COOK){
+    stopStepTimer();
+    COOK.idx = Math.max(0, Math.min(cookPhases().length-1, COOK.idx + Number(nav.dataset.cooknav)));
+    renderCook(); return;
+  }
+  var tb = t.closest("[data-timer]");
+  if(tb && COOK){
+    var a = tb.dataset.timer;
+    if(a === "start") startStepTimer();
+    else if(a === "stop") { stopStepTimer(); renderCook(); }
+    else if(a === "reset"){
+      stopStepTimer();
+      var ph = cookPhases()[COOK.idx];
+      if(ph.kind === "step") delete COOK.stepTimes[ph.i];
+      renderCook();
+    }
+    return;
+  }
+  var oc = t.closest("[data-cook]");
+  if(oc){ openCook(oc.dataset.cook); return; }
+});
 
 /* ------------------------------------------------------------ sync (stage 2)
    Ticks go into a local queue first and drain to /api/state. The queue is the
@@ -702,7 +971,7 @@ function viewSlots(){
 
 function recipeCardPending(key){
   const o = picked(key), set = chooseSet(key);
-  return '<div class="card" id="r-' + key + '"><div class="card-h"><h3>' + esc(o.n) + '</h3></div><div class="card-b">' +
+  return '<div class="card" id="r-' + key + '"><div class="card-h"><h3>' + esc(o.n) + '</h3>' + '<button class="cookbtn" data-cook="' + esc(o.n).replace(/"/g,'&quot;') + '">Cook mode</button>' + '</div><div class="card-b">' +
     '<div class="eyebrow">' + esc(set.day) + ' · your pick</div>' +
     '<div class="note warn" style="margin-top:10px"><b>The full step-by-step for this one is not written yet.</b> You changed the pick, so the card gets authored next — same treatment as the others: equipment named in every step, state cues instead of time cues, per-plate quantities. Everything below is enough to shop for it and to know what matters.</div>' +
     '<div class="facts" style="margin:12px 0;border-radius:8px;overflow:hidden;border:1px solid var(--line)">' +
@@ -725,7 +994,7 @@ function viewRecipes(){
     const r = CONTENT.recipes[key];
     if(!r) return;
     const o = key === "sun" ? CONTENT.sunDinner : picked(key);
-    h += '<div class="card" id="r-' + key + '"><div class="card-h"><h3>' + esc(r.name) + '</h3></div><div class="card-b">' +
+    h += '<div class="card" id="r-' + key + '"><div class="card-h"><h3>' + esc(r.name) + '</h3>' + '<button class="cookbtn" data-cook="' + esc(r.name).replace(/"/g,'&quot;') + '">Cook mode</button>' + '</div><div class="card-b">' +
          '<div class="eyebrow">' + esc(r.when) + '</div>' +
          '<p class="det mono" style="margin:6px 0 12px">' + esc(r.meta) + '</p>' +
          '<p style="font-size:15px;margin:0 0 4px">' + esc(r.lead) + '</p>';

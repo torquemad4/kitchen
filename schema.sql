@@ -163,3 +163,30 @@ CREATE TABLE IF NOT EXISTS cart_history (
   notes           TEXT,
   updated_at      TEXT DEFAULT CURRENT_TIMESTAMP
 );
+
+-- ===========================================================================
+-- Cook mode. The structured card a person actually cooks from.
+-- ===========================================================================
+
+-- `cook` is the ordered card: ingredients, equipment, prep, then steps with
+-- their own timers. Kept apart from recipes.method, which stays the verbatim
+-- library text — the card is a RESTRUCTURING of it and must never become the
+-- only copy. Compressing a recipe is a defect: week 2 was cooked from a
+-- compressed card, lost the peppers from the stir-fry, and got rated "fine".
+ALTER TABLE recipes ADD COLUMN cook TEXT;
+
+-- What actually happened at the hob, so estimates can be calibrated against
+-- reality rather than against themselves. The Recipe Library carries
+-- "Estimated min — what Clousto predicted" for exactly this comparison.
+CREATE TABLE IF NOT EXISTS cook_log (
+  id          TEXT PRIMARY KEY,
+  recipe_id   TEXT NOT NULL,
+  week_id     TEXT,
+  started_at  TEXT NOT NULL,
+  ended_at    TEXT,
+  step_times  TEXT,          -- JSON [{step, seconds}] — per-step actuals
+  elapsed_min REAL,
+  notes       TEXT,
+  created_at  TEXT DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_cook_log_recipe ON cook_log(recipe_id, started_at DESC);

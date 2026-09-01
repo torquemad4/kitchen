@@ -1,0 +1,55 @@
+{
+  "recipe": "Poulet basquaise — chicken braised with melted peppers",
+  "servesNote": "2½ portions — Karl 3 : Maria 2. Of 150 g dry rice, Karl 90 g, Maria 60 g, and 3/5 of the chicken and peppers.",
+  "estimatedMin": 65,
+  "handsOnMin": 20,
+  "adaptations": [
+    "The library card is written for 1 kg BONE-IN thighs with the skin pulled off. This week's shop is 320 g of thigh FILLETS, so the skinning step is gone and the doneness cue changed from 'shrinks back from the bone' to 'gives no resistance to a fork'. Fillets may also be done nearer 25–35 min than 35–45 — go by the cue, not the clock.",
+    "The card lists 4 garlic cloves as BUY, but garlic is not on this week's cart. Substituting a held roasted garlic paste sachet."
+  ],
+  "ingredients": [
+    {"qty": "320 g", "item": "chicken thigh fillets", "prep": "patted thoroughly dry, seasoned", "held": false},
+    {"qty": "320 g", "item": "mixed peppers (about 1 red + 1 green)", "prep": "deseeded, thick strips", "held": true},
+    {"qty": "55 g", "item": "smoked streaky bacon (~4 rashers)", "prep": "cut across into short strips", "held": false},
+    {"qty": "120 g", "item": "onion (1 large)", "prep": "halved and sliced", "held": false},
+    {"qty": "1 sachet", "item": "roasted garlic paste", "prep": "in place of the 4 fresh cloves the card asks for", "held": true},
+    {"qty": "200 g", "item": "chopped tomatoes (half a 400 g tin)", "prep": "", "held": false},
+    {"qty": "1 sachet", "item": "tomato paste", "prep": "", "held": true},
+    {"qty": "1 sachet", "item": "white wine vinegar", "prep": "half at first, the rest only if needed", "held": true},
+    {"qty": "1 tsp", "item": "smoked paprika", "prep": "", "held": true},
+    {"qty": "pinch", "item": "cayenne", "prep": "", "held": true},
+    {"qty": "1", "item": "bay leaf", "prep": "", "held": true},
+    {"qty": "½ tsp", "item": "dried thyme", "prep": "", "held": true},
+    {"qty": "1 tbsp", "item": "olive oil", "prep": "", "held": true},
+    {"qty": "150 g", "item": "rice", "prep": "rinsed until nearly clear", "held": true}
+  ],
+  "equipment": [
+    {"item": "Wide casserole or deep sauté pan WITH A LID", "why": "the lid sits slightly ajar for the braise"},
+    {"item": "Small saucepan with a lid", "why": "rice, run alongside the braise"},
+    {"item": "Sieve", "why": "rinsing the rice until nearly clear"},
+    {"item": "Chopping board and knife", "why": ""},
+    {"item": "Plate", "why": "browned chicken and bacon rest here between steps"},
+    {"item": "Wooden spoon or spatula", "why": "scraping the fond off the base"},
+    {"item": "Kitchen paper", "why": "patting the chicken dry — wet meat steams instead of browning"}
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Pat the thigh fillets thoroughly dry, season, and leave on a plate. Surface water has to boil off before anything can brown.",
+    "Deseed the peppers and cut into thick strips.",
+    "Halve and slice the onion.",
+    "Cut the bacon across into short strips.",
+    "Rinse the rice until the water runs nearly clear, and leave it in the sieve.",
+    "Measure 280 ml water for the rice and have 100 ml ready to swill the tomato tin."
+  ],
+  "steps": [
+    {"text": "<b>Bacon into the wide casserole COLD</b>, then set it over medium heat. Starting cold renders the fat out slowly instead of scorching it. Go until the fat has run and the strips are crisp at the edges but still bendy in the middle. Scoop the bacon out and <b>leave every drop of fat in the pan</b> — that fat is standing in for Bayonne ham.", "min": 5, "max": 6},
+    {"text": "Add the olive oil, raise to medium-high, and brown the thighs <b>in two batches</b>, smooth side down first, <b>without moving them until they release cleanly and are deep gold</b>. Then about 2 minutes on the second side. <b>Crowding drops the temperature and gives you grey chicken and a thin sauce.</b> Out, to join the bacon.", "min": 10, "max": 14},
+    {"text": "⭐ <b>THE PEPPERS ARE THE DISH.</b> Heat down to medium. Peppers, onion and a good pinch of salt. Stir occasionally, scraping the base as the vegetables release moisture and lift the fond, <b>until the peppers have lost their squeak entirely, gone limp and silky, and the onion and pepper edges are catching gold.</b> You are looking for melted, not softened. Every version that disappoints has done this in five minutes.", "min": 12, "max": 15},
+    {"text": "Roasted garlic paste, smoked paprika, cayenne and the tomato paste sachet. <b>Stir constantly until the paste darkens from bright red to brick and smells sweet and roasted rather than raw and metallic.</b> Frying the paste is worth more than an extra ten minutes of simmering later.", "min": 1, "max": 2},
+    {"text": "The tomatoes, then <b>swill the tin out with 100 ml water and add that too.</b> Bay, thyme, plenty of pepper. Bring to a simmer.", "min": 2, "max": 3},
+    {"text": "Chicken and bacon back in with their juices, <b>tucked down so they are two-thirds submerged, not swimming. Lid SLIGHTLY AJAR</b> — peppers and tomatoes throw a lot of liquid and a tight lid gives it nowhere to go. Simmer very gently: <b>the surface should blip, not roll.</b> Done when the meat <b>gives no resistance to a fork</b> and the sauce has gone from watery to a thick glossy mass that holds the trail of a spoon for a second. Still loose? Lift the chicken out and boil hard a few minutes. Thickening too fast? Splash of water, lid closed.", "min": 25, "max": 45},
+    {"text": "<b>Rice, while the braise simmers.</b> The rinsed rice, 280 ml water, salt. Boil, lid on, lowest heat. Then <b>off the heat, lid on, 5 minutes more.</b> Fork through.", "min": 15, "max": 17},
+    {"text": "<b>Taste. Stir in HALF the vinegar sachet, wait a moment, taste again</b> — the sauce should sharpen and, counter-intuitively, the peppers should taste sweeter. Add the rest only if it still tastes flat. Salt.", "min": 1, "max": 2},
+    {"text": "<b>Off the heat, stand before serving.</b> The sauce settles and thickens as it cools and the chicken reabsorbs some of it. Serve over the rice with extra sauce.", "min": 5, "max": 10}
+  ]
+}
