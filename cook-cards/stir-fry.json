@@ -1,0 +1,54 @@
+{
+  "recipe": "Chicken & broccoli stir-fry with egg noodles",
+  "servesNote": "2½ portions — Karl 3 : Maria 2. Of 230 g of dry noodles, Karl 138 g, Maria 92 g, and 3/5 of the chicken.",
+  "estimatedMin": 20,
+  "handsOnMin": 15,
+  "adaptations": [
+    "⭐ THIS CARD IS THE REPAIR. It was cooked on 25 Aug from a compressed card that had lost the peppers, and rated 'fine' twice. Karl: 'a lot of steps are now much shorter or missed altogether… e.g. no peppers this time in the stir fry.' The peppers are back — they are structural, not garnish — along with every fix from the library's cooking notes that had never been written into the method: velveting, two batches, dropping the heat before the aromatics, the sauce down the side of the pan, honey and balsamic, toasted almonds, sesame oil off the heat, and less oil.",
+    "⚠️ SOY: the library card says '2 tbsp from the new bottle'. There is no bottle — that was corrected in the pantry on 19 Aug, and giving soy in tablespoons when the house holds sachets is a recorded past failure. Use the single 30 ml Gousto sachet; the 8 g ones will not cover it."
+  ],
+  "ingredients": [
+    {"qty": "280 g", "item": "chicken breast fillets", "prep": "sliced thin across the grain", "held": false},
+    {"qty": "350 g", "item": "broccoli (about 2 heads)", "prep": "florets, stalks sliced thin", "held": false},
+    {"qty": "160 g", "item": "mixed peppers", "prep": "sliced — ⭐ STRUCTURAL, this is what went missing on the 25th", "held": true},
+    {"qty": "230 g", "item": "egg noodles", "prep": "", "held": true},
+    {"qty": "12 g", "item": "flaked almonds", "prep": "toasted dry, for crunch", "held": true},
+    {"qty": "1 sachet", "item": "toasted sesame oil (15 ml)", "prep": "OFF the heat, at the very end", "held": false},
+    {"qty": "10 ml", "item": "olive oil", "prep": "deliberately less than last time — it was too oily on the 19th", "held": true},
+    {"qty": "1 sachet", "item": "Chinese rice wine (30 ml)", "prep": "", "held": true},
+    {"qty": "1 sachet", "item": "mirin (30 ml)", "prep": "this takes the last one", "held": true},
+    {"qty": "1 sachet", "item": "ginger & garlic paste (15 g)", "prep": "this takes the last one", "held": true},
+    {"qty": "30 ml", "item": "soy sauce", "prep": "the Gousto 30 ml sachet — NOT the 8 g ones, and there is no bottle", "held": true},
+    {"qty": "2 tsp", "item": "cornflour", "prep": "1 tsp to velvet the chicken, 1 tsp slaked for the sauce", "held": true},
+    {"qty": "1 tsp", "item": "honey", "prep": "in the sauce", "held": true},
+    {"qty": "1 sachet", "item": "balsamic vinegar", "prep": "in the sauce", "held": true},
+    {"qty": "to taste", "item": "sriracha", "prep": "at the table, not in the pan", "held": true}
+  ],
+  "equipment": [
+    {"item": "Wok or large frying pan", "why": "wide enough to hold the chicken in a single layer"},
+    {"item": "Saucepan with a lid", "why": "noodles, running alongside — not after"},
+    {"item": "Colander", "why": ""},
+    {"item": "Small bowl", "why": "velveting the chicken"},
+    {"item": "Second small bowl or jug", "why": "the sauce, mixed before anything hits the heat"},
+    {"item": "Small dry pan", "why": "toasting the almonds"},
+    {"item": "Chopping board and knife", "why": ""},
+    {"item": "Tongs or a spatula", "why": ""}
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "⭐ VELVET THE CHICKEN FIRST — it needs 20 minutes and everything else fits inside that. Slice thin, toss with 1 tbsp cold water until it is fully absorbed, then 1 tsp cornflour, then a teaspoon of oil. Leave 20 min. This is the fix from the 25th and it is still untested, so judge it.",
+    "Broccoli into florets, stalks sliced thin so they cook in the same time.",
+    "Slice the peppers.",
+    "Mix the sauce in a bowl: the 30 ml soy sachet, rice wine, mirin, honey, balsamic, and 1 tsp cornflour slaked in a splash of COLD water. Mixing it now is why step 5 takes seconds.",
+    "Toast the flaked almonds in a dry pan until they smell nutty and are just golden. Straight out of the pan or they carry on cooking.",
+    "Noodle water on to boil."
+  ],
+  "steps": [
+    {"text": "⭐ <b>Noodles on to boil NOW — run them CONCURRENTLY with the chicken, not after it.</b> This is the fix from 19 Aug: the linear step list was what cost the time, and Karl finished in 15 min against a 28 min estimate by parallelising anyway.", "min": 4, "max": 6},
+    {"text": "Hot pan, the olive oil, chicken <b>in a single layer and in TWO batches.</b> Leave it <b>until it releases cleanly from the pan</b> and the underside is golden. Crowding steams it. Out to a plate between batches.", "min": 5, "max": 7},
+    {"text": "Broccoli and peppers in, splash of water, <b>lid on until the broccoli goes bright green and still has bite</b> and the peppers have softened but keep a little snap. <b>The peppers are not a garnish</b> — they were dropped on the 25th and the dish was worse for it.", "min": 3, "max": 5},
+    {"text": "⭐ <b>DROP THE HEAT before the aromatics go in.</b> Ginger &amp; garlic paste, about 30 seconds, until it smells sweet rather than raw. On full heat it scorches and turns bitter.", "min": 1, "max": 1},
+    {"text": "Chicken back in. ⭐ <b>Pour the sauce down the SIDE of the pan</b>, not into the middle — it hits hot metal and thickens as it runs in rather than cooling everything and stewing. Toss until it coats and gloss appears.", "min": 1, "max": 2},
+    {"text": "Drained noodles through the pan and toss. <b>Sesame oil OFF THE HEAT</b> — its flavour is volatile and cooking it just makes the dish oily. Almonds scattered over. <b>Sriracha at the table.</b>", "min": 1, "max": 2}
+  ]
+}

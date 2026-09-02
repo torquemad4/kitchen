@@ -1,0 +1,67 @@
+{
+  "recipe": "Beef & stout stew with parsley suet dumplings",
+  "servesNote": "2½ portions — Karl 3 : Maria 2. Dumplings scaled to FOUR, which is what the shop bought and what the card recommends cooking tonight.",
+  "estimatedMin": 195,
+  "handsOnMin": 20,
+  "adaptations": [
+    "⭐ DUMPLINGS, confirmed by Karl. The shop bought 32 g suet and 70 g flour — exactly the card's 110:50 ratio at 64%, which is FOUR dumplings rather than six. That matches the card's own advice: dumplings do not survive reheating, so roll what you will eat tonight. Quantities below are already scaled.",
+    "The 25 g dredging flour is not on the cart because it comes from the 500 g of held plain flour (BB Oct 2026). This dish is the reason that flour has a job at all, and it uses it twice.",
+    "320 g of potatoes were also bought. The card treats potatoes as the dumpling-free alternative — you have both, so they are a side if you want one, not a substitute."
+  ],
+  "ingredients": [
+    {"qty": "280 g", "item": "stewing beef", "prep": "4 cm chunks, patted thoroughly dry", "held": false},
+    {"qty": "150 g", "item": "onion (1 large)", "prep": "thickly sliced", "held": false},
+    {"qty": "200 g", "item": "carrots (2)", "prep": "thick diagonal chunks", "held": false},
+    {"qty": "1 stick", "item": "celery", "prep": "", "held": false},
+    {"qty": "250 ml", "item": "stout", "prep": "⭐ HOLD BACK 60 ml of it for the very end", "held": false},
+    {"qty": "25 g", "item": "plain flour, to dredge", "prep": "from the held 500 g — a bloom you can barely see, not a batter", "held": true},
+    {"qty": "1 sachet", "item": "roasted garlic paste", "prep": "use the earliest best-before pack — one is dated 03/09", "held": true},
+    {"qty": "1 sachet", "item": "tomato paste", "prep": "", "held": true},
+    {"qty": "1 sachet", "item": "chicken stock", "prep": "made up to 300 ml", "held": true},
+    {"qty": "1 sachet", "item": "balsamic vinegar", "prep": "", "held": true},
+    {"qty": "2", "item": "bay leaves", "prep": "", "held": true},
+    {"qty": "pinch", "item": "dried thyme", "prep": "", "held": true},
+    {"qty": "1 tsp", "item": "dark brown sugar", "prep": "", "held": false},
+    {"qty": "1 tsp", "item": "Worcestershire sauce", "prep": "", "held": false},
+    {"qty": "1 tbsp", "item": "olive oil", "prep": "", "held": true},
+    {"qty": "70 g", "item": "plain flour — DUMPLINGS", "prep": "", "held": false},
+    {"qty": "32 g", "item": "shredded suet — DUMPLINGS", "prep": "", "held": false},
+    {"qty": "⅔ tsp", "item": "baking powder — DUMPLINGS", "prep": "", "held": true},
+    {"qty": "⅓ tsp", "item": "salt — DUMPLINGS", "prep": "", "held": true},
+    {"qty": "1½ tbsp", "item": "chopped parsley — DUMPLINGS", "prep": "", "held": false},
+    {"qty": "50–65 ml", "item": "cold water — DUMPLINGS", "prep": "a splash at a time", "held": true}
+  ],
+  "equipment": [
+    {"item": "Heavy lidded casserole, oven-safe", "why": "browns on the hob, then goes in the oven for three hours"},
+    {"item": "Oven", "why": "150°C / 130°C fan for the braise, then up to 190°C / 170°C fan for the dumplings"},
+    {"item": "Mixing bowl", "why": "dredging the beef, then the dumpling dough"},
+    {"item": "Chopping board and knife", "why": ""},
+    {"item": "Wooden spoon", "why": "scraping the fond to bare metal"},
+    {"item": "Table knife", "why": "cutting the water through the dumpling dough — a spoon overworks it"},
+    {"item": "Skewer", "why": "testing the dumplings"},
+    {"item": "Kitchen paper", "why": "patting the beef dry — wet meat will not brown"}
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Beef out of the fridge while you prep. Fridge-cold meat dropped into hot fat seizes and toughens.",
+    "Cut the beef to a rough 4 cm — big chunks, so they survive three hours — and pat every piece thoroughly dry.",
+    "Thickly slice the onion, cut the carrots into thick diagonal chunks, slice the celery.",
+    "Chop the parsley.",
+    "Make up the chicken stock sachet to 300 ml.",
+    "Oven on: 150°C / 130°C fan.",
+    "⚠️ Open the stout and MEASURE 60 ml back into the can straight away. It is far too easy to tip the lot in, and timing — not quantity — is what makes a stout stew bitter."
+  ],
+  "steps": [
+    {"text": "25 g flour, salt and plenty of pepper in a bowl. Turn the beef <b>until every piece is lightly and evenly dusted, then lift out and shake off the excess.</b> A thick coat goes pasty and can scorch; a thin one dries the surface, browns alongside the meat, and dissolves into the gravy so you never need a slurry later.", "min": 3, "max": 5},
+    {"text": "Oil in the casserole over medium-high <b>until it shimmers. Brown in two or three batches, single layer with gaps, turning only once each side has a deep brown crust that releases from the pan by itself.</b> Touching pieces cool the pan, the meat weeps, and you boil grey beef in its own juice. Each batch out, juices kept.", "min": 12, "max": 18},
+    {"text": "Medium heat. Onion, carrots, celery, a pinch of salt, <b>scraping constantly until the onion is translucent with golden edges and the brown crust on the base has lifted into the vegetables and the metal is clean again.</b> That fond is a large fraction of the flavour, and the water coming out of the vegetables is the tool that gets it off.", "min": 6, "max": 8},
+    {"text": "Push the vegetables aside. <b>Tomato paste onto the bare hot base until it darkens from bright red to brick</b>, then the roasted garlic paste for about 30 seconds, <b>until it smells sweet.</b>", "min": 1, "max": 2},
+    {"text": "⭐ <b>HALF the stout, boiled hard, scraping until nothing sticks to the pan.</b> Most recipes say 'add the beer' as one action; deglazing while the pan is at its hottest is the difference. Then the rest of it — <b>keeping the 60 ml back</b> — plus the stock, bay, thyme, balsamic, sugar and Worcestershire.", "min": 3, "max": 5},
+    {"text": "Beef and its juices back in. <b>Liquid about three-quarters up the meat, not covering it</b> — exposed tops concentrate, and the whole thing reduces to gravy rather than soup. <b>Bring it to where the surface just shivers with the occasional bubble, never a rolling boil.</b> Boiling squeezes water out faster than collagen turns to gelatin, which gives you meat that is falling apart and dry at the same time.", "min": 4, "max": 6},
+    {"text": "Lid on, into the oven at <b>150°C / 130°C fan</b>. <b>Ready when a piece crushes against the side of the pot under light pressure from a spoon, with no springiness at all.</b> ⚠️ If it still resists it is <b>not overcooked, it is undercooked</b> — give it another 30 minutes.", "min": 150, "max": 180},
+    {"text": "<b>Dumplings — make them any time while it braises</b>, the dough sits happily in the fridge. Flour, baking powder, salt and suet stirred together, then the parsley. <b>Cold water a splash at a time, cutting it through with a knife, until it just comes together into a soft, slightly craggy dough that holds when squeezed but is not sticky. DO NOT KNEAD IT</b> — working suet dough develops gluten and melts the suet into the flour. <b>You want the suet still visible as flecks</b>, because each fleck melts in the oven and leaves a steam pocket. Roll <b>four</b> balls with floured hands.", "min": 8, "max": 10},
+    {"text": "Casserole out, lid off. <b>Oven up to 190°C / 170°C fan. Stir in the reserved 60 ml of stout.</b> Taste: it should be <b>savoury and faintly sweet with a bittersweet edge, not sour or harsh.</b> Too thin? Bubble it uncovered <b>until a spoon dragged across the base leaves a channel that fills in slowly.</b>", "min": 3, "max": 8},
+    {"text": "<b>Dumplings on top, spaced apart and only HALF-submerged. Back in UNCOVERED.</b> Done when they have <b>visibly risen, the tops are dry, pale-golden and slightly crusted, and a skewer comes out clean.</b> Uncovered is deliberate — bottoms steam in the gravy, tops dry and crisp. Covered, they go uniformly wet.", "min": 25, "max": 30},
+    {"text": "<b>Rest 5 minutes off the heat.</b> The gravy thickens noticeably as it stops boiling.", "min": 5, "max": 5}
+  ]
+}
