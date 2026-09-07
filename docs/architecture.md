@@ -217,6 +217,10 @@ chicken legs). The pack list only ever described *this week's shop*.
 ⚠️ Sizing: the canonical list is therefore roughly **130–150 entries**, not the 65 the
 week document knows about.
 
+📄 **A full draft exists: [`ingredient-vocabulary.md`](ingredient-vocabulary.md)** — 125
+entries with their pack and pantry mappings, the 17 pack↔pantry merges to check first,
+and the four things it could not settle. **Nothing in it is in the database.**
+
 ---
 
 ## 5. Data model

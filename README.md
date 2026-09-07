@@ -14,6 +14,7 @@ Full documentation is in [`docs/`](docs/). It is the single source of truth.
 | [`docs/architecture.md`](docs/architecture.md) | The loop, stage ownership, the data model, known-broken. |
 | [`docs/user-guide.md`](docs/user-guide.md) | How Karl and Maria use it. |
 | [`docs/code.md`](docs/code.md) | Repo layout, endpoints, `index.html` internals, deploying, testing. |
+| 🔴 [`docs/ingredient-vocabulary.md`](docs/ingredient-vocabulary.md) | **Draft awaiting review.** The canonical ingredient list that joins recipes to the pantry to the shops. Not yet in the database. |
 
 Operating skills: `~/projects/skills/clousto` (safe reads and writes),
 `clousto-menu` (the weekly menu conversation), `clousto-receipt` (receipt → pantry).

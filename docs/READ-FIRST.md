@@ -40,6 +40,7 @@ pantry decrement (app). **Only B is meaningfully built.** See `architecture.md` 
 | `docs/architecture.md` | the loop, stage ownership, **the data model**, invariants, known-broken | schema changes, a stage is built, an invariant is added |
 | `docs/user-guide.md` | what Karl and Maria see and do | user-visible behaviour changes |
 | `docs/code.md` | repo layout, endpoints, `index.html` internals, deploy, testing | code changes |
+| `docs/ingredient-vocabulary.md` | 🔴 **DRAFT awaiting Karl.** The proposed canonical ingredient list — 125 entries with their pack and pantry mappings. Nothing in the database. | the vocabulary is agreed, or a new ingredient appears |
 | `~/projects/skills/clousto/SKILL.md` | safe reading/writing of the D1 | schema or invariants change |
 | `~/projects/skills/clousto-menu/SKILL.md` | stage A conversation | the menu flow or its output contract changes |
 | `~/projects/skills/clousto-receipt/SKILL.md` | stage E conversation | receipt handling or pantry writes change |
