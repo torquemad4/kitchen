@@ -295,6 +295,33 @@ caption{caption-side:top;text-align:left;font-size:13px;color:var(--ink-2);paddi
   background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--line)}
 .mdbody hr.mdhr{border:0;border-top:1px solid var(--line);margin:16px 0}
 .mdbody a{color:var(--accent-ink)}
+/* A second row of tabs: which recipe is on the page. */
+.subtabs{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  padding:0 0 10px;margin:0 0 4px;scrollbar-width:none}
+.subtabs::-webkit-scrollbar{display:none}
+.subtabs button{appearance:none;border:1px solid var(--line-2);background:var(--surface);
+  color:var(--ink-2);border-radius:99px;padding:6px 13px;font:inherit;font-size:13px;
+  cursor:pointer;white-space:nowrap}
+.subtabs button[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.subtabs button:focus-visible,.lockbtn2:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.lockrow{display:flex;justify-content:flex-end;margin:0 0 4px}
+.lockbtn2{appearance:none;border:1px solid var(--accent);background:var(--accent-soft);
+  color:var(--accent-ink);border-radius:8px;padding:8px 15px;font:inherit;font-size:14px;
+  font-weight:600;cursor:pointer}
+.lockbtn2:hover{background:var(--surface)}
+
+/* Laptop and desktop. The list stays one column because aisle order is the
+   point of it, but everything gets room and the day grid stops being cramped. */
+@media (min-width:900px){
+  .wrap{max-width:980px;padding:0 24px 96px}
+  /* the bar bleeds to the container edge, so its negative margin has to track
+     the container padding or it overflows by the difference */
+  .totalbar{margin:0 -24px}
+  .subtabs{flex-wrap:wrap;overflow:visible}
+  .choice-b,.card-b{font-size:15px}
+  .day-h{padding:13px 18px}
+}
+@media (min-width:1200px){ .wrap{max-width:1100px} }
 /* The pantry table: item, amount, certainty, when it was last looked at. */
 .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);
   border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow);margin-bottom:8px}
@@ -706,6 +733,23 @@ function readState(){
 function saveLocal(){
   try{ localStorage.setItem(LS_KEY, JSON.stringify({checked:STATE.checked, picks:STATE.picks, ts:Date.now()})); }catch(e){}
 }
+
+/* ⭐ THE LOCK. Karl, 7 Sep: "once recipes/slots are locked in, everything not
+   chosen should be hidden."
+
+   Stored as a pick under the reserved key `_locked`, so it persists, syncs to
+   the other phone and resolves last-write-wins exactly like every other pick —
+   no new table, no new sync path. `_locked` is never a real slot, so it can
+   never collide with one. */
+const LOCK_KEY = "_locked";
+function isLocked(){ return STATE.picks[LOCK_KEY] === 1; }
+function setLocked(v){
+  STATE.picks[LOCK_KEY] = v ? 1 : 0;
+  saveLocal();
+  queueEvent("pick", LOCK_KEY, v ? 1 : 0);
+  render();
+  window.scrollTo(0,0);
+}
 let STATE = readState();
 if(!Array.isArray(STATE.checked)) STATE.checked = [];
 if(!STATE.picks || typeof STATE.picks !== "object") STATE.picks = {};
@@ -723,7 +767,7 @@ const tagClass = t => /floor/i.test(t) ? "floor"
 
 /* Derived from the week, never hardcoded: the days a week contains and the
    standing slots it runs both change week to week. */
-function PICKKEYS(){ return (CONTENT.choices || []).map(c => c.key); }
+function PICKKEYS(){ return (CONTENT.choices || []).map(c => c.key); }   /* never includes _locked */
 function SLOTKEYS(){ return (CONTENT.slots   || []).map(s => s.key); }
 function ALLKEYS(){  return PICKKEYS().concat(SLOTKEYS()); }
 function chooseSet(key){
@@ -993,12 +1037,12 @@ function viewWeek(){
 }
 
 /* One pickable option. Used by both Choose and Slots. */
-function optionCard(setKey, o, oi){
+function optionCard(setKey, o, oi, locked){
   const on = pickIdx(setKey) === oi;
-  return '<div class="choice' + (on ? " pick" : "") + '" data-pick="' + esc(setKey) +
-    '" data-idx="' + oi + '" role="button" tabindex="0" aria-pressed="' + on + '">' +
+  return '<div class="choice' + (on ? " pick" : "") + '"' +
+    (locked ? "" : ' data-pick="' + esc(setKey) + '" data-idx="' + oi + '" role="button" tabindex="0" aria-pressed="' + on + '"') + ">" +
     '<div class="choice-h"><span class="cn">' + esc(o.n) + "</span>" +
-      (on ? '<span class="badge on">chosen</span>' : '<span class="badge pickme">tap to choose</span>') +
+      (locked ? "" : on ? '<span class="badge on">chosen</span>' : '<span class="badge pickme">tap to choose</span>') +
     "</div>" +
     '<div class="facts">' +
       (o.time ? '<div class="fact"><div class="fl">Time</div><div class="fv">' + esc(o.time) + "</div></div>" : "") +
@@ -1015,45 +1059,25 @@ function optionCard(setKey, o, oi){
     "</div>";
 }
 
-function viewChoose(){
-  let h = "";
-  (CONTENT.choices || []).forEach(set => {
-    h += '<div class="grouptitle">' + esc(set.day || set.key) + "</div>";
-    (set.opts || []).forEach((o, oi) => { h += optionCard(set.key, o, oi); });
+/* Locked: only what was chosen. Unlocked: everything, to choose from. */
+function pickList(sets, label){
+  const locked = isLocked();
+  let h = '<div class="lockrow"><button class="lockbtn2" id="lockbtn2">' +
+          (locked ? "Unlock to change" : "Lock these in") + "</button></div>";
+  sets.forEach(set => {
+    h += '<div class="grouptitle">' + esc(label(set)) + "</div>";
+    (set.opts || []).forEach((o, oi) => {
+      if(locked && pickIdx(set.key) !== oi) return;
+      h += optionCard(set.key, o, oi, locked);
+    });
   });
   return h;
 }
-
+function viewChoose(){ return pickList(CONTENT.choices || [], s => s.day || s.key); }
 function viewSlots(){
-  let h = "";
-  (CONTENT.slots || []).forEach(set => {
-    h += '<div class="grouptitle">' + esc(set.label || set.key) +
-         (set.days ? " · " + set.days + (set.days === 1 ? " day" : " days") : "") + "</div>";
-    (set.opts || []).forEach((o, oi) => { h += optionCard(set.key, o, oi); });
-  });
-  return h;
+  return pickList(CONTENT.slots || [], s => (s.label || s.key) +
+    (s.days ? " · " + s.days + (s.days === 1 ? " day" : " days") : ""));
 }
-
-/* The week names the dish; the library holds the method, verbatim. */
-function viewRecipes(){
-  let h = "";
-  (CONTENT.choices || []).forEach(set => {
-    const o = picked(set.key), r = libFind(o.n);
-    h += '<div class="card" id="r-' + esc(set.key) + '"><div class="card-h"><h3>' + esc(o.n) + "</h3>" +
-      '<button class="cookbtn" data-cook="' + esc(o.n).replace(/"/g, "&quot;") + '">Cook mode</button>' +
-      '</div><div class="card-b">' +
-      '<div class="eyebrow">' + esc(set.day || set.key) + "</div>" +
-      (o.split ? '<div class="splitbar" style="margin-top:10px"><b>' +
-         esc(dayParts(set).meal === "dinner" && !/·/.test(String(set.day)) ? "The cut" : capitalise(dayParts(set).meal)) +
-         ":</b> " + o.split + "</div>" : "") +
-      ((r && r.method) ? libraryBody(r)
-        : ((o.makes && o.makes.length) ? '<p class="mh">What makes it</p><ul class="makes">' +
-            o.makes.map(x => "<li>" + x + "</li>").join("") + "</ul>" : "")) +
-      "</div></div>";
-  });
-  return h;
-}
-
 
 /* ------------------------------------------------------------------ library
    ⭐ D1 became the system of record for the recipe library and the pantry on
@@ -1243,7 +1267,49 @@ function libraryBody(r){
     "</div>";
 }
 
-/* ------------------------------------------------------------------ pantry */
+/* ⭐ Which meal is being cooked today. The days read "Tue 8", "Sat 12", so the
+   date carries the match; dinner wins when a day has several meals, because
+   that is the one you stand at the hob for. */
+function todaysKey(){
+  const dom = new Date().getDate();
+  const sameDay = (CONTENT.choices || []).filter(c => {
+    const m = String(c.day || "").match(/(\d+)/);
+    return m && parseInt(m[1], 10) === dom;
+  });
+  if(!sameDay.length) return (CONTENT.choices || [])[0] && CONTENT.choices[0].key;
+  const dinner = sameDay.find(c => /dinner/i.test(String(c.day)) || !/·/.test(String(c.day)));
+  return (dinner || sameDay[0]).key;
+}
+let recipeKey = null;
+
+/* The week names the dish; the library holds the method, verbatim. */
+function viewRecipes(){
+  const sets = CONTENT.choices || [];
+  if(!sets.length) return "";
+  if(!recipeKey || !sets.some(c => c.key === recipeKey)) recipeKey = todaysKey();
+  const set = sets.find(c => c.key === recipeKey) || sets[0];
+  const o = picked(set.key), r = libFind(o.n);
+
+  /* ⛔ One recipe on the page at a time. Ten stacked cards is a thing to scroll
+     past, not a thing to cook from. */
+  let h = '<nav class="subtabs" role="tablist">' + sets.map(c =>
+    '<button role="tab" data-recipe="' + esc(c.key) + '" aria-selected="' + (c.key === set.key) + '">' +
+    esc(String(c.day || c.key)) + "</button>").join("") + "</nav>";
+
+  h += '<div class="card" id="r-' + esc(set.key) + '"><div class="card-h"><h3>' + esc(o.n) + "</h3>" +
+    '<button class="cookbtn" data-cook="' + esc(o.n).replace(/"/g, "&quot;") + '">Cook mode</button>' +
+    '</div><div class="card-b">' +
+    '<div class="eyebrow">' + esc(set.day || set.key) + "</div>" +
+    (o.split ? '<div class="splitbar" style="margin-top:10px"><b>' +
+       esc(dayParts(set).meal === "dinner" && !/·/.test(String(set.day)) ? "The cut" : capitalise(dayParts(set).meal)) +
+       ":</b> " + o.split + "</div>" : "") +
+    ((r && r.method) ? libraryBody(r)
+      : ((o.makes && o.makes.length) ? '<p class="mh">What makes it</p><ul class="makes">' +
+          o.makes.map(x => "<li>" + x + "</li>").join("") + "</ul>" : "")) +
+    "</div></div>";
+  return h;
+}
+
 const LEVEL_ORDER = {out:0, low:1, unmeasured:2, ok:3, plenty:4};
 
 function viewPantry(){
@@ -1326,8 +1392,13 @@ document.addEventListener("click", e => {
   const tab = e.target.closest("[data-tab]");
   if(tab){ active = tab.dataset.tab; render(); window.scrollTo(0,0); return; }
 
+  const rt = e.target.closest("[data-recipe]");
+  if(rt){ recipeKey = rt.dataset.recipe; render(); window.scrollTo(0,0); return; }
+
+  if(e.target.closest("#lockbtn2")){ setLocked(!isLocked()); return; }
+
   const goto = e.target.closest("[data-goto]");
-  if(goto){ active = "cook"; render();
+  if(goto){ active = "cook"; recipeKey = goto.dataset.goto; render();
     const el = document.getElementById("r-" + goto.dataset.goto);
     if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
     return; }
