@@ -148,8 +148,10 @@ card, lost the peppers from the stir-fry and the lemon from the salmon, and got 
 "fine" — the dish was not bad, **the card was the defect**.
 
 **The Recipes tab says a card is not written yet.**
-The dish is in the week but not matched to the library. It still tells you enough to
-shop and to know what matters.
+Uncommon now — every recipe in the library carries its full method, including the
+alternatives you did not pick. If you still see it, the dish is in the week but could
+not be matched to a library recipe. The card still tells you enough to shop and to know
+what matters.
 
 **An ingredient is not in the shop.**
 Some things genuinely are not stocked. Known: Aldi carries no fish sauce at all; capers

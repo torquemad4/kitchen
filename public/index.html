@@ -986,9 +986,16 @@ function viewSlots(){
 
 function recipeCardPending(key){
   const o = picked(key), set = chooseSet(key);
+  /* ⭐ The library usually HAS this one now. Before the migration the week only
+     ever carried a card for the default, so changing a pick meant losing the
+     method entirely; all 36 recipes are in D1, so the honest "not written yet"
+     banner is only shown when it is still true. */
+  const lib = libFind(o.n);
+  const haveMethod = !!(lib && lib.method);
   return '<div class="card" id="r-' + key + '"><div class="card-h"><h3>' + esc(o.n) + '</h3>' + '<button class="cookbtn" data-cook="' + esc(o.n).replace(/"/g,'&quot;') + '">Cook mode</button>' + '</div><div class="card-b">' +
     '<div class="eyebrow">' + esc(set.day) + ' · your pick</div>' +
-    '<div class="note warn" style="margin-top:10px"><b>The full step-by-step for this one is not written yet.</b> You changed the pick, so the card gets authored next — same treatment as the others: equipment named in every step, state cues instead of time cues, per-plate quantities. Everything below is enough to shop for it and to know what matters.</div>' +
+    (haveMethod ? "" :
+    '<div class="note warn" style="margin-top:10px"><b>The full step-by-step for this one is not written yet.</b> You changed the pick, so the card gets authored next — same treatment as the others: equipment named in every step, state cues instead of time cues, per-plate quantities. Everything below is enough to shop for it and to know what matters.</div>') +
     '<div class="facts" style="margin:12px 0;border-radius:8px;overflow:hidden;border:1px solid var(--line)">' +
       '<div class="fact"><div class="fl">Time</div><div class="fv">' + o.time + '</div></div>' +
       '<div class="fact"><div class="fl">Cost</div><div class="fv">' + esc(o.cost) + '</div></div>' +
@@ -999,6 +1006,9 @@ function recipeCardPending(key){
     '<div class="clears" style="margin-top:12px"><b>Clears:</b> ' + o.clears + '</div>' +
     '<p class="mh">What makes it</p><ul class="makes">' + o.makes.map(x => "<li>" + x + "</li>").join("") + '</ul>' +
     (o.warn ? '<div class="note warn" style="margin:11px 0 0">' + o.warn + '</div>' : "") +
+    /* Same substitution as the week card: everything above is the week's own
+       reasoning about this pick, and the library adds the method beneath it. */
+    (haveMethod ? libraryBody(lib) : "") +
     '</div></div>';
 }
 
@@ -1006,25 +1016,13 @@ function viewRecipes(){
   let h = '<div class="note good"><b>Only what is actually being cooked.</b> Change a dinner on Choose and this tab follows. Every card is a <b>shared</b> dish cut three parts to two — nothing here is cooked twice.</div>';
   if(!LIBRARY) h += '<div class="note"><b>Reading the library…</b> Showing the copy stored with this week until it arrives.</div>';
   ["sun"].concat(PICKKEYS).forEach(key => {
-    const docR = CONTENT.recipes[key];
-    const opt  = key === "sun" ? CONTENT.sunDinner : picked(key);
-
-    /* ⭐ The library first. Until 7 Sep this tab could only ever show the copy
-       frozen into weeks.doc, which is why a changed pick used to say "not
-       written yet" — the week only ever carried a card for the default. The
-       library has all 36, so a swapped dinner now gets its real method. */
-    const libName = (key !== "sun" && !isDefault(key)) ? (opt && opt.n)
-                                                       : ((docR && docR.name) || (opt && opt.n));
-    const card = libraryCard(libName, (docR && docR.when) || (chooseSet(key) || {}).day,
-                             opt, docR);
-    if(card){ h += card; return; }
-
-    /* Falls back to exactly what this page did before: the week's own copy,
-       and failing that the honest "not authored yet" card. */
+    /* A swapped pick has no card in the week at all — the week only ever
+       carried one for the default. That path is recipeCardPending(), which now
+       gets the library's method appended to it. */
     if(key !== "sun" && !isDefault(key)){ h += recipeCardPending(key); return; }
-    const r = docR;
+    const r = CONTENT.recipes[key];
     if(!r) return;
-    const o = opt;
+    const o = key === "sun" ? CONTENT.sunDinner : picked(key);
     h += '<div class="card" id="r-' + key + '"><div class="card-h"><h3>' + esc(r.name) + '</h3>' + '<button class="cookbtn" data-cook="' + esc(r.name).replace(/"/g,'&quot;') + '">Cook mode</button>' + '</div><div class="card-b">' +
          '<div class="eyebrow">' + esc(r.when) + '</div>' +
          '<p class="det mono" style="margin:6px 0 12px">' + esc(r.meta) + '</p>' +
@@ -1037,7 +1035,13 @@ function viewRecipes(){
          r.ing.map(x => "• " + x).join("<br>") + '</div>';
     h += '<div class="equip"><h4>Get these out first</h4><ul>' +
          r.equip.map(e => "<li>" + (e.r ? '<span class="req">required</span> ' : "") + e.t + "</li>").join("") + "</ul></div>";
-    h += '<div class="grouptitle">Method</div><ol class="steps">' + r.steps.map(x => "<li>" + x + "</li>").join("") + "</ol>";
+    /* ⭐ The ONE substitution. Everything above this line is the week's card,
+       exactly as it has always been. The library supplies the full verbatim
+       method where it has one; where it does not, the week's own compressed
+       steps still render, so this is never worse than before. */
+    const lib = libFind(r.name);
+    if(lib && lib.method) h += libraryBody(lib);
+    else h += '<div class="grouptitle">Method</div><ol class="steps">' + r.steps.map(x => "<li>" + x + "</li>").join("") + "</ol>";
     h += "</div></div>";
   });
   return h;
@@ -1281,65 +1285,46 @@ function mdToHtml(md){
   return h;
 }
 
-/* One recipe, rendered from the library rather than from the week snapshot.
-   Returns null when the library has nothing for this name, so the caller can
-   fall back to the copy baked into the week.
+/* ⭐ The library's contribution to a recipe card: the method and everything
+   after it, verbatim. A SECTION, not a card.
 
-   ⭐ The library is not a superset of the week. The library holds the canonical
-      dish — method, research, notes, per-portion macros. The WEEK holds what is
-      true only this week: how the pot is split between Karl and Maria, and the
-      notes about which sachet this particular cook uses up. Rendering only the
-      library silently dropped the Karl 3/5 · Maria 2/5 plates, which is exactly
-      the sort of quiet loss this migration is supposed to be preventing. So the
-      card is both: this week's split on top of the library's method.
+   ⛔ The first version of this was a whole card — built from the library, with
+      the week's fields re-added one at a time. It silently dropped the
+      Karl 3/5 · Maria 2/5 plates, then the week notes, then the option's own
+      warning, each found only by going looking for it. That shape is a
+      denylist: it preserves whatever someone happened to think of, and the
+      things it loses are exactly the things nobody remembered.
 
-   ⚠️ docR is only trusted when it actually describes THIS recipe. On a swapped
-      pick the week's entry still refers to the DEFAULT dish, and showing the
-      default's plates above a different recipe's method would be worse than
-      showing none. */
-function libraryCard(name, when, opt, docR){
-  const r = libFind(name);
-  if(!r || !r.method) return null;
-  const doc = (docR && docR.name && libFind(docR.name) === r) ? docR : null;
-  const split = opt && opt.split;
+   So the card stays the WEEK's, untouched, and only its Method section is
+   swapped for this. Nothing week-specific can go missing, because nothing
+   week-specific is rebuilt. */
+function libraryBody(r){
   const facts = [];
-  /* ⚠️ These are PER PORTION, not Karl's plate — the plates block above is the
-     split. Labelling the per-portion kcal "Karl" next to a real 3:2 split would
-     be a quietly wrong number on a card someone cooks from. */
-  if(r.kcal != null)      facts.push(["Per portion", Math.round(r.kcal) + " kcal"]);
-  if(r.proteinG != null)  facts.push(["Protein", r.proteinG + " g"]);
-  if(r.handsOnMin != null)facts.push(["Hands-on", r.handsOnMin + " min"]);
-  if(r.elapsedMin != null)facts.push(["Elapsed", r.elapsedMin + " min"]);
+  /* ⚠️ PER PORTION — not Karl's plate. The week card's plates block above is the
+     split. Labelling these "Karl" beside a real 3:2 split would put a quietly
+     wrong number on a card someone cooks from. */
+  if(r.kcal != null)           facts.push(["Per portion", Math.round(r.kcal) + " kcal"]);
+  if(r.proteinG != null)       facts.push(["Protein", r.proteinG + " g"]);
   if(r.costPerPortion != null) facts.push(["Cost", "£" + r.costPerPortion.toFixed(2)]);
 
-  return '<div class="card" id="r-lib-' + esc(r.id) + '"><div class="card-h"><h3>' + esc(r.name) + '</h3>' +
-    '<button class="cookbtn" data-cook="' + esc(r.name).replace(/"/g,"&quot;") + '">Cook mode</button>' +
-    '</div><div class="card-b">' +
-    (when ? '<div class="eyebrow">' + esc(when) + "</div>" : "") +
-    /* This week's own figure for the whole dish, where the week has one. It is
-       not the same number as the per-portion macros below and both are wanted. */
-    (doc && doc.meta ? '<p class="det mono" style="margin:6px 0 12px">' + esc(doc.meta) + "</p>" : "") +
-    /* Week-specific warnings — which sachet this cook uses up, and so on. */
-    (doc && doc.notes ? doc.notes.map(n => '<div class="note ' + n.k + '">' + n.t + "</div>").join("") : "") +
-    /* ⭐ The plate split. Restored: the library knows a portion, only the week
-       knows that this pot goes three parts Karl to two parts Maria. */
-    (doc && doc.plates ? '<div class="plates">' + doc.plates.map(pl =>
-        '<div class="plate"><div class="who">' + esc(pl.who) + '</div><div class="amt">' + esc(pl.amt) +
-        '</div><div class="mac">' + esc(pl.mac) + "</div></div>").join("") + "</div>" : "") +
-    (facts.length ? '<div class="facts" style="margin:12px 0;border-radius:8px;overflow:hidden;border:1px solid var(--line)">' +
-        facts.map(f => '<div class="fact"><div class="fl">' + f[0] + '</div><div class="fv">' + esc(f[1]) + "</div></div>").join("") +
-      "</div>" : "") +
-    (split ? '<div class="splitbar"><b>The cut:</b> ' + split + "</div>" : "") +
-    /* The compressed one-liner. Kept because it is the rendering the cart
-       builder reads, and the two are not interchangeable. */
-    (r.ingredients ? '<div class="grouptitle" style="margin-top:16px">Ingredients — as the cart sees them</div>' +
-        '<div class="ing">' + esc(r.ingredients) + "</div>" : "") +
+  /* Wrapped so that "the library only ever ADDS to the week's card" is a
+     property a test can assert, rather than a claim in a comment. Strip
+     .libbody and what remains must be byte-identical to the card the page
+     rendered before the library existed. */
+  return '<div class="libbody">' +
+    (facts.length ? '<div class="facts" style="margin:14px 0;border-radius:8px;overflow:hidden;border:1px solid var(--line)">' +
+      facts.map(f => '<div class="fact"><div class="fl">' + f[0] + '</div><div class="fv">' + esc(f[1]) + "</div></div>").join("") +
+    "</div>" : "") +
     (r.cookingNotes ? '<div class="note warn" style="margin-top:12px">' + mdInline(r.cookingNotes) + "</div>" : "") +
     (r.eatingNotes  ? '<div class="note good" style="margin-top:10px">' + mdInline(r.eatingNotes)  + "</div>" : "") +
-    /* The card itself, verbatim: ingredients, method, the research, the notes. */
+    /* Verbatim and whole — headline, intro, the BUY/HELD ingredient list, the
+       method, the research, the notes. ⛔ Deliberately NOT sliced to avoid
+       repeating the week's own ingredient list. Duplication is a cosmetic cost;
+       dropping a line is a defect, and this kitchen has already cooked a
+       compressed card and lost the peppers. */
     '<div class="mdbody">' + mdToHtml(r.method) + "</div>" +
     (r.source ? '<p class="foot">Source: ' + esc(r.source) + "</p>" : "") +
-    "</div></div>";
+    "</div>";
 }
 
 /* ------------------------------------------------------------------ pantry */

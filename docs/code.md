@@ -160,9 +160,33 @@ LIBRARY, PANTRY                    // in memory
 loadLibrary(), loadPantry()        // cache-first, then network, re-render on arrival
 libKey(), libTokens(), libFind()   // the week ─► library join
 mdInline(), mdToHtml()             // verbatim markdown ─► HTML
-libraryCard()                      // one recipe card
+libraryBody()                      // ⭐ a METHOD SECTION, not a card — see below
 viewPantry()                       // the Pantry tab
 ```
+
+#### ⭐ `libraryBody()` augments the week card; it does not replace it
+
+The week card renders everything that is true only *this* week — the `meta` line, the
+lead, the week notes, the **Karl 3/5 · Maria 2/5 plates**, the split bar, the whole-dish
+ingredients and the equipment list. The library holds the canonical dish. **Only the
+Method section is swapped.**
+
+> ⛔ **The first version of this was a whole card** built from the library, with the
+> week's fields re-added one at a time. It silently dropped the plates, then the week
+> notes, then the option's warning — each found only by going looking. **That shape is a
+> denylist: it preserves whatever someone happened to think of.** Never rebuild the
+> card; augment it.
+
+`libraryBody()`'s output is wrapped in `.libbody` **so the invariant is testable**:
+strip `.libbody` and the card must be byte-identical to what the page rendered before
+the library existed. There is a regression check for exactly this (§5).
+
+The one intentional difference: on a swapped pick, the *"not written yet"* banner is
+suppressed when the library does have a method — because it is no longer true.
+
+The full body is rendered **unsliced**, including its own `## Ingredients`, which
+duplicates the week card's list. That is deliberate: duplication is a cosmetic cost,
+dropping a line is a defect, and this kitchen has already cooked a compressed card.
 
 **Cache-first**: read `localStorage` and render immediately, then fetch and correct.
 Keys `clousto.library.v1`, `clousto.pantry.v1`. ⚠️ Bump the `.v1` suffix if the payload
@@ -276,22 +300,27 @@ for f in functions/api/*.js; do cp $f /tmp/c.mjs && node --check /tmp/c.mjs || e
 | render is deterministic | `render(); a=html; render(); b=html; a===b` |
 | every pick permutation renders | all 12 combinations, no exceptions, no empty cards |
 | fallback | with `LIBRARY = null`, the page renders exactly as before |
+| ⭐ **the week card is only augmented** | strip `.libbody` with the library on, strip `ol.steps` + the `Method` grouptitle with it off, and the two must be **byte-identical** (allowing for the intentionally suppressed "not written yet" banner) |
 
 ---
 
-## 6. Current working-tree state (7 Sep 2026)
+## 6. History worth keeping
 
-⚠️ **Deployed code corresponds to no git commit.** The 7 Sep deploy ran with
-`--commit-dirty=true`; `git log` shows `6c82312`, which predates all of it.
+**7 Sep 2026 — the recipe library and pantry came out of Notion.** 36 recipes with their
+verbatim method and 56 pantry rows landed in D1; `recipes.js` and `pantry.js` were added
+and the Recipes tab was rewired to read them, with a new Pantry tab alongside.
 
-- **Deployed** (`751ea33a`, Production): `recipes.js`, `pantry.js`, the Pantry tab, and
-  `viewRecipes()` reading from the library.
-- **Uncommitted and NOT deployed**: a partial revision of `libraryCard()` that restores
-  the per-person plates block and week notes.
+⚠️ **The first deploy that day (`751ea33a`) shipped a regression** and it is worth
+remembering how. `viewRecipes()` was changed to build a *fresh card from the library*,
+which silently dropped the per-person plates block from two cards. The fix attempt made
+it worse — plates, then week notes, then the option warning, each re-added only after
+someone went looking for the next missing thing.
 
-> ⭐ **`libraryCard()` is built the wrong way round and should be rewritten, not patched.**
-> It builds a fresh card from the library and re-adds week fields one at a time —
-> plates, then notes, then the option warning — which is a denylist: it only preserves
-> what someone thought of. The correct shape is the inverse: **keep the existing week
-> card and replace only its method section with the library's verbatim body.** That is
-> structurally lossless, because the card is never rebuilt.
+⭐ **The rewrite inverted it**: keep the week card, swap only the Method section
+(`libraryBody()`, §3.4). Net −21 lines, and the "nothing week-specific is lost" property
+became a regression check rather than a claim.
+
+> **The general lesson, which applies well beyond this function:** when new data supersedes
+> part of an existing view, replace *that part*. Rebuilding the view from the new source
+> and re-adding the old fields is a denylist, and denylists lose exactly the things nobody
+> remembered to list.

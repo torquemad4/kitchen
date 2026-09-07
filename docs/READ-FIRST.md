@@ -141,7 +141,7 @@ deploy — say what was verified (locally, against real data) and ask Karl to lo
 | **A decrement is not a check** | If stage D stamps `last_checked`, stage C stops asking and the balance drifts optimistically forever. Use `last_moved` for arithmetic. |
 | **Compressed recipe cards** | Week 2 lost the peppers from the stir-fry and the lemon from the salmon. *The dish was not bad — the card was the defect.* |
 | **Fuzzy name matching** | Two recipes differ only by *CHICKEN* vs *tofu crumble*. Ambiguity must resolve to no match. |
-| **Rebuilding a card from a subset** | `libraryCard()` was written to rebuild the recipe card from the library and re-add week fields one at a time. That is a denylist — it silently drops whatever nobody thought of. Augment, don't rebuild. |
+| **Rebuilding a view from a subset** | ✅ *fixed 7 Sep.* The Recipes tab was rewritten to build a fresh card from the library and re-add the week's fields one at a time; it dropped the per-person plates, and each patch found only the next missing thing. **When new data supersedes part of a view, replace that part — never rebuild the view and re-add the old fields.** A denylist loses exactly what nobody remembered. Now guarded by a regression check (`code.md` §5). |
 | **Deploying to a preview** | `wrangler pages deploy` can land on a preview branch. Always confirm `Environment = Production`. |
 | **`--commit-dirty=true`** | The 7 Sep deploy matches no commit. Commit before or immediately after deploying. |
 | **Assuming the handover is right** | The 7 Sep handover said `times_cooked` was "0 or null across the board". It was 2,2,2,1,1. **Check the data.** |
