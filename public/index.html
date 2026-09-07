@@ -280,6 +280,21 @@ caption{caption-side:top;text-align:left;font-size:13px;color:var(--ink-2);paddi
 .makes li:last-child{margin-bottom:0}
 .mh{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);margin:0 0 7px}
 .foot{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3)}
+/* The verbatim library card. ⭐ Bold is rendered rather than stripped because
+   in these recipes it marks the things that ruin the dish. */
+.mdbody{font-size:15px;line-height:1.62}
+.mdbody p{margin:0 0 11px}
+.mdbody b{font-weight:640;color:var(--ink)}
+.mdbody code{font-family:"IBM Plex Mono",monospace;font-size:13px;background:var(--accent-soft);padding:1px 4px;border-radius:3px}
+.mdbody ul.mdul{margin:0 0 13px;padding:0 0 0 20px}
+.mdbody ul.mdul li{margin:0 0 6px}
+.mdbody ol.mdol{list-style:none;counter-reset:m;margin:0 0 13px;padding:0}
+.mdbody ol.mdol li{counter-increment:m;position:relative;padding:0 0 15px 40px}
+.mdbody ol.mdol li::before{content:counter(m);position:absolute;left:0;top:-1px;width:27px;height:27px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-family:"IBM Plex Mono",monospace;font-size:12.5px;
+  background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--line)}
+.mdbody hr.mdhr{border:0;border-top:1px solid var(--line);margin:16px 0}
+.mdbody a{color:var(--accent-ink)}
 .reset{appearance:none;background:transparent;border:1px solid var(--line-2);color:var(--ink-2);border-radius:7px;
   padding:6px 11px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;cursor:pointer}
 .reset:hover{border-color:var(--accent);color:var(--accent-ink)}
@@ -989,11 +1004,27 @@ function recipeCardPending(key){
 
 function viewRecipes(){
   let h = '<div class="note good"><b>Only what is actually being cooked.</b> Change a dinner on Choose and this tab follows. Every card is a <b>shared</b> dish cut three parts to two — nothing here is cooked twice.</div>';
+  if(!LIBRARY) h += '<div class="note"><b>Reading the library…</b> Showing the copy stored with this week until it arrives.</div>';
   ["sun"].concat(PICKKEYS).forEach(key => {
+    const docR = CONTENT.recipes[key];
+    const opt  = key === "sun" ? CONTENT.sunDinner : picked(key);
+
+    /* ⭐ The library first. Until 7 Sep this tab could only ever show the copy
+       frozen into weeks.doc, which is why a changed pick used to say "not
+       written yet" — the week only ever carried a card for the default. The
+       library has all 36, so a swapped dinner now gets its real method. */
+    const libName = (key !== "sun" && !isDefault(key)) ? (opt && opt.n)
+                                                       : ((docR && docR.name) || (opt && opt.n));
+    const card = libraryCard(libName, (docR && docR.when) || (chooseSet(key) || {}).day,
+                             opt, docR);
+    if(card){ h += card; return; }
+
+    /* Falls back to exactly what this page did before: the week's own copy,
+       and failing that the honest "not authored yet" card. */
     if(key !== "sun" && !isDefault(key)){ h += recipeCardPending(key); return; }
-    const r = CONTENT.recipes[key];
+    const r = docR;
     if(!r) return;
-    const o = key === "sun" ? CONTENT.sunDinner : picked(key);
+    const o = opt;
     h += '<div class="card" id="r-' + key + '"><div class="card-h"><h3>' + esc(r.name) + '</h3>' + '<button class="cookbtn" data-cook="' + esc(r.name).replace(/"/g,'&quot;') + '">Cook mode</button>' + '</div><div class="card-b">' +
          '<div class="eyebrow">' + esc(r.when) + '</div>' +
          '<p class="det mono" style="margin:6px 0 12px">' + esc(r.meta) + '</p>' +
@@ -1122,6 +1153,229 @@ function viewReceipt(){
   return h;
 }
 
+/* ------------------------------------------------------------------ library
+   ⭐ D1 became the system of record for the recipe library and the pantry on
+   7 Sep 2026. Notion is no longer authoritative for either.
+
+   The week document still carries a denormalised copy of whatever was
+   published — that is what this page rendered from until now, and it is why
+   good data landing in `recipes` changed nothing on screen. A week is a
+   SNAPSHOT; the library is the live thing. Where the two disagree the library
+   wins, because it is the one that gets corrected.
+
+   ⛔ The week doc copy is kept as the fallback, not deleted. A recipe the
+      library has never heard of still renders exactly as it did before. This
+      page is read in an aisle; it does not get to lose a dinner because a
+      name failed to match. */
+let LIBRARY = null, PANTRY = null;
+const LIB_KEY = "clousto.library.v1", PANTRY_KEY = "clousto.pantry.v1";
+
+/* Cached to localStorage on purpose: Aldi has poor signal, and a library that
+   only works on a good connection is a library that fails where it is needed. */
+function cacheGet(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }
+function cachePut(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+async function loadLibrary(){
+  LIBRARY = cacheGet(LIB_KEY);            /* show something immediately… */
+  if(LIBRARY) render();
+  try{
+    const res = await fetch("/api/recipes", {cache:"no-store"});
+    if(!res.ok) return;
+    const p = await res.json();
+    if(p && Array.isArray(p.recipes) && p.recipes.length){
+      LIBRARY = p.recipes; cachePut(LIB_KEY, LIBRARY); render();   /* …then correct it */
+    }
+  }catch(e){ /* offline: the cache, or the week doc copy, still stands */ }
+}
+
+async function loadPantry(){
+  PANTRY = cacheGet(PANTRY_KEY);
+  if(PANTRY) render();
+  try{
+    const res = await fetch("/api/pantry", {cache:"no-store"});
+    if(!res.ok) return;
+    const p = await res.json();
+    if(p && Array.isArray(p.pantry)){
+      PANTRY = p.pantry; cachePut(PANTRY_KEY, PANTRY); render();
+    }
+  }catch(e){}
+}
+
+/* The week document carries recipe NAMES, and /api/recipe has always keyed on
+   the name too, so that is the join. Normalised, because a stray dash or a
+   curly apostrophe between the two stores should not cost a method. */
+function libKey(s){
+  return String(s || "").toLowerCase()
+    .replace(/[‘’]/g, "'").replace(/[–—]/g, "-")
+    .replace(/[^a-z0-9]+/g, "");
+}
+
+/* ⚠️ The week's option labels are ABBREVIATED versions of the library titles —
+   "Goan coconut fish curry with rice" for "…with lentil rice", "Kung pao
+   chicken" for "Kung pao-style chicken". An exact match finds only the five
+   that happen to agree, so most options would silently keep showing the frozen
+   copy and the rewire would be half-done.
+
+   ⛔ NOT fuzzy matching, though. The two sesame-peanut noodle recipes differ
+      only in their last two words — one is CHICKEN, one is tofu — and serving
+      the wrong card on the wrong night is far worse than serving none. So the
+      rule is deliberately conservative: every significant word in the week's
+      label must appear in the library title, AND exactly one row may qualify.
+      Ambiguity resolves to no match and the old behaviour, every time. */
+const LIB_STOP = new Set(["with","and","the","a","an","of","in","on","for","le","la","les"]);
+function libTokens(s){
+  return String(s || "").toLowerCase()
+    .replace(/[‘’]/g, "'").replace(/[–—-]/g, " ")
+    .split(/[^a-z0-9]+/)
+    .filter(w => w && !LIB_STOP.has(w));
+}
+function libFind(name){
+  if(!LIBRARY || !name) return null;
+
+  const k = libKey(name);
+  const exact = LIBRARY.find(r => libKey(r.name) === k);
+  if(exact) return exact;
+
+  const want = libTokens(name);
+  if(want.length < 2) return null;                 /* too little to be sure */
+  const hits = LIBRARY.filter(r => {
+    const have = new Set(libTokens(r.name));
+    return want.every(w => have.has(w));
+  });
+  return hits.length === 1 ? hits[0] : null;       /* ambiguous → fall back */
+}
+
+/* ------------------------------------------------------------------ markdown
+   The method is stored verbatim as the markdown Notion holds, and Karl's recipe
+   rule 1 is binding: every step and every ingredient, in full, unsummarised.
+   ⭐ The bold is not styling — it marks the things that ruin the dish — so this
+      renders emphasis rather than stripping it. Everything is escaped before
+      any tag is introduced. */
+function mdInline(s){
+  let h = esc(s);
+  h = h.replace(/\[([^\]\n]+)\]\((https?:\/\/[^)\s]+)\)/g,
+                (m, t, u) => '<a href="' + u + '" target="_blank" rel="noopener">' + t + '</a>');
+  h = h.replace(/\*\*([\s\S]+?)\*\*/g, "<b>$1</b>");
+  h = h.replace(/\*([^*\n]+)\*/g, "<i>$1</i>");
+  h = h.replace(/`([^`\n]+)`/g, "<code>$1</code>");
+  h = h.replace(/\\([\\~\[\]*_`#.-])/g, "$1");   /* Notion escapes: \~880 -> ~880 */
+  return h;
+}
+function mdToHtml(md){
+  const lines = String(md || "").split("\n");
+  let h = "", list = null;
+  const close = () => { if(list){ h += "</" + list + ">"; list = null; } };
+  const open  = t => { if(list !== t){ close(); h += "<" + t + ' class="md' + t + '">'; list = t; } };
+  lines.forEach(raw => {
+    const l = raw.trim();
+    if(!l){ close(); return; }
+    let m;
+    if((m = l.match(/^#{2,6}\s+(.*)$/))){ close(); h += '<div class="grouptitle">' + mdInline(m[1]) + "</div>"; }
+    else if(/^(-{3,}|\*{3,})$/.test(l)){ close(); h += '<hr class="mdhr">'; }
+    else if((m = l.match(/^>\s?(.*)$/))){ close(); h += '<div class="note">' + mdInline(m[1]) + "</div>"; }
+    else if((m = l.match(/^[-*]\s+(.*)$/))){ open("ul"); h += "<li>" + mdInline(m[1]) + "</li>"; }
+    else if((m = l.match(/^(\d+)\.\s+(.*)$/))){ open("ol"); h += "<li>" + mdInline(m[2]) + "</li>"; }
+    else { close(); h += "<p>" + mdInline(l) + "</p>"; }
+  });
+  close();
+  return h;
+}
+
+/* One recipe, rendered from the library rather than from the week snapshot.
+   Returns null when the library has nothing for this name, so the caller can
+   fall back to the copy baked into the week.
+
+   ⭐ The library is not a superset of the week. The library holds the canonical
+      dish — method, research, notes, per-portion macros. The WEEK holds what is
+      true only this week: how the pot is split between Karl and Maria, and the
+      notes about which sachet this particular cook uses up. Rendering only the
+      library silently dropped the Karl 3/5 · Maria 2/5 plates, which is exactly
+      the sort of quiet loss this migration is supposed to be preventing. So the
+      card is both: this week's split on top of the library's method.
+
+   ⚠️ docR is only trusted when it actually describes THIS recipe. On a swapped
+      pick the week's entry still refers to the DEFAULT dish, and showing the
+      default's plates above a different recipe's method would be worse than
+      showing none. */
+function libraryCard(name, when, opt, docR){
+  const r = libFind(name);
+  if(!r || !r.method) return null;
+  const doc = (docR && docR.name && libFind(docR.name) === r) ? docR : null;
+  const split = opt && opt.split;
+  const facts = [];
+  /* ⚠️ These are PER PORTION, not Karl's plate — the plates block above is the
+     split. Labelling the per-portion kcal "Karl" next to a real 3:2 split would
+     be a quietly wrong number on a card someone cooks from. */
+  if(r.kcal != null)      facts.push(["Per portion", Math.round(r.kcal) + " kcal"]);
+  if(r.proteinG != null)  facts.push(["Protein", r.proteinG + " g"]);
+  if(r.handsOnMin != null)facts.push(["Hands-on", r.handsOnMin + " min"]);
+  if(r.elapsedMin != null)facts.push(["Elapsed", r.elapsedMin + " min"]);
+  if(r.costPerPortion != null) facts.push(["Cost", "£" + r.costPerPortion.toFixed(2)]);
+
+  return '<div class="card" id="r-lib-' + esc(r.id) + '"><div class="card-h"><h3>' + esc(r.name) + '</h3>' +
+    '<button class="cookbtn" data-cook="' + esc(r.name).replace(/"/g,"&quot;") + '">Cook mode</button>' +
+    '</div><div class="card-b">' +
+    (when ? '<div class="eyebrow">' + esc(when) + "</div>" : "") +
+    /* This week's own figure for the whole dish, where the week has one. It is
+       not the same number as the per-portion macros below and both are wanted. */
+    (doc && doc.meta ? '<p class="det mono" style="margin:6px 0 12px">' + esc(doc.meta) + "</p>" : "") +
+    /* Week-specific warnings — which sachet this cook uses up, and so on. */
+    (doc && doc.notes ? doc.notes.map(n => '<div class="note ' + n.k + '">' + n.t + "</div>").join("") : "") +
+    /* ⭐ The plate split. Restored: the library knows a portion, only the week
+       knows that this pot goes three parts Karl to two parts Maria. */
+    (doc && doc.plates ? '<div class="plates">' + doc.plates.map(pl =>
+        '<div class="plate"><div class="who">' + esc(pl.who) + '</div><div class="amt">' + esc(pl.amt) +
+        '</div><div class="mac">' + esc(pl.mac) + "</div></div>").join("") + "</div>" : "") +
+    (facts.length ? '<div class="facts" style="margin:12px 0;border-radius:8px;overflow:hidden;border:1px solid var(--line)">' +
+        facts.map(f => '<div class="fact"><div class="fl">' + f[0] + '</div><div class="fv">' + esc(f[1]) + "</div></div>").join("") +
+      "</div>" : "") +
+    (split ? '<div class="splitbar"><b>The cut:</b> ' + split + "</div>" : "") +
+    /* The compressed one-liner. Kept because it is the rendering the cart
+       builder reads, and the two are not interchangeable. */
+    (r.ingredients ? '<div class="grouptitle" style="margin-top:16px">Ingredients — as the cart sees them</div>' +
+        '<div class="ing">' + esc(r.ingredients) + "</div>" : "") +
+    (r.cookingNotes ? '<div class="note warn" style="margin-top:12px">' + mdInline(r.cookingNotes) + "</div>" : "") +
+    (r.eatingNotes  ? '<div class="note good" style="margin-top:10px">' + mdInline(r.eatingNotes)  + "</div>" : "") +
+    /* The card itself, verbatim: ingredients, method, the research, the notes. */
+    '<div class="mdbody">' + mdToHtml(r.method) + "</div>" +
+    (r.source ? '<p class="foot">Source: ' + esc(r.source) + "</p>" : "") +
+    "</div></div>";
+}
+
+/* ------------------------------------------------------------------ pantry */
+const LEVEL_ORDER = {out:0, low:1, unmeasured:2, ok:3, plenty:4};
+
+function viewPantry(){
+  if(!PANTRY) return '<div class="note"><b>The pantry is loading.</b> If this stays here you are offline and it has not been cached on this phone yet — the shopping list above still works.</div>';
+  const weak = PANTRY.filter(r => r.weakEvidence).length;
+  const unm  = PANTRY.filter(r => r.level === "unmeasured").length;
+  let h = '<div class="note good"><b>What is actually in the house.</b> ' + PANTRY.length + ' lines, read from D1 rather than Notion.</div>' +
+    '<div class="note warn"><b>' + weak + ' of these rest on weak evidence</b> (recalled or inferred) and <b>' + unm + ' are unmeasured</b> — nobody has looked, which is not the same as "fine". ' +
+    '⚠️ A counted number with no decrement mechanism decays into a guess while keeping its confident label: on 3 Sep two pastes recorded as held on 18 Aug turned out to be gone, at the pan. <b>Check the date before you cook from a line.</b></div>';
+
+  const cats = [];
+  PANTRY.forEach(r => { if(cats.indexOf(r.category || "—") < 0) cats.push(r.category || "—"); });
+  cats.forEach(cat => {
+    const rows = PANTRY.filter(r => (r.category || "—") === cat)
+                       .sort((a,b) => (LEVEL_ORDER[a.level] ?? 9) - (LEVEL_ORDER[b.level] ?? 9));
+    h += '<div class="card"><div class="card-h"><h3>' + esc(cat) + "</h3></div><div class=\"card-b\">";
+    rows.forEach(r => {
+      h += '<div class="plate" style="display:block;margin-bottom:10px">' +
+        '<div class="who">' + esc(r.item) + ' <span class="det mono">· ' + esc(r.level || "?") + "</span></div>" +
+        (r.amount ? '<div class="amt">' + esc(r.amount) + "</div>" : "") +
+        '<div class="mac">' + esc(r.howChecked || "not recorded") + (r.lastChecked ? " · " + esc(r.lastChecked) : "") +
+          (r.weakEvidence ? ' · <b>weak evidence</b>' : "") +
+          (r.dated && r.bestBefore ? " · BB " + esc(r.bestBefore) : "") + "</div>" +
+        (r.floor  ? '<div class="mac"><b>Floor:</b> ' + esc(r.floor) + "</div>" : "") +
+        (r.route  ? '<div class="mac"><b>Route:</b> ' + esc(r.route) + "</div>" : "") +
+        (r.notes  ? '<div class="mac">' + esc(r.notes) + "</div>" : "") +
+        "</div>";
+    });
+    h += "</div></div>";
+  });
+  return h;
+}
+
 /* ---------- render ---------- */
 const TABS = [
   {id:"shop",  label:"Shop",     fn:viewShop},
@@ -1129,6 +1383,7 @@ const TABS = [
   {id:"pick",  label:"Choose",   fn:viewChoose},
   {id:"opts",  label:"Slots",    fn:viewSlots},
   {id:"cook",  label:"Recipes",  fn:viewRecipes},
+  {id:"pan",   label:"Pantry",   fn:viewPantry},
   {id:"rec",   label:"Receipt",  fn:viewReceipt}
 ];
 let active = "shop";
@@ -1249,7 +1504,14 @@ document.addEventListener("click", e => {
     await flush();
     await pullState();
 
-    addEventListener("online", function(){ flush(); pullState(); });
+    /* ⭐ The library and the pantry, from D1. Deliberately NOT awaited: the week
+       is what the aisle needs and it is already on screen. These render
+       themselves in when they arrive, and fall back to the cache — or to the
+       copy inside the week document — when they do not. */
+    loadLibrary();
+    loadPantry();
+
+    addEventListener("online", function(){ flush(); pullState(); loadLibrary(); loadPantry(); });
     document.addEventListener("visibilitychange", function(){
       if(!document.hidden){ flush(); pullState(); }
     });
