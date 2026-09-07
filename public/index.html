@@ -295,6 +295,28 @@ caption{caption-side:top;text-align:left;font-size:13px;color:var(--ink-2);paddi
   background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--line)}
 .mdbody hr.mdhr{border:0;border-top:1px solid var(--line);margin:16px 0}
 .mdbody a{color:var(--accent-ink)}
+/* The pantry table: item, amount, certainty, when it was last looked at. */
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);
+  border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow);margin-bottom:8px}
+table.ptable{border-collapse:collapse;width:100%;font-size:14px}
+table.ptable th{text-align:left;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:400;
+  padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.ptable td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+table.ptable tr:last-child td{border-bottom:0}
+table.ptable td:first-child{font-weight:600;min-width:9em}
+table.ptable td.cert,table.ptable td.when{font-family:"IBM Plex Mono",monospace;font-size:12px;white-space:nowrap}
+table.ptable td.when{color:var(--ink-3);font-variant-numeric:tabular-nums}
+/* Certainty is the point of the column, so it is graded rather than plain text. */
+td.cert-photographed,td.cert-counted{color:var(--accent-ink)}
+td.cert-at-the-pan{color:var(--ink-2)}
+td.cert-recalled,td.cert-inferred{color:var(--warn)}
+.lv{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;
+  padding:1px 6px;border-radius:4px;background:var(--sunk);color:var(--ink-2);margin-right:6px;white-space:nowrap}
+.lv-out{background:var(--stop-soft);color:var(--stop);font-weight:600}
+.lv-low{background:var(--warn-soft);color:var(--warn)}
+.lv-unmeasured{background:var(--held-soft);color:var(--held)}
+.lv-ok,.lv-plenty{background:var(--accent-soft);color:var(--accent-ink)}
 .reset{appearance:none;background:transparent;border:1px solid var(--line-2);color:var(--ink-2);border-radius:7px;
   padding:6px 11px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;cursor:pointer}
 .reset:hover{border-color:var(--accent);color:var(--accent-ink)}
@@ -1214,27 +1236,30 @@ function libraryBody(r){
 const LEVEL_ORDER = {out:0, low:1, unmeasured:2, ok:3, plenty:4};
 
 function viewPantry(){
-  if(!PANTRY) return '<div class="note"><b>The pantry is loading.</b> If this stays here you are offline and it has not been cached on this phone yet — the shopping list above still works.</div>';
+  if(!PANTRY) return "";
+  /* ⛔ The table is item / amount / certainty / checked, and nothing else.
+     Notes, floor and route stay in D1 where they are read when a week is built;
+     provenance is not what this page is for. */
   let h = "";
   const cats = [];
   PANTRY.forEach(r => { if(cats.indexOf(r.category || "—") < 0) cats.push(r.category || "—"); });
   cats.forEach(cat => {
     const rows = PANTRY.filter(r => (r.category || "—") === cat)
                        .sort((a,b) => (LEVEL_ORDER[a.level] ?? 9) - (LEVEL_ORDER[b.level] ?? 9));
-    h += '<div class="card"><div class="card-h"><h3>' + esc(cat) + "</h3></div><div class=\"card-b\">";
+    h += '<div class="grouptitle">' + esc(cat) + "</div>" +
+         '<div class="tablewrap"><table class="ptable"><thead><tr>' +
+         "<th>Item</th><th>Amount</th><th>Certainty</th><th>Checked</th>" +
+         "</tr></thead><tbody>";
     rows.forEach(r => {
-      h += '<div class="plate" style="display:block;margin-bottom:10px">' +
-        '<div class="who">' + esc(r.item) + ' <span class="det mono">· ' + esc(r.level || "?") + "</span></div>" +
-        (r.amount ? '<div class="amt">' + esc(r.amount) + "</div>" : "") +
-        '<div class="mac">' + esc(r.howChecked || "not recorded") + (r.lastChecked ? " · " + esc(r.lastChecked) : "") +
-          (r.weakEvidence ? ' · <b>weak evidence</b>' : "") +
-          (r.dated && r.bestBefore ? " · BB " + esc(r.bestBefore) : "") + "</div>" +
-        (r.floor  ? '<div class="mac"><b>Floor:</b> ' + esc(r.floor) + "</div>" : "") +
-        (r.route  ? '<div class="mac"><b>Route:</b> ' + esc(r.route) + "</div>" : "") +
-        (r.notes  ? '<div class="mac">' + esc(r.notes) + "</div>" : "") +
-        "</div>";
+      h += "<tr>" +
+        "<td>" + esc(r.item) + "</td>" +
+        '<td><span class="lv lv-' + esc(r.level || "unknown") + '">' + esc(r.level || "?") + "</span> " +
+          esc(r.amount || "") + "</td>" +
+        '<td class="cert cert-' + esc(r.howChecked || "none") + '">' + esc(r.howChecked || "not recorded") + "</td>" +
+        '<td class="when">' + esc(r.lastChecked || "—") + "</td>" +
+      "</tr>";
     });
-    h += "</div></div>";
+    h += "</tbody></table></div>";
   });
   return h;
 }

@@ -35,7 +35,7 @@ export async function onRequestGet({ env }) {
                 WHERE ri.ingredient_key = i.key AND ri.unit IS NOT NULL
                 GROUP BY ri.unit ORDER BY COUNT(*) DESC LIMIT 1) AS unit
          FROM ingredients i
-         LEFT JOIN pantry p ON p.id = i.pantry_id`
+         LEFT JOIN pantry p ON p.id = i.pantry_id AND p.superseded = 0`
     ).all();
 
     const today = new Date();

@@ -14,6 +14,12 @@
 const FIELDS = `id, item, category, level, amount, how_checked, last_checked,
                 floor, dated, best_before, route, notes, notion_url`;
 
+// ⛔ The six rows superseded by the 7 Sep bundle split are excluded. Their
+//    children are now real rows, so listing both shows the same spices twice —
+//    once itemised and once as a paragraph. They stay in the table for their
+//    history; they are not current stock.
+const LIVE = "superseded = 0";
+
 // Weakest first: the page surfaces these, because they are the rows most
 // likely to be wrong when someone leans on them.
 const WEAK = ["recalled", "inferred"];
@@ -23,9 +29,9 @@ export async function onRequestGet({ request, env }) {
 
   try {
     const { results } = level
-      ? await env.DB.prepare(`SELECT ${FIELDS} FROM pantry WHERE level = ? ORDER BY category, item`)
+      ? await env.DB.prepare(`SELECT ${FIELDS} FROM pantry WHERE ${LIVE} AND level = ? ORDER BY category, item`)
           .bind(level).all()
-      : await env.DB.prepare(`SELECT ${FIELDS} FROM pantry ORDER BY category, item`).all();
+      : await env.DB.prepare(`SELECT ${FIELDS} FROM pantry WHERE ${LIVE} ORDER BY category, item`).all();
 
     const rows = (results || []).map(r => ({
       id: r.id, item: r.item, category: r.category, level: r.level,

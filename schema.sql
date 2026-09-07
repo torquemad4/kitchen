@@ -149,6 +149,10 @@ CREATE TABLE IF NOT EXISTS pantry (
   route        TEXT,       -- which dish consumes this, for orphaned stock
   notes        TEXT,
   notion_url   TEXT,
+  -- ⛔ 1 = kept for its history, NOT current stock. The five food bundles split
+  --    on 7 Sep 2026 into individual rows, plus "Salt & pepper". Listing a parent
+  --    beside its children shows the same spices twice.
+  superseded   INTEGER NOT NULL DEFAULT 0,
   updated_at   TEXT DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX IF NOT EXISTS idx_pantry_level ON pantry(level, category);
