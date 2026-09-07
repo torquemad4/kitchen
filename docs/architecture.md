@@ -475,8 +475,17 @@ the same place: nothing had ever written the schema down.
                "use": { "milk_skim": 250, "banana": 1 } }]
   }],
 
+  "schedule": [{                 // ⭐ WHICH SLOTS EACH DAY RUNS
+    "day": "Tue 8", "w": "office day",
+    "karl":  [{ "key": "k1", "tag": "S1" },
+              { "yfood": true, "tag": "S3",        // a slot REPLACED, not run
+                "n": "yfood, 12 scoops", "m": "1200 kcal · 74.9 g P" },
+              { "key": "tue", "tag": "S5" }],      // a choice key = the shared meal
+    "maria": [{ "key": "mb", "tag": "B" }, { "key": "tue", "tag": "D" }]
+  }],
+
   "notes": ["…"],
-  "cost":  { "week_total": 136.67 }
+  "cost":  { "aldi_tuesday": 113.31, "tesco_saturday": 40.23, "week_total": 153.54 }
 }
 ```
 
@@ -497,6 +506,19 @@ in the morning, as well as a pre-workout. That's not there any more."*
 
 ⭐ **`packs[k]` for every key in `held`** — enforced by `PUT /api/week` (§2.1). Held
 stock runs out after publication; without a pack the shortfall cannot be priced.
+
+⭐ **`schedule`** — which slots each day runs, in the order the day happens. The slots
+carry a day COUNT ("k3: 2 days") but never *which* days, so without this the week can
+only be shown as dinners plus a standing list, and the Week tab cannot say what Tuesday
+looks like.
+
+An entry is either `{key, tag}` — a slot or choice to render — or a **replacement**:
+`{yfood: true, tag, n, m}`, for a slot that does not run because something else covers
+it. Karl's office days are the case that exists: `k3` is replaced by yfood, 12 scoops.
+
+⛔ **Do not schedule what is not scheduled.** The bonus top-up `kb` is provisioned five
+times a week but Karl takes it *"just as and when, it's not predictable"* — so it appears
+in no day. Inventing a day for it would put a fiction on the page.
 
 **The self-check that proves a week is coherent:** sum `use` across the default picks
 (× `days` for slots), add `fixed` and `floor`, subtract `held`, round each up to its

@@ -873,7 +873,14 @@ function dayParts(set){
   return {day: bits[0], meal: bits[1] || "dinner"};
 }
 
+/* ⭐ The day grid. Reads `schedule` — which slots each day runs, and what
+   replaces them when it does not.
+
+   The slots carry a day COUNT ("k3: 2 days") but never which days those are, so
+   without a schedule the week can only be shown as dinners plus a standing list.
+   `schedule` is what turns that into "here is Tuesday". */
 function viewWeek(){
+  const sched = CONTENT.schedule;
   let h = "", order = [], byDay = {};
   (CONTENT.choices || []).forEach(ch => {
     const d = dayParts(ch).day;
@@ -881,35 +888,64 @@ function viewWeek(){
     byDay[d].push(ch);
   });
 
-  order.forEach(d => {
-    h += '<div class="day"><div class="day-h"><span class="d">' + esc(d) + "</span></div>";
-    byDay[d].forEach(ch => {
-      const o = picked(ch.key), meal = dayParts(ch).meal;
+  /* A row: a tag, what it is, and the macros. */
+  const row = (tag, name, macro, cls, goto) =>
+    '<div class="mrow' + (cls ? " " + cls : "") + '"><span class="mtag' + (cls === "yf" ? " yf" : "") + '">' +
+    esc(tag) + '</span><span class="mbody"><span class="mt">' + esc(name) +
+    (goto ? ' <span class="badge on" data-goto="' + esc(goto) + '" role="button" tabindex="0" style="cursor:pointer">card</span>' : "") +
+    '</span>' + (macro ? '<span class="mm">' + esc(macro) + "</span>" : "") + "</span></div>";
+
+  const mac  = o => o && o.k != null ? o.k + " kcal · " + Number(o.p).toFixed(1) + " g P" : "";
+  const macM = o => o && o.mk != null ? o.mk + " kcal · " + Number(o.mp).toFixed(1) + " g P" : "";
+
+  order.forEach((d, di) => {
+    const day = sched ? (sched.find(x => x.day === d) || {}) : null;
+    h += '<div class="day"><div class="day-h"><span class="d">' + esc(d) + "</span>" +
+         (day && day.w ? '<span class="w">' + esc(day.w) + "</span>" : "") + "</div>";
+
+    if(day){
+      /* Karl, then Maria, in the order the day actually happens. */
+      let kr = "", mr = "";
+      (day.karl || []).forEach(entry => {
+        if(entry.yfood){ kr += row(entry.tag || "—", entry.n, entry.m || "", "yf"); return; }
+        const set = chooseSet(entry.key); if(!set) return;
+        const o = picked(entry.key);
+        kr += row(entry.tag || tagFor(set), o.n, mac(o), null,
+                  (CONTENT.choices || []).some(c => c.key === entry.key) ? entry.key : null);
+      });
+      (day.maria || []).forEach(entry => {
+        if(entry.yfood){ mr += row(entry.tag || "—", entry.n, entry.m || "", "yf"); return; }
+        const set = chooseSet(entry.key); if(!set) return;
+        const o = picked(entry.key);
+        const shared = (CONTENT.choices || []).some(c => c.key === entry.key);
+        mr += row(entry.tag || tagFor(set), o.n, shared ? macM(o) : mac(o), null, shared ? entry.key : null);
+      });
       h += '<div class="twocol">' +
-        '<div class="col"><div class="colh">' + esc(meal) + "</div>" +
-          '<div class="mrow"><span class="mtag sh">K</span><span class="mbody">' +
-            '<span class="mt">' + esc(o.n) +
-            ' <span class="badge on" data-goto="' + esc(ch.key) + '" role="button" tabindex="0" style="cursor:pointer">card</span></span>' +
-            (o.k != null ? '<span class="mm">' + o.k + " kcal · " + Number(o.p).toFixed(1) + " g P</span>" : "") +
-          "</span></div>" +
-          (o.mk != null ? '<div class="mrow"><span class="mtag">M</span><span class="mbody">' +
-            '<span class="mt">' + esc(o.n) + "</span>" +
-            '<span class="mm">' + o.mk + " kcal · " + Number(o.mp).toFixed(1) + " g P</span></span></div>" : "") +
-        "</div></div>";
+           '<div class="col"><div class="colh">Karl</div>' + (kr || row("—", "Nothing provisioned", "", "away")) + "</div>" +
+           '<div class="col"><div class="colh">Maria</div>' + (mr || row("—", "Nothing provisioned", "", "away")) + "</div>" +
+           "</div>";
+    } else {
+      /* No schedule: show the day's own meals, which is all that is known. */
+      byDay[d].forEach(ch => {
+        const o = picked(ch.key), meal = dayParts(ch).meal;
+        h += '<div class="twocol"><div class="col"><div class="colh">' + esc(meal) + "</div>" +
+             row("K", o.n, mac(o), null, ch.key) +
+             (o.mk != null ? row("M", o.n, macM(o)) : "") + "</div></div>";
+      });
+    }
+
+    byDay[d].forEach(ch => {
+      const o = picked(ch.key);
       if(o.split) h += '<div class="splitbar"><b>The cut:</b> ' + o.split + "</div>";
     });
     h += "</div>";
   });
 
-  /* The standing meals, with how many days each runs. */
-  if((CONTENT.slots || []).length){
+  if(!sched && (CONTENT.slots || []).length){
     h += '<div class="grouptitle">Every day</div><div class="card"><div class="card-b">';
     CONTENT.slots.forEach(sl => {
       const o = picked(sl.key);
-      h += '<div class="mrow"><span class="mtag">' + esc(tagFor(sl)) + "</span><span class=\"mbody\">" +
-           '<span class="mt">' + esc(o.n) + "</span>" +
-           '<span class="mm">' + (o.k != null ? o.k + " kcal · " + Number(o.p).toFixed(1) + " g P · " : "") +
-           (sl.days || 1) + (sl.days === 1 ? " day" : " days") + "</span></span></div>";
+      h += row(tagFor(sl), o.n, mac(o) + " · " + (sl.days || 1) + (sl.days === 1 ? " day" : " days"));
     });
     h += "</div></div>";
   }
