@@ -798,7 +798,13 @@ function ingredientNeed(withSource){
      fresher, and letting the pantry win buys a second jar of peanut butter.
 
    So compare the dates and believe the more recent one. A stale source is not
-   made trustworthy by which table it lives in. */
+   made trustworthy by which table it lives in.
+
+   ⚠️ A tie goes to the PANTRY: a row checked the same day the week was built is
+      at least as current, and in practice it means Karl has just said what is in
+      the house.
+
+   ⚠️ And even then, only `out` overrides. See heldFor. */
 function heldFor(k){
   const held = CONTENT.held ? (CONTENT.held[k] || 0) : 0;
   if(!held) return 0;
@@ -806,8 +812,13 @@ function heldFor(k){
   if(!st || !st.tracked) return held;
   /* No date on either side: nothing to compare, so the week stands. */
   if(!CONTENT.built || !st.lastChecked) return held;
-  if(CONTENT.built >= st.lastChecked) return held;      /* the week is fresher */
-  return (st.level === "ok" || st.level === "plenty") ? held : 0;
+  if(CONTENT.built > st.lastChecked) return held;       /* the week is fresher */
+  /* ⭐ Only `out` beats a stated quantity. `low` is a BUCKET and the week's held
+     is a NUMBER, and the two do not contradict each other — 300 g of oats is
+     low. Zeroing a number because a coarser reading of the same thing says "low"
+     throws away the better data and buys a second bag. `out` is different: it
+     says none, and none beats any number. */
+  return st.level === "out" ? 0 : held;
 }
 
 function effectiveCart(){
@@ -1241,11 +1252,16 @@ function viewPantry(){
      Notes, floor and route stay in D1 where they are read when a week is built;
      provenance is not what this page is for. */
   let h = "";
+  /* ⛔ Karl, 7 Sep: "You don't need to say NEVER HELD on the site, or anything
+     that we're out of. Just what we have/think we have." An `out` row is not
+     stock, so it does not appear. The cart still reads it — being out is what
+     puts a thing on the shopping list. */
   const cats = [];
-  PANTRY.forEach(r => { if(cats.indexOf(r.category || "—") < 0) cats.push(r.category || "—"); });
+  PANTRY.forEach(r => { if(r.level !== "out" && cats.indexOf(r.category || "—") < 0) cats.push(r.category || "—"); });
   cats.forEach(cat => {
-    const rows = PANTRY.filter(r => (r.category || "—") === cat)
+    const rows = PANTRY.filter(r => (r.category || "—") === cat && r.level !== "out")
                        .sort((a,b) => (LEVEL_ORDER[a.level] ?? 9) - (LEVEL_ORDER[b.level] ?? 9));
+    if(!rows.length) return;
     h += '<div class="grouptitle">' + esc(cat) + "</div>" +
          '<div class="tablewrap"><table class="ptable"><thead><tr>' +
          "<th>Item</th><th>Amount</th><th>Certainty</th><th>Checked</th>" +
