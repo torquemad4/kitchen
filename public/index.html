@@ -867,6 +867,8 @@ function viewShop(){
   return h;
 }
 
+const capitalise = s => String(s || "").charAt(0).toUpperCase() + String(s || "").slice(1);
+
 /* "Tue 8 · dinner" -> {day:"Tue 8", meal:"dinner"} */
 function dayParts(set){
   const bits = String(set.day || set.key).split("·").map(x => x.trim());
@@ -934,9 +936,14 @@ function viewWeek(){
       });
     }
 
+    /* ⛔ "The cut" means the Karl 3 : Maria 2 division of one shared dish. On a
+       day with several meals and guests at the table it is not a cut, and
+       "The cut: Two." says nothing — so the meal names the line instead. */
     byDay[d].forEach(ch => {
       const o = picked(ch.key);
-      if(o.split) h += '<div class="splitbar"><b>The cut:</b> ' + o.split + "</div>";
+      if(!o.split) return;
+      const label = byDay[d].length === 1 ? "The cut" : capitalise(dayParts(ch).meal);
+      h += '<div class="splitbar"><b>' + esc(label) + ":</b> " + o.split + "</div>";
     });
     h += "</div>";
   });
@@ -1003,7 +1010,9 @@ function viewRecipes(){
       '<button class="cookbtn" data-cook="' + esc(o.n).replace(/"/g, "&quot;") + '">Cook mode</button>' +
       '</div><div class="card-b">' +
       '<div class="eyebrow">' + esc(set.day || set.key) + "</div>" +
-      (o.split ? '<div class="splitbar" style="margin-top:10px"><b>The cut:</b> ' + o.split + "</div>" : "") +
+      (o.split ? '<div class="splitbar" style="margin-top:10px"><b>' +
+         esc(dayParts(set).meal === "dinner" && !/·/.test(String(set.day)) ? "The cut" : capitalise(dayParts(set).meal)) +
+         ":</b> " + o.split + "</div>" : "") +
       ((r && r.method) ? libraryBody(r)
         : ((o.makes && o.makes.length) ? '<p class="mh">What makes it</p><ul class="makes">' +
             o.makes.map(x => "<li>" + x + "</li>").join("") + "</ul>" : "")) +
