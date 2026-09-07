@@ -1,0 +1,259 @@
+<title>Clousto Ingredient Keys</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#F3F5EE; --surface:#FFFFFF; --sunk:#E9ECE1;
+  --ink:#14180F; --ink-2:#4A5142; --ink-3:#7C8471;
+  --line:#DBE0D0; --line-2:#C6CDB8;
+  --accent:#3E6B2F; --accent-soft:#E4EEDC; --accent-ink:#2C4D21;
+  --warn:#8A5A0B; --warn-soft:#F6ECD6;
+  --stop:#8E3221; --stop-soft:#F7E3DE;
+  --held:#3B5C6B; --held-soft:#DFEAEF;
+  --shadow:0 1px 2px rgba(20,24,15,.06),0 8px 24px -12px rgba(20,24,15,.18);
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#101310; --surface:#181C17; --sunk:#1F241D;
+  --ink:#EAEEE3; --ink-2:#AEB6A4; --ink-3:#7E8776;
+  --line:#2B3128; --line-2:#3C4438;
+  --accent:#8FC178; --accent-soft:#23301D; --accent-ink:#A9D294;
+  --warn:#D9A94F; --warn-soft:#2E2617;
+  --stop:#E38B75; --stop-soft:#331E19;
+  --held:#8FBACD; --held-soft:#182730;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}}
+:root[data-theme="dark"]{
+  --paper:#101310; --surface:#181C17; --sunk:#1F241D;
+  --ink:#EAEEE3; --ink-2:#AEB6A4; --ink-3:#7E8776;
+  --line:#2B3128; --line-2:#3C4438;
+  --accent:#8FC178; --accent-soft:#23301D; --accent-ink:#A9D294;
+  --warn:#D9A94F; --warn-soft:#2E2617;
+  --stop:#E38B75; --stop-soft:#331E19;
+  --held:#8FBACD; --held-soft:#182730;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:15px;line-height:1.5;-webkit-text-size-adjust:100%}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px 96px}
+h1{font-family:"Bricolage Grotesque","Public Sans",sans-serif;font-weight:700;
+  font-size:clamp(24px,5vw,34px);line-height:1.1;margin:0;text-wrap:balance}
+.lede{color:var(--ink-2);margin:10px 0 0;max-width:62ch}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3)}
+header.top{padding:28px 0 18px}
+.stick{position:sticky;top:0;z-index:20;background:var(--paper);
+  border-bottom:1px solid var(--line);padding:10px 0 9px;margin-bottom:6px}
+.bar{height:6px;border-radius:99px;background:var(--sunk);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s ease}
+.status{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:7px}
+.count{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.sync{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3)}
+.sync.bad{color:var(--stop)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.chip{appearance:none;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);
+  border-radius:99px;padding:5px 11px;font:inherit;font-size:12.5px;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip:focus-visible,.v:focus-visible,.note:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.search{width:100%;margin-top:9px;padding:8px 11px;border:1px solid var(--line-2);border-radius:8px;
+  background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:15px 17px;margin:16px 0;box-shadow:var(--shadow)}
+.panel h2{font-family:"Bricolage Grotesque",sans-serif;font-size:16px;margin:0 0 8px}
+.panel ol{margin:8px 0 0;padding-left:20px}.panel li{margin-bottom:7px;color:var(--ink-2)}
+.cat{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin:26px 0 9px;display:flex;align-items:center;gap:10px}
+.cat::after{content:"";flex:1;height:1px;background:var(--line)}
+.row{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:12px 14px;margin-bottom:8px;box-shadow:var(--shadow)}
+.row.done{border-color:var(--line-2);opacity:.62}
+.row.att{border-left:3px solid var(--warn)}
+.rh{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.k{font-family:"IBM Plex Mono",monospace;font-size:13.5px;font-weight:500;color:var(--accent-ink)}
+.nm{font-weight:600}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0 0}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.04em;
+  border:1px solid var(--line-2);border-radius:5px;padding:2px 6px;color:var(--ink-3);white-space:nowrap}
+.tag.pack{background:var(--accent-soft);color:var(--accent-ink);border-color:transparent}
+.tag.pan{background:var(--held-soft);color:var(--held);border-color:transparent}
+.tag.ref{background:var(--sunk);color:var(--ink-2);border-color:transparent}
+.tag.mrg{background:var(--warn-soft);color:var(--warn);border-color:transparent;font-weight:500}
+.flag{margin:9px 0 0;padding:8px 10px;border-radius:7px;background:var(--warn-soft);color:var(--warn);
+  font-size:13px;line-height:1.45}
+.flag.stopish{background:var(--stop-soft);color:var(--stop)}
+.vs{display:flex;gap:5px;flex-wrap:wrap;margin-top:11px}
+.v{appearance:none;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);
+  border-radius:7px;padding:6px 10px;font:inherit;font-size:12.5px;cursor:pointer}
+.v:hover{border-color:var(--ink-3)}
+.v[aria-pressed="true"]{font-weight:600}
+.v.keep[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent-ink);border-color:var(--accent)}
+.v.rename[aria-pressed="true"],.v.split[aria-pressed="true"]{background:var(--warn-soft);color:var(--warn);border-color:var(--warn)}
+.v.merge[aria-pressed="true"]{background:var(--held-soft);color:var(--held);border-color:var(--held)}
+.v.drop[aria-pressed="true"]{background:var(--stop-soft);color:var(--stop);border-color:var(--stop)}
+.note{display:none;width:100%;margin-top:9px;padding:7px 10px;border:1px solid var(--line-2);
+  border-radius:7px;background:var(--sunk);color:var(--ink);font:inherit;font-size:13.5px}
+.note.on{display:block}
+.empty{text-align:center;color:var(--ink-3);padding:40px 0;font-size:14px}
+footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--ink-3);font-size:12.5px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">Clousto · stage 3</div>
+  <h1>Ingredient keys</h1>
+  <p class="lede">The key that joins a recipe ingredient to a pantry row to a shop product. It does not
+  exist yet, and stages B&nbsp;to&nbsp;E all wait on it. <strong>125 proposed entries — nothing here is in
+  the database.</strong> Your decisions save as you go.</p>
+</header>
+
+<div class="panel">
+  <h2>Four things I could not settle</h2>
+  <ol>
+    <li><strong><span class="mono">red_wine</span> is two products.</strong> It appears inside both
+      <em>Pastes</em> (a 10&nbsp;g red-wine paste sachet) and <em>Vinegars &amp; cooking wines</em>
+      (red wine vinegar). Needs two keys; I don't know which recipes mean which.</li>
+    <li><strong>Generic versus specific.</strong> Recipes say <em>oil</em>, <em>milk</em>,
+      <em>yoghurt</em>, <em>cheese</em>. The house holds sunflower and olive, skimmed and semi and oat,
+      Greek 0% and Greek style. A decrement can't be right until each resolves to one.</li>
+    <li><strong>Whether the five food bundles get split.</strong> Everything tagged
+      <span class="mono">in a bundle</span> depends on it. Until they're split those ingredients can't be
+      decremented after a cook or asked about before one.</li>
+    <li><strong>Chicken by cut.</strong> Three pack keys exist and recipes say all of “chicken”,
+      “chicken breast”, “bone-in skin-on chicken thighs”. Some of that is ambiguous in the source text.</li>
+  </ol>
+</div>
+
+<div class="stick">
+  <div class="status">
+    <span class="count" id="count">0 of 125 decided</span>
+    <span class="sync" id="sync">Loading…</span>
+  </div>
+  <div class="bar"><i id="fill"></i></div>
+  <div class="filters" id="filters">
+    <button class="chip" data-f="all" aria-pressed="true">All 125</button>
+    <button class="chip" data-f="merged" aria-pressed="false">Merges 8</button>
+    <button class="chip" data-f="bundle" aria-pressed="false">In a bundle 31</button>
+    <button class="chip" data-f="flag" aria-pressed="false">Flagged</button>
+    <button class="chip" data-f="todo" aria-pressed="false">Undecided</button>
+  </div>
+  <input class="search" id="q" type="search" placeholder="Find a key or name…" autocomplete="off">
+</div>
+
+<main id="list"></main>
+<footer id="foot">Decisions are saved to this page. Tell Claude when you're done and it reads them back to build the table.</footer>
+</div>
+
+<script>
+const DATA = [{"key":"bagel","name":"Bagels","cat":"bakery","pack":"bagel","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"bread","name":"Bread","cat":"bakery","pack":null,"pantry":"bread-sliced-loaf","note":"⚠️ ambiguous vs bread_seed,bread_wm","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"bread_seed","name":"Multiseed wholemeal loaf","cat":"bakery","pack":"bread_seed","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"bread_wm","name":"Bread","cat":"bakery","pack":"bread_wm","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"malt_loaf","name":"Malt loaf","cat":"bakery","pack":"malt_loaf","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"lemon","name":"Lemons","cat":"chilled","pack":"lemon","pantry":null,"note":"","origin":"pack","refs":13,"merged":0,"bundle":0},{"key":"carrot","name":"Carrots","cat":"chilled","pack":"carrot","pantry":null,"note":"","origin":"pack","refs":7,"merged":0,"bundle":0},{"key":"celery","name":"Celery","cat":"chilled","pack":"celery","pantry":null,"note":"","origin":"pack","refs":4,"merged":0,"bundle":0},{"key":"spring_onion","name":"Spring onions","cat":"chilled","pack":"spring_onion","pantry":null,"note":"","origin":"pack","refs":4,"merged":0,"bundle":0},{"key":"cheddar","name":"Extra mature cheddar","cat":"chilled","pack":"cheddar","pantry":"extra-mature-cheddar","note":"","origin":"pack","refs":3,"merged":1,"bundle":0},{"key":"cucumber","name":"Cucumber","cat":"chilled","pack":"cucumber","pantry":null,"note":"","origin":"pack","refs":2,"merged":0,"bundle":0},{"key":"salmon","name":"Salmon fillets","cat":"chilled","pack":"salmon","pantry":null,"note":"","origin":"pack","refs":2,"merged":0,"bundle":0},{"key":"bacon","name":"Smoked streaky bacon","cat":"chilled","pack":"bacon","pantry":null,"note":"","origin":"pack","refs":1,"merged":0,"bundle":0},{"key":"basa","name":"Basa fillets","cat":"chilled","pack":"basa","pantry":null,"note":"","origin":"pack","refs":1,"merged":0,"bundle":0},{"key":"broccoli","name":"Broccoli","cat":"chilled","pack":"broccoli","pantry":"broccoli","note":"","origin":"pack","refs":1,"merged":1,"bundle":0},{"key":"cauliflower","name":"Cauliflower","cat":"chilled","pack":"cauliflower","pantry":null,"note":"","origin":"pack","refs":1,"merged":0,"bundle":0},{"key":"feta","name":"Feta","cat":"chilled","pack":"feta","pantry":null,"note":"","origin":"pack","refs":1,"merged":0,"bundle":0},{"key":"ham","name":"Cooked ham","cat":"chilled","pack":"ham","pantry":"cooked-ham","note":"","origin":"pack","refs":1,"merged":1,"bundle":0},{"key":"pepper","name":"Mixed peppers","cat":"chilled","pack":"pepper","pantry":null,"note":"","origin":"pack","refs":1,"merged":0,"bundle":0},{"key":"apple","name":"Pink Lady apples","cat":"chilled","pack":"apple","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"banana","name":"Bananas","cat":"chilled","pack":"banana","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"beef_stew","name":"Stewing beef","cat":"chilled","pack":"beef_stew","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"chicken_br","name":"Chicken breast fillets","cat":"chilled","pack":"chicken_br","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"chicken_th","name":"Chicken thigh fillets","cat":"chilled","pack":"chicken_th","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"egg","name":"Eggs","cat":"chilled","pack":"egg","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"eggs","name":"Eggs","cat":"chilled","pack":null,"pantry":"eggs","note":"⚠️ ambiguous vs egg,noodles,tagliatelle","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"greek0","name":"Greek style fat free yoghurt","cat":"chilled","pack":"greek0","pantry":"greek-style-yoghurt","note":"","origin":"pack","refs":0,"merged":1,"bundle":0},{"key":"halloumi","name":"Halloumi","cat":"chilled","pack":"halloumi","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"lettuce","name":"Sweet gem lettuce","cat":"chilled","pack":"lettuce","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"milk_semi","name":"Milk","cat":"chilled","pack":"milk_semi","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"milk_skim","name":"Milk","cat":"chilled","pack":"milk_skim","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"mince5","name":"Beef lean steak mince 5%","cat":"chilled","pack":"mince5","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"oat_milk","name":"Oat milk","cat":"chilled","pack":"oat_milk","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"onion","name":"Onions","cat":"chilled","pack":"onion","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"onions","name":"Onions","cat":"chilled","pack":null,"pantry":"onions","note":"⚠️ ambiguous vs spring_onion,onion","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"potato","name":"Potatoes","cat":"chilled","pack":"potato","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"sardine","name":"Sardines in tomato sauce","cat":"chilled","pack":"sardine","pantry":"sardines-in-tomato-sauce","note":"","origin":"pack","refs":0,"merged":1,"bundle":0},{"key":"sweet_potatoes","name":"Sweet potatoes","cat":"chilled","pack":null,"pantry":"sweet-potatoes","note":"","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"vine_tom","name":"Sweet vine tomatoes","cat":"chilled","pack":"vine_tom","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"olive_oil","name":"Olive oil","cat":"dry goods","pack":"olive_oil","pantry":"olive-oil","note":"","origin":"pack","refs":12,"merged":1,"bundle":0},{"key":"flour","name":"Plain flour","cat":"dry goods","pack":null,"pantry":"plain-flour","note":"","origin":"held-only","refs":6,"merged":0,"bundle":0},{"key":"almond","name":"Flaked almonds","cat":"dry goods","pack":null,"pantry":"flaked-almonds","note":"","origin":"held-only","refs":5,"merged":0,"bundle":0},{"key":"chickpea","name":"Chickpea","cat":"dry goods","pack":null,"pantry":null,"note":"","origin":"held-only","refs":4,"merged":0,"bundle":0},{"key":"sultana","name":"Sultanas","cat":"dry goods","pack":null,"pantry":"sultanas","note":"","origin":"held-only","refs":4,"merged":0,"bundle":0},{"key":"capers","name":"Capers","cat":"dry goods","pack":"capers","pantry":null,"note":"","origin":"pack","refs":3,"merged":0,"bundle":0},{"key":"couscous","name":"Couscous","cat":"dry goods","pack":null,"pantry":"couscous","note":"","origin":"held-only","refs":3,"merged":0,"bundle":0},{"key":"honey","name":"Honey","cat":"dry goods","pack":null,"pantry":"honey","note":"","origin":"held-only","refs":2,"merged":0,"bundle":0},{"key":"peanut_butter","name":"Peanut butter","cat":"dry goods","pack":null,"pantry":"peanut-butter","note":"","origin":"pantry","refs":2,"merged":0,"bundle":0},{"key":"rice","name":"Chinese rice wine","cat":"dry goods","pack":null,"pantry":"rice","note":"","origin":"held-only","refs":2,"merged":0,"bundle":0},{"key":"sesame_oil","name":"Toasted sesame oil","cat":"dry goods","pack":"sesame_oil","pantry":"toasted-sesame-oil","note":"","origin":"pack","refs":2,"merged":1,"bundle":0},{"key":"fusilli","name":"Fusilli","cat":"dry goods","pack":"fusilli","pantry":null,"note":"","origin":"pack","refs":1,"merged":0,"bundle":0},{"key":"panko","name":"Panko breadcrumbs","cat":"dry goods","pack":null,"pantry":"panko-breadcrumbs","note":"","origin":"held-only","refs":1,"merged":0,"bundle":0},{"key":"stout","name":"Stout","cat":"dry goods","pack":"stout","pantry":null,"note":"","origin":"pack","refs":1,"merged":0,"bundle":0},{"key":"tagliatelle","name":"Egg tagliatelle","cat":"dry goods","pack":"tagliatelle","pantry":null,"note":"","origin":"pack","refs":1,"merged":0,"bundle":0},{"key":"bourbon_biscuits","name":"Bourbon biscuits","cat":"dry goods","pack":null,"pantry":"bourbon-biscuits","note":"","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"bulgur","name":"Bulgur wheat","cat":"dry goods","pack":null,"pantry":"bulgur-wheat","note":"","origin":"held-only","refs":0,"merged":0,"bundle":0},{"key":"butterbean","name":"Butter beans","cat":"dry goods","pack":"butterbean","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"coffee_beans","name":"Coffee beans","cat":"dry goods","pack":null,"pantry":"coffee-beans","note":"","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"fava","name":"Greek fava","cat":"dry goods","pack":null,"pantry":"greek-fava-lemnian-lathyrus-ochrus","note":"","origin":"held-only","refs":0,"merged":0,"bundle":0},{"key":"kidney","name":"Red kidney beans","cat":"dry goods","pack":"kidney","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"mayo","name":"Mayonnaise","cat":"dry goods","pack":"mayo","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"noodles","name":"Egg noodles","cat":"dry goods","pack":"noodles","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"oats","name":"Porridge oats","cat":"dry goods","pack":"oats","pantry":"porridge-oats","note":"","origin":"pack","refs":0,"merged":1,"bundle":0},{"key":"pb","name":"Pb","cat":"dry goods","pack":null,"pantry":null,"note":"","origin":"held-only","refs":0,"merged":0,"bundle":0},{"key":"peanuts","name":"Salted peanuts","cat":"dry goods","pack":"peanuts","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"protein_bar","name":"Protein bars","cat":"dry goods","pack":"protein_bar","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"suet","name":"Shredded suet","cat":"dry goods","pack":"suet","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"sweetcorn","name":"Sweetcorn","cat":"dry goods","pack":"sweetcorn","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"tom_puree","name":"Tomato double concentrate","cat":"dry goods","pack":"tom_puree","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"tom_tin","name":"Chopped tomatoes","cat":"dry goods","pack":"tom_tin","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"tuna","name":"Tuna chunks in spring water","cat":"dry goods","pack":"tuna","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"whey","name":"Whey protein","cat":"dry goods","pack":"whey","pantry":null,"note":"","origin":"pack","refs":0,"merged":0,"bundle":0},{"key":"salt_pepper","name":"Salt & pepper","cat":"oils & condiments","pack":null,"pantry":"salt-pepper","note":"","origin":"pantry","refs":1,"merged":0,"bundle":0},{"key":"cooking_oil","name":"Cooking oil","cat":"oils & condiments","pack":null,"pantry":"cooking-oil-sunflower","note":"","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"hot_sauce","name":"Hot sauce","cat":"oils & condiments","pack":null,"pantry":"hot-sauce-bottles","note":"","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"pasta","name":"Pasta","cat":"pasta & grains","pack":null,"pantry":"pasta-dried","note":"","origin":"pantry","refs":3,"merged":0,"bundle":0},{"key":"egg_noodles","name":"Egg noodles","cat":"pasta & grains","pack":null,"pantry":"egg-noodles","note":"⚠️ ambiguous vs egg,noodles","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"gnocchi","name":"Gnocchi","cat":"pasta & grains","pack":null,"pantry":"gnocchi","note":"","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"red_lentils","name":"Red lentils","cat":"pulses & tinned","pack":null,"pantry":"red-lentils","note":"","origin":"pantry","refs":4,"merged":0,"bundle":0},{"key":"tinned_tuna","name":"Tinned tuna","cat":"pulses & tinned","pack":null,"pantry":"tinned-tuna","note":"","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"tomato_paste","name":"Tomato paste","cat":"sauces & sachets","pack":null,"pantry":null,"note":"🔴 currently inside \"Pastes\" ⚠️ a PASTE sachet — not tinned tomatoes (tom_tin)","origin":"bundle","refs":15,"merged":0,"bundle":1},{"key":"roasted_garlic_paste","name":"Roasted garlic paste","cat":"sauces & sachets","pack":null,"pantry":null,"note":"🔴 currently inside \"Pastes\"","origin":"bundle","refs":6,"merged":0,"bundle":1},{"key":"sriracha","name":"Sriracha","cat":"sauces & sachets","pack":null,"pantry":"sriracha","note":"","origin":"pantry","refs":5,"merged":0,"bundle":0},{"key":"ginger_garlic_paste","name":"Ginger & garlic paste","cat":"sauces & sachets","pack":null,"pantry":null,"note":"🔴 currently inside \"Pastes\"","origin":"bundle","refs":4,"merged":0,"bundle":1},{"key":"cornflour","name":"Cornflour","cat":"sauces & sachets","pack":null,"pantry":null,"note":"🔴 currently inside \"Stocks & thickeners\"","origin":"bundle","refs":3,"merged":0,"bundle":1},{"key":"soy_sauce","name":"Soy sauce","cat":"sauces & sachets","pack":null,"pantry":"soy-sauce","note":"","origin":"pantry","refs":3,"merged":0,"bundle":0},{"key":"white_wine_vinegar","name":"White wine vinegar","cat":"sauces & sachets","pack":null,"pantry":null,"note":"🔴 currently inside \"Vinegars & cooking wines\"","origin":"bundle","refs":3,"merged":0,"bundle":1},{"key":"balsamic_vinegar","name":"Balsamic vinegar","cat":"sauces & sachets","pack":null,"pantry":null,"note":"🔴 currently inside \"Vinegars & cooking wines\"","origin":"bundle","refs":2,"merged":0,"bundle":1},{"key":"cider_vinegar","name":"Cider vinegar","cat":"sauces & sachets","pack":null,"pantry":null,"note":"🔴 currently inside \"Vinegars & cooking wines\"","origin":"bundle","refs":2,"merged":0,"bundle":1},{"key":"mint_sauce","name":"Mint sauce","cat":"sauces & sachets","pack":null,"pantry":"mint-sauce","note":"","origin":"pantry","refs":2,"merged":0,"bundle":0},{"key":"vegetable_stock","name":"Vegetable stock","cat":"sauces & sachets","pack":null,"pantry":null,"note":"🔴 currently inside \"Stocks & thickeners\"","origin":"bundle","refs":2,"merged":0,"bundle":1},{"key":"creamed_coconut","name":"Creamed coconut","cat":"sauces & sachets","pack":null,"pantry":"creamed-coconut","note":"","origin":"pantry","refs":1,"merged":0,"bundle":0},{"key":"mirin","name":"Mirin","cat":"sauces & sachets","pack":null,"pantry":null,"note":"🔴 currently inside \"Vinegars & cooking wines\"","origin":"bundle","refs":1,"merged":0,"bundle":1},{"key":"chicken_stock","name":"Chicken stock","cat":"sauces & sachets","pack":null,"pantry":null,"note":"🔴 currently inside \"Stocks & thickeners\"","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"fish_sauce","name":"Fish sauce","cat":"sauces & sachets","pack":null,"pantry":"fish-sauce","note":"","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"red_wine","name":"Red wine","cat":"sauces & sachets","pack":null,"pantry":null,"note":"🔴 currently inside \"Pastes\" 🔴 AMBIGUOUS — appears in BOTH \"Pastes\" (red wine paste 10 g) and \"Vinegars & cooking wines\" (red wine vinegar). Two different products; needs splitting.","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"tamarind","name":"Tamarind","cat":"sauces & sachets","pack":null,"pantry":null,"note":"🔴 currently inside \"Pastes\"","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"smoked_paprika","name":"Smoked paprika","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"One-shot flavour bases\"","origin":"bundle","refs":8,"merged":0,"bundle":1},{"key":"chilli_powder","name":"Chilli powder","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"Other spice jars\"","origin":"bundle","refs":6,"merged":0,"bundle":1},{"key":"cayenne","name":"Cayenne","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"Other spice jars\"","origin":"bundle","refs":5,"merged":0,"bundle":1},{"key":"saffron","name":"Saffron","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"One-shot flavour bases\"","origin":"bundle","refs":5,"merged":0,"bundle":1},{"key":"oregano","name":"Oregano","cat":"spices","pack":null,"pantry":"oregano","note":"","origin":"pantry","refs":4,"merged":0,"bundle":0},{"key":"ras_el_hanout","name":"Ras el hanout","cat":"spices","pack":null,"pantry":"ras-el-hanout","note":"","origin":"pantry","refs":4,"merged":0,"bundle":0},{"key":"cumin_seeds","name":"Cumin seeds","cat":"spices","pack":null,"pantry":"cumin-seeds","note":"","origin":"pantry","refs":3,"merged":0,"bundle":0},{"key":"garam_masala","name":"Garam masala","cat":"spices","pack":null,"pantry":"garam-masala","note":"","origin":"pantry","refs":3,"merged":0,"bundle":0},{"key":"harissa","name":"Harissa","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"Other spice jars\"","origin":"bundle","refs":3,"merged":0,"bundle":1},{"key":"thyme","name":"Thyme","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"Other spice jars\"","origin":"bundle","refs":3,"merged":0,"bundle":1},{"key":"baharat","name":"Baharat","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"One-shot flavour bases\"","origin":"bundle","refs":2,"merged":0,"bundle":1},{"key":"rosemary","name":"Rosemary","cat":"spices","pack":null,"pantry":"rosemary","note":"","origin":"pantry","refs":2,"merged":0,"bundle":0},{"key":"chilli_flakes","name":"Chilli flakes","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"One-shot flavour bases\"","origin":"bundle","refs":1,"merged":0,"bundle":1},{"key":"greek_herbs","name":"Greek herbs","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"Other spice jars\"","origin":"bundle","refs":1,"merged":0,"bundle":1},{"key":"ground_ginger","name":"Ground ginger","cat":"spices","pack":null,"pantry":"ground-ginger","note":"","origin":"pantry","refs":1,"merged":0,"bundle":0},{"key":"bay","name":"Bay leaves","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"Other spice jars\"","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"cardamoms_whole","name":"Cardamoms whole","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"Other spice jars\"","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"curry_powder","name":"Curry powder","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"One-shot flavour bases\"","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"dried_basil","name":"Dried basil","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"Other spice jars\"","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"fennel_seeds","name":"Fennel seeds","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"One-shot flavour bases\"","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"ground_black_pepper","name":"Ground black pepper","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"Other spice jars\"","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"ground_cinnamon","name":"Ground cinnamon","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"Other spice jars\"","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"ground_coriander","name":"Ground coriander","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"One-shot flavour bases\"","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"ground_cumin","name":"Ground cumin","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"Other spice jars\"","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"ground_sumac","name":"Ground sumac","cat":"spices","pack":null,"pantry":null,"note":"🔴 currently inside \"One-shot flavour bases\"","origin":"bundle","refs":0,"merged":0,"bundle":1},{"key":"ground_turmeric","name":"Ground turmeric","cat":"spices","pack":null,"pantry":"ground-turmeric","note":"","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"mixed_herbs","name":"Mixed herbs","cat":"spices","pack":null,"pantry":"mixed-herbs","note":"","origin":"pantry","refs":0,"merged":0,"bundle":0},{"key":"peri_peri_spice_mix","name":"Peri Peri spice mix","cat":"spices","pack":null,"pantry":"peri-peri-spice-mix","note":"","origin":"pantry","refs":0,"merged":0,"bundle":0}];
+const VERDICTS = [["keep","Keep"],["rename","Rename"],["merge","Merge"],["split","Split"],["drop","Not an ingredient"]];
+let state = {};                 // key -> {verdict, note}
+let db = null, filter = "all", q = "";
+
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const needsNote = v => v === "rename" || v === "merge" || v === "split";
+
+function attention(r){ return r.merged || r.bundle || /🔴|⚠️/.test(r.note || ""); }
+function visible(r){
+  if(q){
+    const h = (r.key + " " + r.name + " " + (r.pack||"") + " " + (r.pantry||"")).toLowerCase();
+    if(!h.includes(q)) return false;
+  }
+  if(filter === "merged") return !!r.merged;
+  if(filter === "bundle") return !!r.bundle;
+  if(filter === "flag")   return attention(r);
+  if(filter === "todo")   return !state[r.key];
+  return true;
+}
+
+function render(){
+  const list = document.getElementById("list");
+  const rows = DATA.filter(visible);
+  let html = "", cat = null;
+  if(!rows.length) html = '<p class="empty">Nothing matches that.</p>';
+  for(const r of rows){
+    if(r.cat !== cat){ cat = r.cat; html += '<div class="cat">' + esc(cat || "uncategorised") + "</div>"; }
+    const st = state[r.key] || {};
+    const note = (r.note || "").replace(/🔴|⚠️/g, "").trim();
+    html +=
+      '<article class="row' + (st.verdict ? " done" : "") + (attention(r) ? " att" : "") + '" data-k="' + esc(r.key) + '">' +
+        '<div class="rh"><span class="k">' + esc(r.key) + '</span><span class="nm">' + esc(r.name) + '</span></div>' +
+        '<div class="tags">' +
+          (r.pack   ? '<span class="tag pack">pack ' + esc(r.pack) + "</span>" : "") +
+          (r.pantry ? '<span class="tag pan">pantry ' + esc(r.pantry) + "</span>" : "") +
+          (r.merged ? '<span class="tag mrg">merged — check</span>' : "") +
+          (r.refs   ? '<span class="tag ref">' + r.refs + " recipe" + (r.refs>1?"s":"") + "</span>"
+                    : '<span class="tag">no recipe uses it</span>') +
+          (r.bundle ? '<span class="tag mrg">in a bundle</span>' : "") +
+        "</div>" +
+        (note ? '<p class="flag' + (r.merged ? "" : " stopish") + '">' + esc(note) + "</p>" : "") +
+        '<div class="vs">' + VERDICTS.map(([v,label]) =>
+          '<button class="v ' + v + '" data-v="' + v + '" aria-pressed="' + (st.verdict===v) + '">' + label + "</button>").join("") +
+        "</div>" +
+        '<input class="note' + (needsNote(st.verdict) || st.note ? " on" : "") + '" data-n="' + esc(r.key) + '"' +
+          ' placeholder="' + (st.verdict==="merge" ? "Merge into which key?" : st.verdict==="rename" ? "New key or name" : "Note (optional)") +
+          '" value="' + esc(st.note || "") + '">' +
+      "</article>";
+  }
+  list.innerHTML = html;
+  const n = Object.keys(state).length;
+  document.getElementById("count").textContent = n + " of " + DATA.length + " decided";
+  document.getElementById("fill").style.width = (n / DATA.length * 100) + "%";
+}
+
+function setSync(t, bad){ const e = document.getElementById("sync"); e.textContent = t; e.className = "sync" + (bad ? " bad" : ""); }
+
+async function save(key){
+  const v = state[key];
+  if(!db) return;
+  try{
+    if(!v) await db.doc("verdicts/" + key).delete();
+    else   await db.doc("verdicts/" + key).set({verdict: v.verdict, note: v.note || "", at: Date.now()});
+    setSync("Saved");
+  }catch(e){ setSync("Not saved — " + (e && e.code || "error"), true); }
+}
+
+document.getElementById("list").addEventListener("click", e => {
+  const b = e.target.closest(".v"); if(!b) return;
+  const key = b.closest(".row").dataset.k, v = b.dataset.v;
+  const cur = state[key] || {};
+  if(cur.verdict === v){ delete state[key]; } else { state[key] = {verdict: v, note: cur.note || ""}; }
+  render(); save(key);
+});
+document.getElementById("list").addEventListener("input", e => {
+  const i = e.target.closest(".note"); if(!i) return;
+  const key = i.dataset.n;
+  state[key] = {verdict: (state[key]||{}).verdict || "keep", note: i.value};
+  clearTimeout(i._t); i._t = setTimeout(() => save(key), 500);
+});
+document.getElementById("filters").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if(!b) return;
+  filter = b.dataset.f;
+  [...document.querySelectorAll(".chip")].forEach(c => c.setAttribute("aria-pressed", c === b));
+  render();
+});
+document.getElementById("q").addEventListener("input", e => { q = e.target.value.trim().toLowerCase(); render(); });
+
+render();
+(async () => {
+  db = await claude.use("db");
+  if(!db){ setSync("Offline — decisions won't save", true);
+    document.getElementById("foot").textContent = "This view can't save. Decisions you make here are not being recorded."; return; }
+  try{
+    db.collection("verdicts").onSnapshot(docs => {
+      const next = {};
+      for(const d of docs) next[d.id] = {verdict: d.verdict, note: d.note || ""};
+      state = next; render(); setSync("Saved");
+    });
+  }catch(e){
+    const docs = await db.collection("verdicts").get();
+    for(const d of docs) state[d.id] = {verdict: d.verdict, note: d.note || ""};
+    render(); setSync("Ready");
+  }
+})();
+</script>

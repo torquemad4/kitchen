@@ -153,14 +153,17 @@ deploy — say what was verified (locally, against real data) and ask Karl to lo
 
 These are Karl's to make. If a change depends on one, ask.
 
-1. **The canonical `ingredient_key`.** ⚠️ *Revised 7 Sep after measuring* — it cannot be
-   derived by unioning pack keys with pantry ids: ~8 pairs are the same ingredient under
-   two names, ~36 recipe ingredients exist in neither, and roughly half the unmappable
-   ingredient mentions are hidden inside prose bundle rows. **It has to be authored:
-   ~130–150 entries.** See `architecture.md` §4.
-1b. **Splitting the five food bundle rows** (spices, pastes, stocks, vinegars — ~40 new
-   pantry rows). Now understood to be a *prerequisite* for stages C and D rather than a
-   tidy-up, because that is where most recipe ingredients live.
+1. ~~**The canonical `ingredient_key`.**~~ ✅ **CLOSED 7 Sep** — reviewed and signed off,
+   119 rows live in `ingredients`. See `architecture.md` §4 for the three things the
+   review corrected, including the `pepper` collision.
+1b. **Splitting the five food bundle rows into real pantry rows.** ⚠️ Implicitly approved
+   — 30 of the 119 agreed keys are still marked `in_bundle`, and they cannot be
+   decremented or checked until the rows exist. **~30 new pantry rows, not yet written.**
+   This changes curated pantry data, so confirm the shape before writing.
+1c. **`salt & pepper` still needs splitting** into the agreed `salt` + `black_pepper`
+   rows. ⛔ Never key the second one `pepper` — that is the mixed-peppers pack.
+1d. **`red_wine` was dropped and may need to come back.** It meant two products (paste
+   sachet vs vinegar); at least one recipe still calls for the paste.
 2. **Split-portion recipes.** Two recipes state Karl/Maria splits rather than
    per-portion figures. `kcal`/`portions` are NULL rather than guessed.
 3. **Pantry numeric balance vs free-text `amount`.** `amount` is free text *on purpose*.

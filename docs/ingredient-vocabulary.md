@@ -1,6 +1,16 @@
-# Clousto — canonical ingredient vocabulary (DRAFT, for review)
+# Clousto — canonical ingredient vocabulary
 
-**Generated 7 September 2026. Nothing here is in the database yet.**
+✅ **Reviewed and signed off by Karl, 7 September 2026. Live in D1.**
+125 proposed → **7 dropped, 1 split, 117 kept → 119 rows** in the `ingredients` table.
+
+> This page is the draft as it went for review, kept for the record. The live vocabulary
+> is the `ingredients` table; where the two differ, the table wins. What the review
+> changed — including the `pepper` collision that was one word from shipping — is written
+> up in [`architecture.md`](architecture.md) §4.
+
+**Dropped:** `bread_wm` and `pb` (kept as *aliases*, because published weeks still speak
+them), `eggs`, `onions`, `tinned_tuna`, `ground_black_pepper`, `red_wine`.
+**Split:** `salt_pepper` → `salt` + `black_pepper`.
 
 This is the `ingredients` table proposed in [`architecture.md`](architecture.md) §4 —
 the key that joins a recipe ingredient to a pantry row to a shop product, and the thing

@@ -190,3 +190,31 @@ CREATE TABLE IF NOT EXISTS cook_log (
   created_at  TEXT DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX IF NOT EXISTS idx_cook_log_recipe ON cook_log(recipe_id, started_at DESC);
+
+-- ===========================================================================
+-- The canonical ingredient vocabulary. Reviewed and signed off 7 Sep 2026.
+-- ===========================================================================
+
+-- ⭐ THE JOIN. The key that connects a recipe ingredient to a pantry row to a
+-- shop product. Stages B–E all depend on it; before this table existed there
+-- was nothing tying `500 g pork shoulder` in a recipe to the pantry row that
+-- holds it or the pack that buys it.
+--
+-- ⚠️ `aliases` exists so PUBLISHED WEEKS KEEP RESOLVING. weeks.doc keys its
+--    ingredient maps on pack keys, and two of those (`pb`, `bread_wm`) were
+--    superseded by better canonical names during review. Rewriting a published
+--    week to match would make weeks/picks/cart_state collateral damage, which
+--    is exactly what the invariants forbid — so the superseded key is recorded
+--    here and readers resolve through it instead.
+CREATE TABLE IF NOT EXISTS ingredients (
+  key        TEXT PRIMARY KEY,
+  name       TEXT NOT NULL,
+  category   TEXT,
+  pack_key   TEXT,   -- the key weeks.doc uses, where a buyable pack exists
+  pantry_id  TEXT,   -- the pantry row, where one exists
+  aliases    TEXT,   -- JSON array of superseded keys still in published weeks
+  in_bundle  TEXT,   -- the prose bundle row it must still be freed from
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_ingredients_pack   ON ingredients(pack_key);
+CREATE INDEX IF NOT EXISTS idx_ingredients_pantry ON ingredients(pantry_id);

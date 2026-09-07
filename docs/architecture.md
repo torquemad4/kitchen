@@ -217,9 +217,32 @@ chicken legs). The pack list only ever described *this week's shop*.
 ⚠️ Sizing: the canonical list is therefore roughly **130–150 entries**, not the 65 the
 week document knows about.
 
-📄 **A full draft exists: [`ingredient-vocabulary.md`](ingredient-vocabulary.md)** — 125
-entries with their pack and pantry mappings, the 17 pack↔pantry merges to check first,
-and the four things it could not settle. **Nothing in it is in the database.**
+### ✅ Settled — reviewed and live, 7 Sep 2026
+
+125 proposed entries went to Karl; **7 dropped, 1 split, 117 kept → 119 live rows** in
+`ingredients`. The draft that was reviewed is
+[`ingredient-vocabulary.md`](ingredient-vocabulary.md).
+
+**Three things the review surfaced that the draft had wrong:**
+
+⛔ **`salt & pepper` splits to `salt` + `black_pepper`, never `pepper`.** The pack key
+`pepper` already means *Mixed peppers, 3-pack* — the vegetable — and it is referenced in
+six places in the live week. A split producing `pepper` would have made every recipe
+calling for black pepper decrement the bell peppers instead. **This is the exact silent
+conflation the join exists to prevent, and it was one word away from being shipped.**
+
+⚠️ **Two dropped keys are still spoken by the published week**, so they became aliases
+rather than deletions: `pb` → `peanut_butter` (used in `held`, `sunUse` and four `use`
+slots) and `bread_wm` → `bread` (used in `packs` and three `use` slots). Rewriting
+`weeks.doc` to match the better names would make the live week collateral damage, which
+invariant 6 forbids — so `ingredients.aliases` records the superseded key and readers
+resolve through it. **The other five drops are clean:** `eggs`, `onions`, `tinned_tuna`,
+`ground_black_pepper` and `red_wine` are referenced nowhere in the week.
+
+⚠️ **`red_wine` was dropped outright.** It was the flagged entry that meant two products —
+a 10 g red-wine *paste* sachet in `Pastes`, and red wine *vinegar* in `Vinegars`. Neither
+now has a key, and at least one recipe (the bolognese) calls for "the held red wine paste
+sachet". Either that recipe loses its mapping or a key comes back; **open.**
 
 ---
 
@@ -253,6 +276,11 @@ pantry(id, item, category, level, amount, how_checked, last_checked, floor,
 cook_log(id, recipe_id, week_id, started_at, ended_at, step_times, elapsed_min,
          notes, created_at)
   -- 1 row. step_times is JSON [{step, seconds}] — per-step actuals.
+
+ingredients(key, name, category, pack_key, pantry_id, aliases, in_bundle, updated_at)
+  -- ⭐ THE JOIN, live since 7 Sep 2026. 119 rows, reviewed and signed off.
+  -- 54 carry a pack_key, 47 a pantry_id, 2 an alias, 30 are still inside a bundle.
+  -- ⚠️ `aliases` is what lets published weeks keep resolving — see §4.
 
 params(key, value, kind, note, ruling_url, updated_at)          -- 0 rows
 profiles(id, name, household, status, …, restrictions_stated, …)-- 0 rows
