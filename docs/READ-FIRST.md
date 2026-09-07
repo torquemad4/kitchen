@@ -152,8 +152,14 @@ deploy — say what was verified (locally, against real data) and ask Karl to lo
 
 These are Karl's to make. If a change depends on one, ask.
 
-1. **The canonical `ingredient_key`.** Proposed: seed from the existing pack keys.
-   Requires backfilling 56 pantry rows; six bundle rows cannot take one.
+1. **The canonical `ingredient_key`.** ⚠️ *Revised 7 Sep after measuring* — it cannot be
+   derived by unioning pack keys with pantry ids: ~8 pairs are the same ingredient under
+   two names, ~36 recipe ingredients exist in neither, and roughly half the unmappable
+   ingredient mentions are hidden inside prose bundle rows. **It has to be authored:
+   ~130–150 entries.** See `architecture.md` §4.
+1b. **Splitting the five food bundle rows** (spices, pastes, stocks, vinegars — ~40 new
+   pantry rows). Now understood to be a *prerequisite* for stages C and D rather than a
+   tidy-up, because that is where most recipe ingredients live.
 2. **Split-portion recipes.** Two recipes state Karl/Maria splits rather than
    per-portion figures. `kcal`/`portions` are NULL rather than guessed.
 3. **Pantry numeric balance vs free-text `amount`.** `amount` is free text *on purpose*.

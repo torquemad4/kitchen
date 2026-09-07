@@ -177,11 +177,45 @@ ingredients(key)  ◄──── recipe_ingredients(recipe_id, ingredient_key, 
       └────────────────  shopping(ingredient_key, store, product, size, price, availability)
 ```
 
-⚠️ **Not every pantry row takes a key.** Six rows are deliberately *bundles*, not
-ingredients: `⚠️ HOUSEHOLD`, `⚠️ TOILETRIES`, `📌 Cat supplies`, `Never reorder —
-stable orphans`, `One-shot flavour bases`, `Other spice jars — the remainder`. These
-get `ingredient_key = NULL` and `is_bundle = 1`. They are never decremented and never
-appear on a generated shopping list.
+### ⭐ The vocabulary must be AUTHORED, not derived — measured 7 Sep 2026
+
+An extraction pass over all 36 recipes settled two things that were assumptions:
+
+**1. A union of pack keys and pantry ids does not work — they overlap.** Roughly eight
+genuine duplicates exist where a buyable pack and a pantry row are the same ingredient
+under different names: `cheddar`/`extra_mature_cheddar`, `egg`/`eggs`, `ham`/`cooked_ham`,
+`noodles`/`egg_noodles`, `oats`/`porridge_oats`, `onion`/`onions`,
+`sardine`/`sardines_in_tomato_sauce`, `sesame_oil`/`toasted_sesame_oil`. A naive union
+produces two keys for one thing, which is the join failing in exactly the way it is
+meant to prevent. **The canonical list has to be written deliberately, with the pack and
+the pantry row both pointing at it.**
+
+**2. ⛔ The bundle rows are not an edge case — they are where a large share of recipe
+ingredients live.** Of 246 ingredient mentions parsed from recipes, 133 could not be
+mapped. Approximately **half of those refer to things the house genuinely holds but
+which are locked inside prose bundles**: chicken stock (5 mentions), smoked paprika (5),
+harissa, cumin, cinnamon, chilli powder (3 each), saffron, baharat, coriander (2 each),
+plus every vinegar, every paste and the cornflour.
+
+> ⚠️ **This invalidates the original proposal below that bundles simply get
+> `is_bundle = 1` and are never decremented.** Spices and stocks appear in nearly every
+> recipe. If they stay as prose lists inside six rows, **stage D cannot decrement most
+> of what a recipe actually uses**, and stage C cannot ask about any of it — which is
+> most of the pantry's staleness risk, since the spice rows were last checked 18 August.
+>
+> **Splitting the food bundles into real rows is a prerequisite for stages C and D**, not
+> a tidy-up. `One-shot flavour bases` (8 items), `Other spice jars` (~14), `Pastes` (~8),
+> `Stocks & thickeners` (3) and `Vinegars & cooking wines` (~7) are the ones that matter
+> — roughly 40 new rows. `⚠️ HOUSEHOLD`, `⚠️ TOILETRIES`, `📌 Cat supplies` and `Never
+> reorder — stable orphans` are genuinely not recipe ingredients and can stay bundled.
+
+**3. About 36 further ingredients are tracked nowhere at all** — garlic, parsley, butter,
+milk, salt, bay, turmeric, nutmeg, tofu, chorizo, mushrooms, passata, parmesan, wine, and
+most proteins the current week does not happen to buy (brisket, pork shoulder, pork loin,
+chicken legs). The pack list only ever described *this week's shop*.
+
+⚠️ Sizing: the canonical list is therefore roughly **130–150 entries**, not the 65 the
+week document knows about.
 
 ---
 
@@ -273,9 +307,15 @@ peppercorns nor ya cai. Aldi cannot supply any of the cat food.*
 
 ### 5.3 Proposed pantry changes 🔴 NOT BUILT
 
+⚠️ **Prerequisite:** the five *food* bundle rows must be split into real rows first —
+see §4. Roughly 40 new pantry rows, and without them stages C and D cannot see the
+spices, stocks, pastes or vinegars that most recipes depend on.
+
 ```sql
-ALTER TABLE pantry ADD COLUMN ingredient_key TEXT;  -- NULL for bundles
+ALTER TABLE pantry ADD COLUMN ingredient_key TEXT;  -- NULL only for true bundles
 ALTER TABLE pantry ADD COLUMN is_bundle   INTEGER NOT NULL DEFAULT 0;
+  -- ⚠️ after the split this should apply only to HOUSEHOLD, TOILETRIES,
+  --    Cat supplies and Never-reorder — never to a food row.
 ALTER TABLE pantry ADD COLUMN qty         REAL;     -- the machine balance
 ALTER TABLE pantry ADD COLUMN qty_unit    TEXT;
 ALTER TABLE pantry ADD COLUMN qty_basis   TEXT;     -- 'observed' | 'derived'
