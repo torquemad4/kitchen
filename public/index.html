@@ -790,21 +790,15 @@ function effectiveCart(){
     const short = t[k] - held;
     if(short <= 1e-9) continue;
     const p = CONTENT.packs[k];
-    if(!p){
-      /* ⛔ Needed, not held, and this week was built without a product for it.
-         It still goes ON THE LIST. The list is what gets carried into the shop,
-         and an item missing from it is an item nobody puts in the trolley. The
-         quantity is known; the price is not, so it carries none and adds nothing
-         to the total. Stage A giving it a pack is the fix. */
-      const stk = (STOCK && STOCK[k]) || null;
-      const label = (stk && (stk.item || stk.name)) || HELD_LABEL[k] || k.replace(/_/g, " ");
-      (byGroup["Cupboard"] = byGroup["Cupboard"] || []).push({
-        n: label, d: "", p: null, est: false,
-        need: Math.round(short*10)/10 + ((stk && stk.unit) || ""),
-        held: null, tags: (src[k] || [])
-      });
-      continue;
-    }
+    /* ⛔ No product, no line. A line has to say what to put in the trolley, and
+       without a pack there is no size and no price to say it with. An earlier cut
+       emitted the requirement instead ("needs 115g") — that is a quantity you
+       need, not a quantity you can buy, and it is not a line.
+
+       This case is a defect in the WEEK, not something to improvise around at
+       shopping time: every key in `held` should carry a `packs` entry so that a
+       shortfall can always be priced. PUT /api/week enforces that. */
+    if(!p) continue;
     const packs = Math.ceil(short / p.size - 1e-9);
     if(packs < 1) continue;
     (byGroup[p.g] = byGroup[p.g] || []).push({
@@ -818,8 +812,8 @@ function effectiveCart(){
   const order = ["Fruit & veg","Meat & fish — eat in this order","Chilled","Bakery","Cupboard"];
   return order.filter(g => byGroup[g]).map(g => ({g, items: byGroup[g]}));
 }
-function cartTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{t+=(i.p||0);})); return t; }
-function remainingTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{ if(!STATE.checked.includes(i.n)) t+=(i.p||0); })); return t; }
+function cartTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{t+=i.p;})); return t; }
+function remainingTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{ if(!STATE.checked.includes(i.n)) t+=i.p; })); return t; }
 const HELD_LABEL = {
   rice:"rice", couscous:"couscous", noodles:"egg noodles", sultana:"sultanas", almond:"flaked almonds",
   pb:"peanut butter", honey:"honey", tuna:"tinned tuna", sweetpot:"sweet potato", chickpea:"chickpeas",
@@ -865,7 +859,7 @@ function viewShop(){
              i.tags.map(function(x){ return '<span class="tag ' + tagClass(x) + '">' + esc(x) + '</span>'; }).join("") +
              '<span class="tag qty">needs ' + esc(i.need) + '</span>' +
              (i.held ? '<span class="tag qty">' + esc(i.held) + ' held</span>' : "") + '</span>' +
-           '</span><span class="price">' + (i.p == null ? "" : money(i.p) + (i.est ? "*" : "")) + '</span></button></li>';
+           '</span><span class="price">' + money(i.p) + (i.est ? "*" : "") + '</span></button></li>';
     });
     h += "</ul></div>";
   });

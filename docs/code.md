@@ -71,6 +71,11 @@ one-live-week invariant at the application layer as well as the index.
 
 A `doc` that will not `JSON.parse` returns `500` rather than rendering. Same reasoning.
 
+⭐ **It also refuses a week that cannot be shopped**: every key in `held` must have a
+`packs` entry. Held stock runs out after publication, and a shortfall has to become a line
+with a size and a price. A pack entry is a catalogue entry, not a line — it costs nothing
+until the pantry says that item is short.
+
 ### `state.js`
 
 The concurrency core. Read it before touching anything about sync.
@@ -165,11 +170,10 @@ snapshot frozen into the week; `/api/stock` is the live answer. `out`, `low` and
 this added a warnings panel and was rejected: the Shop tab's own copy says *"nothing here
 is a maybe"*. If something needs attention it is a line, or it is not there.
 
-**An ingredient with no pack still emits a line** — `effectiveCart()` pushes it into
-`Cupboard` with `p: null`, its quantity, and no price. `cartTotal()`/`remainingTotal()`
-coalesce `i.p || 0`; the renderer omits the price span when `i.p == null`. It ticks like
-any other line and enters the offline outbox normally. The unit comes from
-`recipe_ingredients` via `/api/stock`, never guessed.
+**No pack, no line.** `effectiveCart()` keeps `if(!p) continue;` — every line carries a
+size and a price by construction, so there is no null-price path and no defensive
+coalescing anywhere. The condition that would need one is refused at publish instead:
+`PUT /api/week` rejects a week where a `held` key has no `packs` entry (§`week.js`).
 
 ⚠️ With `STOCK` null — offline, first visit, endpoint down — the cart is byte-identical to
 before stage B. There is a regression check for that.

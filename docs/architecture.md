@@ -121,11 +121,27 @@ published week might use (pack key, canonical key, alias). The cart reads it thr
 covers 150 g, and that is exactly what not knowing the quantity means. A spare costs a
 pound; being short strands someone at the hob.
 
-**An ingredient with no pack still gets a line.** Eleven held keys have no product in the
-current week. Rather than a note saying it cannot be added, the line appears with its
-quantity and **no price**, contributes nothing to the total, and ticks like any other.
-The list is what gets carried into the shop; an item missing from it is an item nobody
-puts in the trolley. Stage A giving it a pack is the fix.
+**Every line has a size and a price. An ingredient with no pack gets no line.**
+
+⛔ Karl, 7 Sep: *"We can't have lines without quantities."* A line has to say what to put
+in the trolley. An earlier cut printed the *requirement* instead — "needs 115 g" — which
+is a quantity you need, not a quantity you can buy, and is therefore not a line.
+
+⭐ **So the defect is in the WEEK, and it is caught at the door.** `PUT /api/week` now
+refuses (422) any week where a key in `held` has no entry in `packs`. `held` is a
+snapshot; stock runs out after publication, and when it does the item must go on the list
+with a size and a price. Without a pack the only remaining options are both bad — drop it
+silently (which is how the beef & stout stew reached the pan without its tomato paste) or
+print a half-line.
+
+⚠️ **A `packs` entry is a CATALOGUE entry, not a shopping line.** Listing rice costs
+nothing while there is rice in the house; it becomes a line only if the pantry says the
+rice has run short.
+
+🔴 **The live week (2026-08-30) predates this rule and fails it** — eleven held keys have
+no pack: rice, couscous, sultana, almond, pb, honey, chickpea, bulgur, fava, panko,
+flour. Two of them are currently short, so **peanut butter and sultanas cannot appear on
+this week's list at all.** Nothing breaks; the rule applies to the next publish.
 
 ⚠️ A true numeric diff still needs `pantry.qty`, which does not exist and whose semantics
 are open (§5.3). The week's `held` map remains the only source of quantities.

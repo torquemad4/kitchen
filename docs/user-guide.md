@@ -78,11 +78,9 @@ There is nothing to read and nothing to decide: **if the pantry cannot confirm w
 enough of something, it appears on the list.** If it can, it does not. No warnings, no
 "check this one", no maybes.
 
-- Something the week thought was in the house but the pantry knows is gone, or is running
-  low, or that nobody has looked at — **it is simply on your list.**
-- A few items have no product attached to them in this week's plan. They still appear as
-  a line, with the quantity and **no price**, and they tick like everything else. They add
-  nothing to the total.
+Something the week thought was in the house but the pantry knows is gone, or is running
+low, or that nobody has looked at — **it is simply on your list**, with its size and its
+price like every other line.
 
 ---
 

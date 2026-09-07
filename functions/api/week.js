@@ -79,6 +79,31 @@ export async function onRequestPut({ request, env }) {
   for (const k of ["packs", "slots", "choices"]) {
     if (!doc[k]) problems.push(`content.${k} is missing`);
   }
+
+  // ⭐ EVERY HELD KEY NEEDS A PACK, and this is the rule that keeps the shopping
+  //    list honest once the week is live.
+  //
+  //    `held` is a snapshot taken when the week was published. Stock runs out
+  //    afterwards — the pantry knows, the frozen snapshot does not. When that
+  //    happens the item has to go on the list, and a line has to say what to put
+  //    in the trolley: a size and a price. Without a `packs` entry there is
+  //    nothing to say it with, and the only options left are all bad — omit it
+  //    silently (which is how the beef & stout stew reached the pan without its
+  //    tomato paste on 3 Sep), or print a half-line stating a requirement rather
+  //    than a purchase.
+  //
+  // ⚠️ A `packs` entry is a CATALOGUE entry, not a shopping line. Listing rice
+  //    here costs nothing while there is rice in the house; it only ever becomes
+  //    a line if the pantry says the rice has run short.
+  if (doc.held && doc.packs) {
+    const unbuyable = Object.keys(doc.held).filter(k => doc.held[k] && !doc.packs[k]);
+    if (unbuyable.length) {
+      problems.push(
+        `held stock with no product to replace it: ${unbuyable.join(", ")} — ` +
+        `add a packs entry for each, so a shortfall can be priced rather than dropped`
+      );
+    }
+  }
   if (Array.isArray(doc.slots) && !doc.slots.length)   problems.push("content.slots is empty");
   if (Array.isArray(doc.choices) && !doc.choices.length) problems.push("content.choices is empty");
   for (const set of [].concat(doc.choices || [], doc.slots || [])) {
