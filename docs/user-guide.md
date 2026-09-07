@@ -69,9 +69,23 @@ The running total updates as you go.
   the list as a requirement, so the cart can never leave the house below it. In
   practice this is a cheese rule; tuna and pasta are always well above their floor.
 
-⚠️ **Today the list is built from the week document published at the start of the week**,
-including a snapshot of the pantry taken at that moment. It is not yet a live diff
-against the pantry table.
+### What the pantry notes on this tab mean
+
+Quantities still come from the week published at the start of the week, including a
+snapshot of the pantry taken then. **What is checked live is whether you actually still
+have the things that snapshot claims.** You may see:
+
+- **"the pantry says we do not"** — the week thought something was in the house and the
+  pantry knows it is gone, so it has been **added to your list**. This is the 3 September
+  problem caught before you get to the hob rather than at it.
+- **"running short and this week has no pack to buy it in"** — ⚠️ **the list cannot add
+  this one; put it in the trolley yourself.** It is short, but the week was built without
+  a product for it, so there is no price and nothing to tick.
+- **"low or unmeasured"** — still counted as held. The pantry records levels, not
+  amounts, so it cannot tell whether what is left covers the recipe. Worth a look in the
+  cupboard before you leave.
+- **"older than they should be"** — the claim stands on a check from a while ago, or on
+  someone's recall rather than a look.
 
 ---
 

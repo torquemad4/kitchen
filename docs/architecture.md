@@ -84,7 +84,7 @@ targets. Clousto reads them and never writes back.
 | stage | runs in | writes | status |
 |---|---|---|---|
 | **A** Menu creation | Cowork conversation | `recipes`, `shopping`, `weeks` | 🔴 NOT BUILT as a defined flow |
-| **B** Picks → shopping list | App (browser) | `picks` | 🟡 PARTIAL — works, but off the week blob |
+| **B** Picks → shopping list | App (browser) | `picks` | 🟡 PARTIAL — quantities still from the week blob; live pantry now overrides and warns (§3.1) |
 | **E** Receipt → pantry | Cowork conversation | `pantry`, `cart_history` | 🔴 NOT BUILT |
 | **C** Pre-cook checks | App (browser) | `pantry` | 🔴 NOT BUILT |
 | **D** Cook confirm → decrement | App (browser) | `cook_log`, `pantry`, `recipes.times_cooked` | 🟡 PARTIAL — cook_log written, no confirm, no decrement |
@@ -92,6 +92,31 @@ targets. Clousto reads them and never writes back.
 ⚠️ **Karl's standing rule (4 Sep 2026): engine/code changes to a Cloudflare-hosted app
 go through Claude Code, not Cowork. Cowork is the right place for D1 *data*.** That
 boundary is why stages A and E are conversations and B/C/D are code.
+
+### 2.1 Stage B as built, 7 Sep 2026 🟡 PARTIAL
+
+`GET /api/stock` joins `ingredients` → `pantry` and returns it keyed by every name a
+published week might use (pack key, canonical key, alias). The cart reads it through
+`heldFor()`.
+
+**One rule: when the live pantry says `out`, the week's frozen `held` claim loses and the
+item goes on the list.** That is the 3 September failure closed — a count correct when
+made, with nothing to decrement it since.
+
+⚠️ **`low` deliberately does NOT move the cart.** The pantry records levels, not
+quantities, so "low" cannot tell you whether what remains covers 150 g. It raises a
+warning and leaves the arithmetic alone. Under-buying strands someone at the hob;
+over-buying costs a pound.
+
+⛔ **What stage B still cannot do, and says so on screen.** Eleven held keys have no pack
+in the current week. If one of them runs short the list can flag it but **cannot buy it**
+— there is no price, no size and nothing to tick. Today that is peanut butter, whose own
+pantry note already says *"ON THE NEXT CART"*. The Shop tab prints "the list cannot add
+it — put it in the trolley yourself" rather than staying quiet. **Stage A supplying a
+pack is the real fix.**
+
+A true numeric diff needs `pantry.qty`, which does not exist and whose semantics are
+still open (§5.3). The week's `held` map remains the only source of numbers.
 
 ---
 

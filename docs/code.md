@@ -17,6 +17,7 @@ Technical documentation of the codebase. For architecture and the data model see
 │   ├── recipe.js          GET one cook card
 │   ├── recipes.js         GET the recipe library          (new, 7 Sep 2026)
 │   ├── pantry.js          GET the pantry                  (new, 7 Sep 2026)
+│   ├── stock.js           GET ingredients ⋈ pantry        (stage B, 7 Sep 2026)
 │   └── cook.js            POST what happened at the hob
 ├── schema.sql             the D1 schema, applied by deploy.sh
 ├── seed-week.mjs          week-seed.json ─► seed.sql
@@ -54,6 +55,7 @@ page and an aisle list must never be stale.
 | `POST` | `/api/state` | a batch of tick/pick events from one phone |
 | `GET` | `/api/recipes` | the whole library; `?id=` / `?name=` for one |
 | `GET` | `/api/pantry` | the pantry; `?level=` to filter |
+| `GET` | `/api/stock` | ⭐ stage B: `ingredients` ⋈ `pantry`, keyed by every name a week might use |
 | `GET` | `/api/recipe?name=` | the structured **cook card** (`recipes.cook`) |
 | `POST` | `/api/cook` | a finished cook → `cook_log` |
 
@@ -145,13 +147,28 @@ ingredientNeed()  →  { packKey: qtyNeeded }   summed across all picks,
 effectiveCart()   →  need − CONTENT.held → ceil(short / pack.size) → priced lines
 ```
 
-⚠️ **This is the part still bound to the week blob.** `CONTENT.held` is a *hand-maintained
-snapshot of the pantry* frozen into `weeks.doc`, and `CONTENT.packs` is this week's
-products. Stage B in the architecture replaces both with live `pantry` + `shopping`
-reads. See `architecture.md` §4 — this is the largest piece of outstanding work.
+⚠️ **The QUANTITIES are still the week blob's.** `CONTENT.held` is a hand-made snapshot of
+the pantry frozen into `weeks.doc` and `CONTENT.packs` is this week's products. That
+remains true because a numeric diff needs `pantry.qty`, which does not exist — pantry
+amounts are free text on purpose. What stage B added is a **truth layer** over that
+arithmetic; see `heldFor()` below and `architecture.md` §2.1.
 
 `CONTENT.floor` is added to the *need*, so the emergency floor is a requirement the
 cart cannot leave the house below.
+
+⭐ **`heldFor(k)` is stage B, and it is one rule.** `CONTENT.held` is a hand-made snapshot
+of the pantry frozen into the week; `/api/stock` is the live answer. When the pantry says
+`out`, `heldFor` returns 0 and the item goes on the cart whatever the snapshot claims.
+`low` does *not* override — the pantry has levels, not quantities, so it cannot know
+whether what is left covers the recipe; it warns via `stockWarnings()` instead.
+
+`stockWarnings()` returns five classes and `stockPanel()` renders them on Shop: `gone`
+(moved onto the list), `unbuyable` (short, and the week has no pack for it — the list
+says so because silence is how someone reaches the hob without an ingredient), `thin`,
+`old` (stale or recall-based), `untracked`.
+
+⚠️ With `STOCK` null — offline, first visit, endpoint down — the cart is byte-identical to
+before stage B and no panel renders. There is a regression check for that.
 
 ### 3.4 The library module (added 7 Sep 2026)
 

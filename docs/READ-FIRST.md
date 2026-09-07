@@ -18,12 +18,12 @@ Clousto plans the household's food. `kitchen.torquemada.uk`, Cloudflare Pages +
 Pages Functions + D1 (`clousto`, `e1268405-4322-460d-9635-6e004c4061dd`), behind
 Cloudflare Access. **Load-bearing since 21 Aug 2026** — a broken week has a real cost.
 
-The app is **one HTML file** (`public/index.html`) plus six Pages Functions. No build
+The app is **one HTML file** (`public/index.html`) plus seven Pages Functions. No build
 step, no framework, no CI. **Pushing to `main` deploys nothing.**
 
 The loop has five stages: **A** menu creation (Cowork) → **B** picks & shopping list
 (app) → **E** receipt (Cowork) → **C** pre-cook checks (app) → **D** cook confirm and
-pantry decrement (app). **Only B is meaningfully built.** See `architecture.md` §2.
+pantry decrement (app). **Only B is built, and only partly** — see `architecture.md` §2.1.
 
 ### The two hard constraints behind most design decisions
 1. **Offline.** Aldi has poor signal; the aisle is the hostile environment.
@@ -40,7 +40,7 @@ pantry decrement (app). **Only B is meaningfully built.** See `architecture.md` 
 | `docs/architecture.md` | the loop, stage ownership, **the data model**, invariants, known-broken | schema changes, a stage is built, an invariant is added |
 | `docs/user-guide.md` | what Karl and Maria see and do | user-visible behaviour changes |
 | `docs/code.md` | repo layout, endpoints, `index.html` internals, deploy, testing | code changes |
-| `docs/ingredient-vocabulary.md` | 🔴 **DRAFT awaiting Karl.** The proposed canonical ingredient list — 125 entries with their pack and pantry mappings. Nothing in the database. | the vocabulary is agreed, or a new ingredient appears |
+| `docs/ingredient-vocabulary.md` | ✅ The reviewed vocabulary draft, kept for the record. The **live** list is the `ingredients` table; where they differ the table wins. | a new ingredient is agreed |
 | `~/projects/skills/clousto/SKILL.md` | safe reading/writing of the D1 | schema or invariants change |
 | `~/projects/skills/clousto-menu/SKILL.md` | stage A conversation | the menu flow or its output contract changes |
 | `~/projects/skills/clousto-receipt/SKILL.md` | stage E conversation | receipt handling or pantry writes change |
@@ -115,12 +115,14 @@ regression checks against a **locally seeded** wrangler dev server, never produc
 **Data** — after any bulk write:
 
 ```sql
-SELECT (SELECT COUNT(*) FROM recipes)                        AS recipes,     -- 36
-       (SELECT COUNT(*) FROM pantry)                         AS pantry,      -- 56
-       (SELECT COUNT(*) FROM weeks)                          AS weeks,       --  1
+SELECT (SELECT COUNT(*) FROM recipes)                        AS recipes,     --  36
+       (SELECT COUNT(*) FROM pantry)                         AS pantry,      --  87
+       (SELECT COUNT(*) FROM ingredients)                    AS ingredients, -- 118
+       (SELECT COUNT(*) FROM recipe_ingredients)             AS joined,      -- 297
+       (SELECT COUNT(*) FROM weeks)                          AS weeks,       --   1
        (SELECT length(doc) FROM weeks WHERE status='live')   AS live_bytes,  -- 55312
-       (SELECT COUNT(*) FROM picks)                          AS picks,       -- 11
-       (SELECT COUNT(*) FROM cart_state)                     AS cart_state;  --  1
+       (SELECT COUNT(*) FROM picks)                          AS picks,       --  11
+       (SELECT COUNT(*) FROM cart_state)                     AS cart_state;  --   1
 ```
 
 ⚠️ D1 rejects compound `SELECT`s with too many `UNION ALL` terms — use subqueries.
@@ -156,14 +158,19 @@ These are Karl's to make. If a change depends on one, ask.
 1. ~~**The canonical `ingredient_key`.**~~ ✅ **CLOSED 7 Sep** — reviewed and signed off,
    119 rows live in `ingredients`. See `architecture.md` §4 for the three things the
    review corrected, including the `pepper` collision.
-1b. **Splitting the five food bundle rows into real pantry rows.** ⚠️ Implicitly approved
-   — 30 of the 119 agreed keys are still marked `in_bundle`, and they cannot be
-   decremented or checked until the rows exist. **~30 new pantry rows, not yet written.**
-   This changes curated pantry data, so confirm the shape before writing.
-1c. **`salt & pepper` still needs splitting** into the agreed `salt` + `black_pepper`
-   rows. ⛔ Never key the second one `pepper` — that is the mixed-peppers pack.
-1d. **`red_wine` was dropped and may need to come back.** It meant two products (paste
-   sachet vs vinegar); at least one recipe still calls for the paste.
+1b. ~~**Splitting the five food bundle rows.**~~ ✅ **DONE 7 Sep** — pantry 56 → 87 rows,
+   nothing left `in_bundle`. Children inherit their parent's evidence; parents kept for
+   their history and marked as split.
+1c. ~~**`salt & pepper`**~~ ✅ **DONE** — `salt` + `black_pepper`. ⛔ Never key the second
+   one `pepper`; that is the mixed-peppers pack.
+1d. ~~**`red_wine`**~~ ✅ **CLOSED** — Karl, 7 Sep: the paste sachet is long gone.
+1e. **35 recipe ingredients still have no key** (parsley, tofu, chorizo, brisket,
+   mushrooms, merlot, apricots, mustard, bacon lardons…). ⚠️ **Karl's decision, 7 Sep:
+   Clousto sources these in stage A, the next time a recipe needing them is picked.**
+   Do not bulk-add them speculatively.
+1f. **Eleven held keys have no pack in the current week**, so if one runs short the cart
+   can flag it but cannot buy it (today: peanut butter). Stage A supplying a pack is the
+   fix; the Shop tab says so explicitly meanwhile.
 2. **Split-portion recipes.** Two recipes state Karl/Maria splits rather than
    per-portion figures. `kcal`/`portions` are NULL rather than guessed.
 3. **Pantry numeric balance vs free-text `amount`.** `amount` is free text *on purpose*.
