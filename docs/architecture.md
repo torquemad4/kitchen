@@ -29,7 +29,7 @@ It is one of three apps on the same personal platform:
 ⛔ **The Clophie → Clousto arrow is one-way (ruling R41).** Clophie owns the macro
 targets. Clousto reads them and never writes back.
 
-### Two non-negotiable operating facts
+### Three non-negotiable operating facts
 
 1. **It must work offline.** Aldi has poor signal. The aisle is the hostile
    environment this app is designed around, and anything that only works on a good
@@ -37,6 +37,12 @@ targets. Clousto reads them and never writes back.
 2. **Two users, concurrently.** Karl and Maria both tick the shopping list on
    separate phones at the same time. Clousto exists *because* concurrent edits were
    being silently dropped when the week lived in an artifact. Never regress that.
+3. ⛔ **The page carries no maybes.** Karl, 7 Sep 2026: *"The front end is only for
+   shopping, picking, and cooking, nothing more. Don't tell me what went wrong before,
+   don't tell me what's uncertain."* Everything this document records about evidence,
+   staleness and past failures is real, and none of it belongs on the screen — it is
+   here so that a *week* is built correctly, and a correctly built week needs no
+   caveats. See §2.1 and invariant 10.
 
 ---
 
@@ -83,9 +89,9 @@ targets. Clousto reads them and never writes back.
 
 | stage | runs in | writes | status |
 |---|---|---|---|
-| **A** Menu creation | Cowork conversation | `recipes`, `shopping`, `weeks` | 🔴 NOT BUILT as a defined flow |
-| **B** Picks → shopping list | App (browser) | `picks` | 🟡 PARTIAL — quantities still from the week blob; live pantry now overrides and warns (§3.1) |
-| **E** Receipt → pantry | Cowork conversation | `pantry`, `cart_history` | 🔴 NOT BUILT |
+| **A** Menu creation | Cowork conversation | `recipes`, `pantry`, `ingredients`, `weeks` | ✅ **RAN 7 Sep 2026** — built the week of 8 Sep to the §5.5 contract, wrote 2 new recipes and ~20 new ingredient keys. `shopping` still does not exist. |
+| **B** Picks → shopping list | App (browser) | `picks` | ✅ **BUILT 7 Sep 2026** — the cart is computed from each option's `use` map against `held`, so a changed pick moves the trolley. See §2.1. |
+| **E** Receipt → pantry | Cowork conversation | `pantry`, `cart_history` | 🔴 NOT BUILT — **the most consequential gap left**, see §3 |
 | **C** Pre-cook checks | App (browser) | `pantry` | 🔴 NOT BUILT |
 | **D** Cook confirm → decrement | App (browser) | `cook_log`, `pantry`, `recipes.times_cooked` | 🟡 PARTIAL — cook_log written, no confirm, no decrement |
 
@@ -93,62 +99,50 @@ targets. Clousto reads them and never writes back.
 go through Claude Code, not Cowork. Cowork is the right place for D1 *data*.** That
 boundary is why stages A and E are conversations and B/C/D are code.
 
-### 2.1 Stage B as built, 7 Sep 2026 🟡 PARTIAL
+### 2.1 Stage B as built ✅ BUILT
+
+The cart is computed, not read. `ingredientNeed()` sums each picked option's `use` map
+— multiplied by `days` for a standing slot — adds `fixed` and `floor`, subtracts what is
+held, and rounds each shortfall up to its pack size. **So changing a pick changes the
+trolley**, which is the point of choosing.
 
 `GET /api/stock` joins `ingredients` → `pantry` and returns it keyed by every name a
-published week might use (pack key, canonical key, alias). The cart reads it through
-`heldFor()`.
+published week might use (pack key, canonical key, alias). `heldFor()` reconciles it
+against the week's own `held` map.
 
-> ⛔ **KARL'S RULE, 7 Sep 2026 — THE SHOP TAB CARRIES NO MAYBES.**
-> *"Things are in the list or they are not, we know the quantity or we do not, we put it
-> in the cart or we do not."*
+> ⛔ **KARL'S RULE, 7 Sep 2026 — THE FRONT END CARRIES NO MAYBES.**
+> *"The front end is only for shopping, picking, and cooking, nothing more. Don't tell me
+> what went wrong before, don't tell me what's uncertain. Tell me what I need to buy,
+> what I'm eating each day, and how to make it. Full. Stop."*
 >
-> The tab's own copy already said it — *"nothing here is a maybe"* — and a first attempt
-> at stage B broke it, adding an advisory panel of warnings about items that might need
-> attention. **Every such decision is binary and is expressed as a line, or as no line.
-> There is no advisory copy, no "check this", no "cannot add".**
+> And: *"We can't have lines without quantities. Things are in the list or they are not,
+> we know the quantity or we do not, we put it in the cart or we do not."*
+>
+> Two attempts were rejected before this landed — first a panel of advisory warnings,
+> then a half-line stating a requirement ("needs 115 g") rather than a purchase. **Every
+> decision is a line or no line. Nothing on the page is prose about a decision.**
 
-**Held is therefore a judgement, not a hedge:**
+**Held is decided by whichever source is fresher, and only `out` overrides a number:**
 
-| the live pantry says | verdict | effect |
-|---|---|---|
-| `out` · `low` · `unmeasured` | we do **not** know there is enough | held = 0 → **it goes on the list** |
-| `ok` · `plenty` | the pantry agrees with the week | keep the week's number → stays off |
-| no pantry row | nothing contradicts the week | keep the week's number → stays off |
+| the week vs the pantry | outcome |
+|---|---|
+| week `built` is later than the row's `last_checked` | the week's number stands |
+| the row is as fresh or fresher, and says **`out`** | held = 0 → **it goes on the list** |
+| the row is as fresh or fresher, and says `low` / `unmeasured` | the week's number **still stands** |
+| no pantry row at all | the week's number stands |
 
-⛔ `out` overriding a held claim is the 3 September failure closed.
-⚠️ `low` counting as **not held** is deliberate: "low" cannot say whether what remains
-covers 150 g, and that is exactly what not knowing the quantity means. A spare costs a
-pound; being short strands someone at the hob.
+⭐ **Why `low` does not override.** `low` is a bucket; the week's `held` is a number, and
+300 g of oats *is* low — they do not contradict each other. Zeroing the number because a
+coarser reading agrees with it put oats, peanut butter and soy sauce back on the list for
+£1.94. `out` is different: it says *none*, and none beats any number. That is the
+3 September failure — a paste counted on 18 August, gone by the pan — and it is tested.
 
-**Every line has a size and a price. An ingredient with no pack gets no line.**
+⚠️ **A tie goes to the pantry.** A row checked the same day the week was built is at least
+as current, and in practice means Karl has just said what is in the house.
 
-⛔ Karl, 7 Sep: *"We can't have lines without quantities."* A line has to say what to put
-in the trolley. An earlier cut printed the *requirement* instead — "needs 115 g" — which
-is a quantity you need, not a quantity you can buy, and is therefore not a line.
-
-⭐ **So the defect is in the WEEK, and it is caught at the door.** `PUT /api/week` now
-refuses (422) any week where a key in `held` has no entry in `packs`. `held` is a
-snapshot; stock runs out after publication, and when it does the item must go on the list
-with a size and a price. Without a pack the only remaining options are both bad — drop it
-silently (which is how the beef & stout stew reached the pan without its tomato paste) or
-print a half-line.
-
-⚠️ **A `packs` entry is a CATALOGUE entry, not a shopping line.** Listing rice costs
-nothing while there is rice in the house; it becomes a line only if the pantry says the
-rice has run short.
-
-⚠️ **The week marked `live` is `2026-08-30`, "Sun 30 Aug – Mon 7 Sep" — that week has now
-ENDED.** It is still `live` only because nothing has replaced it. **This week's menu has
-not been built yet**; it was the original ask on 7 Sep and the plumbing was fixed first.
-
-So the eleven held keys with no pack (rice, couscous, sultana, almond, pb, honey,
-chickpea, bulgur, fava, panko, flour) are a property of a finished week, not a list anyone
-is about to shop. **Nothing needs retro-fixing.** The rule lands on the next publish,
-which is the week stage A builds — exactly where it should.
-
-⚠️ A true numeric diff still needs `pantry.qty`, which does not exist and whose semantics
-are open (§5.3). The week's `held` map remains the only source of quantities.
+**Every line has a size and a price.** An ingredient with no `packs` entry gets no line,
+because a line has to say what to put in the trolley. That condition is refused at
+publish instead — see §5.5 — rather than improvised around in the aisle.
 
 ---
 
@@ -170,7 +164,15 @@ that is known*:
   block" is honest in a way `0.5` is not.
 - `last_checked` — when.
 
-Of the 56 rows today, **11 rest on weak evidence** and **7 are unmeasured**.
+89 rows: **82 live**, of which **63 are things we actually have** — a row that says
+`out` is a record, not stock. The other 7 carry `superseded = 1`: the five food bundles
+split on 7 Sep, `Salt & pepper`, and `Never reorder`, whose own note said never to
+surface it. ⛔ **Every stock query filters `superseded = 0`**, or the same spices are
+counted twice — once itemised, once as a paragraph.
+
+⚠️ **Nothing in this table has been updated by a shop since 20 August.** That is stage E
+missing, not neglect, and it is why the 8 Sep week was built from Karl saying out loud
+what was in the cupboards. Rows are lower bounds of unknown age.
 
 ### The failure this design already suffered
 
@@ -205,24 +207,22 @@ A balance drifts; checks re-anchor it. That is the whole design, and it is why
 
 ---
 
-## 4. The join that makes the loop possible 🔴 NOT BUILT
+## 4. The join that makes the loop possible ✅ BUILT 7 Sep 2026
 
-**This is the single biggest gap in the system today.**
+`ingredients` (139 rows) and `recipe_ingredients` (297 rows) connect *a recipe
+ingredient* to *a pantry row* to *a buyable pack*. Before they existed, nothing tied
+`500 g pork shoulder` in a recipe to the row that holds it or the pack that buys it, and
+stages B–E were all blocked on that.
 
-Stages B, C, D and E all require connecting *a recipe ingredient* to *a pantry row* to
-*a shop product*. Today no such connection exists.
+⭐ **The week document now carries structured `use` maps too** (§5.5), so the cart is
+computed from the menu rather than read from a frozen list. Both halves of the September
+migration are done: the human-readable one moved out of Notion, and the machine-readable
+one out of the week blob.
 
-- `recipes.ingredients` is **prose**: `500 g pork shoulder · onion · carrot · 3 garlic
-  · HELD: 1 sachet tomato paste, 1 chicken stock`. Not machine-readable.
-- `pantry` identifies rows by prose `item` names ("Sweet potatoes") and slug ids.
-- The only structured ingredient data in the system lives **inside `weeks.doc`**,
-  keyed on *pack keys* (`sweetpot`, `tom_tin`, `mince5`) — and it is bound to a week
-  and an option index, not to a recipe.
+⚠️ Still missing: **`shopping`**, the per-store availability and price table (§5.2). Until
+it exists, store choice and receipt-line matching have nowhere to live.
 
-> ⭐ **The September 2026 migration moved the human-readable half of the library out of
-> Notion. The machine-readable half never moved — it is still trapped in the week blob.**
-
-### The proposed key
+### The key, and how it was chosen
 
 A canonical **`ingredient_key`**, seeded from the pack keys already in use in
 `weeks.doc` (they are terse, stable, and already understood by the cart builder).
@@ -236,7 +236,8 @@ ingredients(key)  ◄──── recipe_ingredients(recipe_id, ingredient_key, 
 
 ### ⭐ The vocabulary must be AUTHORED, not derived — measured 7 Sep 2026
 
-An extraction pass over all 36 recipes settled two things that were assumptions:
+An extraction pass over the library (36 recipes at the time; 38 now) settled two
+things that were assumptions:
 
 **1. A union of pack keys and pantry ids does not work — they overlap.** Roughly eight
 genuine duplicates exist where a buyable pack and a pantry row are the same ingredient
@@ -272,13 +273,20 @@ most proteins the current week does not happen to buy (brisket, pork shoulder, p
 chicken legs). The pack list only ever described *this week's shop*.
 
 ⚠️ Sizing: the canonical list is therefore roughly **130–150 entries**, not the 65 the
-week document knows about.
+week document knows about. ✅ It landed at 119 and stage A has since taken it to **139**,
+inside the estimate.
 
 ### ✅ Settled — reviewed and live, 7 Sep 2026
 
 125 proposed entries went to Karl; **7 dropped, 1 split, 117 kept → 119 live rows** in
 `ingredients`. The draft that was reviewed is
 [`ingredient-vocabulary.md`](ingredient-vocabulary.md).
+
+⭐ **139 rows today.** Karl's rule was that unkeyed ingredients get sourced by stage A
+when a recipe needing them is picked, rather than bulk-added; building the 8 Sep week
+did exactly that for about twenty of them, and took `aliases` from 2 keys to 22.
+⛔ **Do not bulk-add the rest.** A key with no recipe to spend it on has no pack, no
+price and no pantry row — a row that looks like coverage and is not.
 
 **Three things the review surfaced that the draft had wrong:**
 
@@ -323,25 +331,29 @@ recipes(id, name, slot, status, rating, ingredients, method, source,
         uses_pantry, vegan_variant, cooking_notes, eating_notes, notion_url,
         cook, headline, kcal, protein_g, portions, cost_per_portion, updated_at)
   -- UNIQUE INDEX idx_recipes_notion_url   ⭐ the upsert key, see §7
-  -- 36 rows. method is the Notion page body VERBATIM.
+  -- 38 rows, 30 with a method. method is the Notion page body VERBATIM.
+  -- Stage A adds to this: the lamb shoulder and the full English arrived 7 Sep.
 
 pantry(id, item, category, level, amount, how_checked, last_checked, floor,
-       dated, best_before, route, notes, notion_url, updated_at)
+       dated, best_before, route, notes, notion_url, superseded, updated_at)
   -- UNIQUE INDEX idx_pantry_notion_url
-  -- 56 rows.
+  -- 89 rows: 82 live, of which 63 are shown on the page (an `out` row is not stock).
+  -- superseded = 1 keeps a row for its history without it counting as stock — the
+  -- five food bundles split on 7 Sep, "Salt & pepper", and "Never reorder", whose
+  -- own note said "never surface".
 
 cook_log(id, recipe_id, week_id, started_at, ended_at, step_times, elapsed_min,
          notes, created_at)
   -- 1 row. step_times is JSON [{step, seconds}] — per-step actuals.
 
 ingredients(key, name, category, pack_key, pantry_id, aliases, in_bundle, updated_at)
-  -- ⭐ THE JOIN, live since 7 Sep 2026. 119 rows, reviewed and signed off.
-  -- 54 carry a pack_key, 76 a pantry_id, 2 an alias. in_bundle is now empty:
-  -- every ingredient has a real pantry row of its own.
+  -- ⭐ THE JOIN, live since 7 Sep 2026. 139 rows: 119 reviewed and signed off by
+  -- Karl, plus ~20 that stage A sourced when the 8 Sep week needed them.
+  -- 22 carry an alias. in_bundle is empty: every ingredient has its own pantry row.
   -- ⚠️ `aliases` is what lets published weeks keep resolving — see §4.
 
 recipe_ingredients(recipe_id, ingredient_key, qty, unit, source, origin, note)
-  -- ⭐ 297 rows across all 36 recipes, live 7 Sep 2026. 0 orphan keys.
+  -- ⭐ 297 rows, live 7 Sep 2026. 0 orphan keys.
   -- 90 rows `origin='week'` are authoritative (hand-authored, quantified).
   -- 207 are `origin='prose'`; a NULL qty means the source stated no number.
 
@@ -584,6 +596,18 @@ reason. A library that only works on a good connection is not a library.
    between Notion and D1. A sync job quietly recreates the problem being fixed.
 8. ⛔ **No second database and no `_v2` tables.** Alter the existing schema.
 9. ⛔ **Nothing writes back to Clophie** (R41).
+10. ⛔ **The page carries no maybes.** Karl, 7 Sep 2026: *"The front end is only for
+    shopping, picking, and cooking, nothing more. Don't tell me what went wrong before,
+    don't tell me what's uncertain."* A decision reaches the page as a line or as no
+    line, never as prose about the decision. Every line has a size and a price; a
+    condition that cannot be expressed that way is a defect in the week, refused at
+    publish. **This one generalises past Clousto** — he does not want hedging UI
+    anywhere.
+11. ⛔ **`pantry.superseded = 0` in every stock query.** A superseded row is history, not
+    stock; counting it lists the same spices twice, once itemised and once as prose.
+12. ⛔ **`effectiveCart()` never drops an aisle group.** Known aisles keep walking order,
+    unknown ones are appended. A cart that walks only the aisles it recognises silently
+    loses the second shop — on the live week, the £40 lamb and the wines.
 
 ---
 
@@ -594,9 +618,10 @@ reason. A library that only works on a good connection is not a library.
 | **`times_cooked`** | ⚠️ Open Notion task says it is not maintained. The 5 cooked rows *do* carry counts (2,2,2,1,1) — the original handover's claim that they are "0 or null across the board" is **wrong**. Stage D is what would make it self-maintaining. |
 | **6 recipes have no cost/portion** | Never written in the source headline. They sort last in any price-first query. |
 | **2 recipes are split-portion** | *Sesame-peanut noodles (CHICKEN)* and *Weeknight beef ragù* state Karl/Maria splits, not per-portion figures. `kcal`/`portions` are NULL rather than guessed. Needs a representation decision. |
-| **8 recipes have no method** | Their Notion pages are genuinely blank. Mostly retired. |
+| **8 recipes have no method** | Their Notion pages are genuinely blank. Mostly retired. 30 of 38 now carry one. |
 | **Notion databases** | Stale but must stay until Karl positively confirms deletion **and** the page is verified reading D1. |
-| **`weeks.doc` still owns structured ingredients** | See §4. The reason B/C/D/E cannot be built yet. |
+| **No `shopping` table** | Per-store availability and price (§5.2). Store choice is expressed as a pack `g` group today, and receipt-line matching has nowhere to live. |
+| **Stage E does not exist** | Every shop puts food in the house the pantry never hears about, so its rows drift and stock has to be restated by hand. This is why the 8 Sep week was built from Karl's spoken stock rather than the table. |
 
 ---
 
@@ -611,3 +636,8 @@ reason. A library that only works on a good connection is not a library.
 | `~/projects/skills/clousto/SKILL.md` | operating guide for reading/writing the D1 |
 | `~/projects/skills/clousto-menu/SKILL.md` | stage A, the weekly menu conversation |
 | `~/projects/skills/clousto-receipt/SKILL.md` | stage E, receipt → pantry |
+| `docs/ingredient-vocabulary.md` | the reviewed vocabulary draft, frozen for the record — the live list is the `ingredients` table |
+
+⚠️ **`~/projects/skills` is not version-controlled**; the repo wins where they disagree.
+The three skills are also exported as `.skill` zips for Cowork — **re-export after any
+edit**, or Cowork keeps running the old text.

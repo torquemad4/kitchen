@@ -127,6 +127,31 @@ state it produces byte-identical output — a useful property when testing.
 
 ⚠️ **`esc()` everything.** Text originates in Notion and goes in via `innerHTML`.
 
+**The tabs, in order: Shop · The week · Choose · Slots · Recipes · Pantry.** There is
+no Receipt tab — stage E is a Cowork conversation, not a screen.
+
+#### ⭐ The lock: choosing is a phase, not a permanent control
+
+```js
+const LOCK_KEY = "_locked";        // stored as a pick, so it syncs like one
+isLocked() / setLocked(v)
+```
+
+Once the week is locked, **everything not chosen is hidden**: Choose and Slots collapse
+to what was picked, and the Shop tab stops offering alternatives. Karl, 7 Sep: *"once
+recipes/slots are locked in, everything not chosen should be hidden."* Deciding and
+shopping are different jobs and the second one does not want the first one's options
+still on screen.
+
+⭐ It rides on the pick channel deliberately — one sync path, one conflict rule, and
+both phones lock together.
+
+#### Responsive
+
+The page is **mobile-first and must also work on a laptop**. Layout widens at the
+breakpoint rather than reflowing into something different; the aisle case is still the
+one that gets the tight column.
+
 ### 3.2 State and sync
 
 ```js
@@ -147,28 +172,49 @@ Re-triggered on `online` and on `visibilitychange`.
 ### 3.3 The cart builder
 
 ```
-ingredientNeed()  →  { packKey: qtyNeeded }   summed across all picks,
-                                              plus CONTENT.fixed and CONTENT.floor
-effectiveCart()   →  need − CONTENT.held → ceil(short / pack.size) → priced lines
+PICKKEYS() / SLOTKEYS() / ALLKEYS()   ⭐ derived from the document, never hardcoded
+ingredientNeed()  →  { packKey: qtyNeeded }   each picked option's OWN `use` map
+                                              (× days for a slot), + fixed + floor
+effectiveCart()   →  need − heldFor() → ceil(short / pack.size) → priced lines
 ```
 
-⚠️ **The QUANTITIES are still the week blob's.** `CONTENT.held` is a hand-made snapshot of
-the pantry frozen into `weeks.doc` and `CONTENT.packs` is this week's products. That
-remains true because a numeric diff needs `pantry.qty`, which does not exist — pantry
-amounts are free text on purpose. What stage B added is a **truth layer** over that
-arithmetic; see `heldFor()` below and `architecture.md` §2.1.
+⭐ **A changed pick moves the trolley.** Every option in the regenerated week carries its
+own `use` map, so `ingredientNeed()` sums what was actually chosen rather than reading a
+frozen list. Before that the cart was the same whatever you picked, which made choosing
+decorative.
+
+⛔ **The key sets are derived.** `PICKKEYS()`, `SLOTKEYS()` and `ALLKEYS()` walk
+`CONTENT`. A hardcoded list silently omits whatever stage A adds next, and the omission
+looks exactly like a finished shopping list.
 
 `CONTENT.floor` is added to the *need*, so the emergency floor is a requirement the
 cart cannot leave the house below.
 
-⭐ **`heldFor(k)` is stage B, and it is a BINARY judgement.** `CONTENT.held` is a hand-made
-snapshot frozen into the week; `/api/stock` is the live answer. `out`, `low` and
-`unmeasured` all return 0 — we do not know there is enough, so the line goes on the list.
-`ok` and `plenty`, or no pantry row at all, keep the week's number.
+⭐ **`heldFor(k)` reconciles the week against the pantry, and only `out` wins.**
+
+```js
+if (!held) return 0;                              // nothing claimed
+if (!st || !st.tracked) return held;              // no live row
+if (!CONTENT.built || !st.lastChecked) return held;
+if (CONTENT.built > st.lastChecked) return held;  // the week is fresher
+return st.level === "out" ? 0 : held;             // only "none" beats a number
+```
+
+A tie goes to the pantry: a row checked the day the week was built is at least as
+current. ⚠️ **`low` does not zero a stated quantity.** `low` is a bucket and `held` is a
+number; 300 g of oats *is* low, and they agree rather than conflict. Treating them as a
+conflict put oats, peanut butter and soy sauce back on the list for £1.94. `out` says
+*none*, and none beats any number.
+
+⛔ **`effectiveCart()` never drops an aisle group.** Known aisles keep the walking order;
+anything unknown is appended. A builder that walked only the aisles it recognised would
+have silently dropped the £40 lamb and the wines from the live week.
 
 ⛔ **No advisory UI. Ever.** See `architecture.md` §2.1 for Karl's rule. A first cut of
-this added a warnings panel and was rejected: the Shop tab's own copy says *"nothing here
-is a maybe"*. If something needs attention it is a line, or it is not there.
+this added a warnings panel and was rejected; so was the follow-up that emitted a
+half-line stating a requirement instead of a purchase. The Shop tab's own copy says
+*"nothing here is a maybe"*. If something needs attention it is a line, or it is not
+there.
 
 **No pack, no line.** `effectiveCart()` keeps `if(!p) continue;` — every line carries a
 size and a price by construction, so there is no null-price path and no defensive
@@ -186,8 +232,24 @@ loadLibrary(), loadPantry()        // cache-first, then network, re-render on ar
 libKey(), libTokens(), libFind()   // the week ─► library join
 mdInline(), mdToHtml()             // verbatim markdown ─► HTML
 libraryBody()                      // ⭐ a METHOD SECTION, not a card — see below
-viewPantry()                       // the Pantry tab
+viewRecipes(), todaysKey()         // the Recipes tab — ONE recipe, sub-tab selected
+viewPantry()                       // the Pantry tab — a table
 ```
+
+#### The Recipes tab shows exactly one recipe
+
+A second row of sub-tabs selects it, and `todaysKey()` defaults to whatever is being
+cooked on the day you are looking — dinner preferred when a day has more than one.
+Karl, 7 Sep: *"The recipe tab should have only one recipe on it at any time."* Six
+cards stacked on a phone is a scroll, not a page you can cook from.
+
+#### The Pantry tab is a table, not prose
+
+Four columns: **Item · Amount · Certainty · Checked.** Rows with `level = "out"` are
+filtered out, because an empty jar is not stock and the page only ever says what is in
+the house. ⛔ No `NEVER HELD`, no provenance paragraphs, no "never reorder" copy —
+Karl asked for all of it gone. The provenance is still in D1; `/api/pantry` still
+returns it. It is simply not what this page is for.
 
 #### ⭐ `libraryBody()` augments the week card; it does not replace it
 
@@ -246,7 +308,7 @@ escapes (`\~880` → `~880`). Escapes HTML **before** introducing any tag.
 what to get out, what to get ready, prep, then steps with per-step timers.
 `saveCook()` → `POST /api/cook` → `cook_log`, and reports elapsed vs estimated.
 
-Only 3 recipes have a `cook` card (`cook-cards/*.json`). The other 33 fall back to the
+Only 3 recipes have a `cook` card (`cook-cards/*.json`). The other 35 fall back to the
 verbatim method on the Recipes tab.
 
 🔴 Stages C and D (pre-cook checks, confirm + pantry decrement) attach here.
@@ -326,6 +388,13 @@ for f in functions/api/*.js; do cp $f /tmp/c.mjs && node --check /tmp/c.mjs || e
 | every pick permutation renders | all 12 combinations, no exceptions, no empty cards |
 | fallback | with `LIBRARY = null`, the page renders exactly as before |
 | ⭐ **the week card is only augmented** | strip `.libbody` with the library on, strip `ol.steps` + the `Method` grouptitle with it off, and the two must be **byte-identical** (allowing for the intentionally suppressed "not written yet" banner) |
+| ⭐ **no aisle group is dropped** | the groups `effectiveCart()` emits ⊇ every group present in `CONTENT.packs` for a needed key — this is what protects the £40 lamb and the wines |
+| ⭐ **a changed pick moves the cart** | flip any pick and the totals must change; two different picks giving an identical cart means `ingredientNeed()` has stopped reading `use` |
+| **`low` does not zero a stated quantity** | with `STOCK` saying `low` for a key the week holds, that key must still produce **no** line; only `out` does |
+| **the declaration list is intact** | `git diff HEAD -- public/index.html \| grep -c '^-.*\bfunction '` — an over-broad replacement has twice deleted whole modules; anything non-zero must be deliberate |
+| **locked hides the unchosen** | `setLocked(true); render()` → no unpicked option appears anywhere in the HTML |
+| **the Recipes tab shows one recipe** | exactly one `.card` in that section, whatever the day |
+| **the Pantry tab says only what we have** | no row with `level = "out"`, and no occurrence of `NEVER HELD` or `never reorder` |
 
 ---
 
@@ -349,3 +418,23 @@ became a regression check rather than a claim.
 > part of an existing view, replace *that part*. Rebuilding the view from the new source
 > and re-adding the old fields is a denylist, and denylists lose exactly the things nobody
 > remembered to list.
+
+**7 Sep 2026, later — the join, then stage B, then the week of 8 Sep.** `ingredients`
+and `recipe_ingredients` were reviewed and signed off, `stock.js` was added, and the
+cart began reconciling the week against the live pantry. Clousto then built the 8 Sep
+week to the §5.5 contract — every option carrying its own `use` map — and the cart
+became computed rather than frozen. It reproduces the document exactly, at **£148.25**.
+
+**7 Sep 2026, later still — the page was corrected to Karl's standards.** Six passes,
+and each one removed something rather than adding it: the advisory panel, then the
+half-lines, then the pantry's provenance prose, then every mention of what we do not
+have, then the unchosen options behind the lock, then five of six recipe cards.
+
+> ⭐ **The pattern is worth naming.** Every rejection was of the same thing — the page
+> talking *about* its data instead of just being the answer. `architecture.md` §2.1 and
+> `READ-FIRST.md` §1 constraint 3 hold the rule; this is where it was learned.
+
+**Two modules were deleted by over-broad text replacements** in the same session — one
+took `libFind`, `mdToHtml` and the `STOCK` cache with it and the page died on load with
+`STOCK is not defined`. Both were restored from `HEAD` and the declaration list diffed.
+⛔ **Anchor a replacement on both ends, and diff before deploying.**

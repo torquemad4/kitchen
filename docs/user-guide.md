@@ -6,6 +6,9 @@ something looks wrong.
 **Where it lives:** `kitchen.torquemada.uk` — behind Cloudflare Access, so you sign in
 with your own email. **The URL never changes.** Bookmark it once.
 
+Built for the phone, because that is what goes to the shop, but it works on a laptop
+too.
+
 > ⚠️ **What works today vs what is planned.** Parts of the weekly routine below are not
 > built yet and are marked 🔴. They are here so the shape of the system is clear, not
 > because they work. Anything unmarked works now.
@@ -16,15 +19,15 @@ with your own email. **The URL never changes.** Bookmark it once.
 
 | when | what | where |
 |---|---|---|
-| First day of the week | Build the menu | 🔴 Cowork chat |
-| Then | Choose your dinners | App → **Choose** |
+| First day of the week | Build the menu | Cowork chat |
+| Then | Choose your dinners, then lock | App → **Choose** |
 | Then | Shop | App → **Shop** |
 | After shopping | Photo of the receipt | 🔴 Cowork chat |
 | Each evening | Cook | App → **Recipes** → Cook mode |
 
 ---
 
-## 1. Building the week 🔴 NOT BUILT
+## 1. Building the week ✅
 
 Done in a **Cowork conversation**, not the app.
 
@@ -38,6 +41,8 @@ ingredient for availability, store by store, in this order:
 Everything is written into the app at the end of the conversation. Nothing is live
 until that write happens.
 
+✅ **This ran for the first time on 7 September 2026**, for the week of the 8th.
+
 ---
 
 ## 2. Choosing dinners — the **Choose** tab
@@ -49,9 +54,14 @@ Recipes tab all follow.
 **Both phones stay in step.** Picks and ticks sync between you. If you and Maria change
 the same thing at the same time, the most recent change wins.
 
-🔴 **Once picks are locked in**, the app will diff the chosen recipes against the pantry
-and build the shopping list from only what is missing. Today the list comes from the
-week that was published — see the note in §3.
+✅ **Your picks build the list.** Each option carries its own ingredients, so swapping a
+dinner changes what goes in the trolley and what it costs. Choosing is not cosmetic.
+
+### Locking the week
+
+When you are both happy, **lock it**. Everything you did not choose disappears — Choose,
+Slots and Shop all narrow to the week you actually settled on. Unlock if you change your
+mind. The lock syncs like a pick, so you both lock together.
 
 ---
 
@@ -71,16 +81,17 @@ The running total updates as you go.
 
 ### The list is checked against the pantry
 
-Quantities still come from the week published at the start of the week. **What is checked
-live is whether you still actually have the things that week assumed.**
+The quantities come from the dinners you picked, then get measured against what the
+house holds. **What is checked live is whether you still actually have the things the
+week assumed.**
 
-There is nothing to read and nothing to decide: **if the pantry cannot confirm we have
-enough of something, it appears on the list.** If it can, it does not. No warnings, no
-"check this one", no maybes.
+There is nothing to read and nothing to decide: **if something has run out since the
+week was built, it is simply on your list**, with its size and its price like every
+other line. If it has not, it is not. No warnings, no "check this one", no maybes.
 
-Something the week thought was in the house but the pantry knows is gone, or is running
-low, or that nobody has looked at — **it is simply on your list**, with its size and its
-price like every other line.
+Only *out* puts something back on the list. "Running low" does not — the week already
+knew roughly how much was there, and low usually agrees with that rather than
+contradicting it.
 
 ---
 
@@ -91,12 +102,16 @@ it is added to the pantry, and the real total is recorded against what was predi
 
 This is what keeps the pantry honest in the "things came into the house" direction.
 
+⚠️ **Until it is built the pantry drifts**, and the only correction is telling Clousto
+out loud what is actually in the house — which is how the week of 8 September was
+built.
+
 ---
 
 ## 5. Cooking — the **Recipes** tab
 
-Only what is actually being cooked is shown. Change a dinner on **Choose** and this tab
-follows.
+**One recipe at a time.** A second row of tabs picks which; it opens on whatever is
+being cooked today, dinner first. Change a dinner on **Choose** and this tab follows.
 
 Each card carries the **full recipe, verbatim** — every step and every ingredient, plus
 the research behind it and the notes on storing and reheating.
@@ -123,19 +138,18 @@ pantry.
 
 ## 6. The **Pantry** tab
 
-Everything in the house, grouped by category, weakest evidence first.
+A table of what is in the house: **Item · Amount · Certainty · Checked.**
 
-Each line shows **how it is known** and **when** — photographed, counted, at-the-pan,
-recalled, or inferred. That grading is the point of the tab, not decoration.
+It lists what we have. Things we are out of are not on it — an empty jar is not stock,
+and a list of absences is not something you can shop or cook from.
 
-- **`unmeasured`** means *nobody has looked*. It does not mean "probably fine" and it
-  does not mean "out".
-- **Weak evidence** (recalled, inferred) means the line came from conversation, not
-  observation. Conversation-derived baselines have undercounted **seven times out of
-  seven** in the food categories.
-- ⚠️ **Check the date before you cook from a line.** On 3 September two pastes recorded
-  as held on 18 August turned out to be gone — discovered at the pan, mid-recipe. The
-  count was correct when it was made; nothing had decremented it since.
+- **Certainty** is how the amount is known: photographed, counted, at-the-pan, recalled
+  or inferred. Photographed and counted are worth more than recalled and inferred.
+- **`unmeasured`** means *nobody has looked*. It does not mean "probably fine".
+- ⚠️ **Checked is a date, not a promise.** On 3 September two pastes recorded as held on
+  18 August turned out to be gone — discovered at the pan, mid-recipe. The count was
+  correct when it was made; nothing had decremented it since. That is what the receipt
+  step (§4) and the cook confirm (§5) are for.
 
 ---
 
@@ -161,6 +175,10 @@ Uncommon now — every recipe in the library carries its full method, including 
 alternatives you did not pick. If you still see it, the dish is in the week but could
 not be matched to a library recipe. The card still tells you enough to shop and to know
 what matters.
+
+**Half the app has disappeared.**
+The week is locked. Everything you did not choose is hidden on purpose — unlock on
+**Choose** to see the options again.
 
 **An ingredient is not in the shop.**
 Some things genuinely are not stocked. Known: Aldi carries no fish sauce at all; capers

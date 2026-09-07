@@ -23,12 +23,19 @@ step, no framework, no CI. **Pushing to `main` deploys nothing.**
 
 The loop has five stages: **A** menu creation (Cowork) → **B** picks & shopping list
 (app) → **E** receipt (Cowork) → **C** pre-cook checks (app) → **D** cook confirm and
-pantry decrement (app). **Only B is built, and only partly** — see `architecture.md` §2.1.
+pantry decrement (app). **A and B are built; C, D and E are not** — see
+`architecture.md` §2. Stage E is the gap that matters: nothing tells the pantry what
+came home from the shop, so its rows drift until someone restates them out loud.
 
-### The two hard constraints behind most design decisions
+### The three hard constraints behind most design decisions
 1. **Offline.** Aldi has poor signal; the aisle is the hostile environment.
 2. **Two users at once.** Karl and Maria, two phones. Clousto exists *because*
    concurrent edits were being silently dropped.
+3. ⛔ **The page carries no maybes.** Karl, 7 Sep 2026: *"The front end is only for
+   shopping, picking, and cooking, nothing more. Don't tell me what went wrong before,
+   don't tell me what's uncertain."* Provenance, evidence grading and known failures
+   are real and they live in D1 and in these docs — **not on the page.** A decision
+   reaches the page as a line or as no line, never as prose about the decision.
 
 ---
 
@@ -61,6 +68,7 @@ affected, update it in the same session.**
 | a D1 table or column | ✅ §5 | — | if an endpoint shape changed | ✅ `clousto` | `schema.sql` |
 | a new API endpoint | — | — | ✅ §2 | ✅ if a skill calls it | — |
 | `index.html` view logic | — | ✅ if visible | ✅ §3 | — | — |
+| anything the page renders | — | ✅ | ✅ | — | ⛔ re-read §1 constraint 3 first |
 | the cart builder | ✅ §4 | ✅ §3 | ✅ §3.3 | — | — |
 | the week ↔ library join | — | ✅ §7 if visible | ✅ §3.4 | — | add a regression check |
 | built a stage (A–E) | ✅ §2 table **and** flip its 🔴 | ✅ flip its 🔴 | ✅ | ✅ the stage's skill | — |
@@ -115,13 +123,14 @@ regression checks against a **locally seeded** wrangler dev server, never produc
 **Data** — after any bulk write:
 
 ```sql
-SELECT (SELECT COUNT(*) FROM recipes)                        AS recipes,     --  36
-       (SELECT COUNT(*) FROM pantry)                         AS pantry,      --  87
-       (SELECT COUNT(*) FROM ingredients)                    AS ingredients, -- 118
+SELECT (SELECT COUNT(*) FROM recipes)                        AS recipes,     --  38
+       (SELECT COUNT(*) FROM pantry)                         AS pantry,      --  89
+       (SELECT COUNT(*) FROM pantry WHERE superseded = 0)    AS live_pantry, --  82
+       (SELECT COUNT(*) FROM ingredients)                    AS ingredients, -- 139
        (SELECT COUNT(*) FROM recipe_ingredients)             AS joined,      -- 297
-       (SELECT COUNT(*) FROM weeks)                          AS weeks,       --   1
-       (SELECT length(doc) FROM weeks WHERE status='live')   AS live_bytes,  -- 55312
-       (SELECT COUNT(*) FROM picks)                          AS picks,       --  11
+       (SELECT COUNT(*) FROM weeks)                          AS weeks,       --   2
+       (SELECT length(doc) FROM weeks WHERE status='live')   AS live_bytes,  -- 40505
+       (SELECT COUNT(*) FROM picks)                          AS picks,       --  24
        (SELECT COUNT(*) FROM cart_state)                     AS cart_state;  --   1
 ```
 
@@ -150,6 +159,11 @@ deploy — say what was verified (locally, against real data) and ask Karl to lo
 | **Deploying to a preview** | `wrangler pages deploy` can land on a preview branch. Always confirm `Environment = Production`. |
 | **`--commit-dirty=true`** | The 7 Sep deploy matches no commit. Commit before or immediately after deploying. |
 | **Assuming the handover is right** | The 7 Sep handover said `times_cooked` was "0 or null across the board". It was 2,2,2,1,1. **Check the data.** |
+| **Reading a closed week as current** | 7 Sep: I read `2026-08-30` — ended — as this week's list. Karl: *"This week's list isn't done yet, you're looking at last week."* **Check `starts_on` against today.** |
+| **A pantry row cited as present fact** | 7 Sep: off a row dated 20 Aug I told Karl oats and peanut butter were missing from the cart. Karl: *"They aren't."* This is trap 1 again, aimed at him instead of the pan. **A dated row is evidence of that date, not of now.** |
+| **A broad text replacement in `index.html`** | ✅ *fixed 7 Sep, twice.* One over-wide replacement deleted `libFind`, `mdToHtml`, the `STOCK` cache and the whole library module; the page died with `STOCK is not defined`. **Anchor replacements on both ends, and `git diff` the declaration list before deploying.** |
+| **Rebuilding the cart from a subset of aisles** | A restored legacy cart builder walked only the aisles it knew and silently dropped the rest — on the live week that was the £40 lamb and the wines. **`effectiveCart()` never drops a group: known aisles keep walking order, unknown ones are appended.** Guarded by a regression check. |
+| **A coarse reading overriding a number** | `low` said what the week's `held` number already said, and zeroing on it put oats, peanut butter and soy sauce back on the list for £1.94. **Only `out` beats a stated quantity** — see `architecture.md` §2.1. |
 
 ---
 
@@ -158,23 +172,25 @@ deploy — say what was verified (locally, against real data) and ask Karl to lo
 These are Karl's to make. If a change depends on one, ask.
 
 1. ~~**The canonical `ingredient_key`.**~~ ✅ **CLOSED 7 Sep** — reviewed and signed off,
-   119 rows live in `ingredients`. See `architecture.md` §4 for the three things the
-   review corrected, including the `pepper` collision.
-1b. ~~**Splitting the five food bundle rows.**~~ ✅ **DONE 7 Sep** — pantry 56 → 87 rows,
+   119 rows live in `ingredients`; stage A has since taken it to 139. See
+   `architecture.md` §4 for the three things the review corrected, including the
+   `pepper` collision.
+1b. ~~**Splitting the five food bundle rows.**~~ ✅ **DONE 7 Sep** — pantry 56 → 89 rows,
    nothing left `in_bundle`. Children inherit their parent's evidence; parents kept for
-   their history and marked as split.
+   their history and marked `superseded = 1`, which is what keeps them off the page.
 1c. ~~**`salt & pepper`**~~ ✅ **DONE** — `salt` + `black_pepper`. ⛔ Never key the second
    one `pepper`; that is the mixed-peppers pack.
 1d. ~~**`red_wine`**~~ ✅ **CLOSED** — Karl, 7 Sep: the paste sachet is long gone.
-1e. **35 recipe ingredients still have no key** (parsley, tofu, chorizo, brisket,
-   mushrooms, merlot, apricots, mustard, bacon lardons…). ⚠️ **Karl's decision, 7 Sep:
-   Clousto sources these in stage A, the next time a recipe needing them is picked.**
-   Do not bulk-add them speculatively.
-1f. ⚠️ **The week marked `live` is last week.** `2026-08-30` covered "Sun 30 Aug – Mon 7
-   Sep" and has ended; it stays `live` because nothing has replaced it. **Do not read it
-   as the current shopping list** — this week's menu has not been built yet. Its eleven
-   pack-less held keys need no retro-fix; `PUT /api/week` enforces the rule on the next
-   publish.
+1e. ~~**35 recipe ingredients with no key.**~~ 🟡 **WORKING AS DECIDED.** Karl, 7 Sep:
+   *"Those ingredients will need to be sourced by Clousto next time we pick those
+   recipes."* That is what happened — building the 8 Sep week added ~20 keys and took
+   `ingredients` to 139. ⚠️ **Still: do not bulk-add the rest speculatively.** A key
+   sourced with no recipe to spend it on has no pack, no price and no pantry row.
+1f. ~~**The week marked `live` is last week.**~~ ✅ **CLOSED 7 Sep** — `2026-09-08` is
+   live and current; `2026-08-30` is `closed`. ⚠️ **The trap stands: check a week's
+   `starts_on` against today before reading it as the shopping list.** On 7 Sep I read
+   the closed week as current and told Karl his list was missing things it did not need.
+   *"This week's list isn't done yet, you're looking at last week."*
 2. **Split-portion recipes.** Two recipes state Karl/Maria splits rather than
    per-portion figures. `kcal`/`portions` are NULL rather than guessed.
 3. **Pantry numeric balance vs free-text `amount`.** `amount` is free text *on purpose*.

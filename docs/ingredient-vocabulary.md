@@ -12,12 +12,18 @@
 them), `eggs`, `onions`, `tinned_tuna`, `ground_black_pepper`, `red_wine`.
 **Split:** `salt_pepper` → `salt` + `black_pepper`.
 
-This is the `ingredients` table proposed in [`architecture.md`](architecture.md) §4 —
-the key that joins a recipe ingredient to a pantry row to a shop product, and the thing
-that currently does not exist. Stages B, C, D and E all depend on it.
+This is the `ingredients` table described in [`architecture.md`](architecture.md) §4 —
+the key that joins a recipe ingredient to a pantry row to a shop product. Stages B, C, D
+and E all depend on it, and B is built on it.
 
-> ⚠️ **This is a draft to be red-penned, not a decision.** It was assembled mechanically
-> from three sources and the joins between them are exactly where judgement is needed.
+⚠️ **The table has grown since.** 119 rows at sign-off, **139 today**: stage A sources a
+key when a recipe that needs one is picked, which is Karl's rule, and it ran for the
+first time on 7 Sep. **This page is not updated to match** — it is the review artefact,
+frozen. Query the table.
+
+> ⚠️ **The text below is the draft as it went for red-penning, not a decision.** It was
+> assembled mechanically from three sources and the joins between them are exactly where
+> judgement was needed.
 > Rows marked 🔴 are ones I could not settle and should not settle alone.
 
 ## How it was built, and the one rule that constrained it
