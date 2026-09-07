@@ -812,8 +812,17 @@ function effectiveCart(){
   const order = ["Fruit & veg","Meat & fish — eat in this order","Chilled","Bakery","Cupboard"];
   return order.filter(g => byGroup[g]).map(g => ({g, items: byGroup[g]}));
 }
-function cartTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{t+=i.p;})); return t; }
-function remainingTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{ if(!STATE.checked.includes(i.n)) t+=i.p; })); return t; }
+/* Both formats answer these; the planned week reads its packs, the original
+   recomputes from the use-maps. The tick handler calls remainingTotal() on every
+   tap, so this must never throw. */
+function cartTotal(){
+  if(planned()) return plannedTotal();
+  let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{t+=i.p;})); return t;
+}
+function remainingTotal(){
+  if(planned()) return plannedRemaining();
+  let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{ if(!STATE.checked.includes(i.n)) t+=i.p; })); return t;
+}
 const HELD_LABEL = {
   rice:"rice", couscous:"couscous", noodles:"egg noodles", sultana:"sultanas", almond:"flaked almonds",
   pb:"peanut butter", honey:"honey", tuna:"tinned tuna", sweetpot:"sweet potato", chickpea:"chickpeas",
@@ -1414,8 +1423,177 @@ function viewPantry(){
   return h;
 }
 
+
+/* ==========================================================================
+   THE PLANNED WEEK — the format Clousto has produced since 8 Sep 2026.
+
+   ⭐ The two formats differ in WHO DID THE ARITHMETIC.
+
+   The original week shipped raw material — `dinUse`, `use`, `held`, `floor` —
+   and the app computed the shopping list from it, which is why changing a pick
+   moved the lines and the total. The planned week ships the ANSWER: every pack
+   carries the `qty` to buy, and the pantry-first work was done in the Cowork
+   conversation that built it.
+
+   ⚠️ THE COST OF THAT, STATED PLAINLY: with no per-option ingredient maps, a
+      changed dinner pick CANNOT change the shopping list. The recipe you cook
+      follows your pick; the trolley does not. Nothing in the UI may imply
+      otherwise.
+
+   Legacy weeks still render through the original path — `planned()` picks. */
+function planned(){ return !!(CONTENT && !CONTENT.dinUse); }
+
+/* ⛔ Never drop a group. The original renderer filtered to five known aisle
+   names, which would silently have discarded this week's "Wine — cooking" and
+   "⚠️ TESCO — Maria, Saturday morning" — a separate shop, dropped without a
+   trace. Known aisles keep their walking order; anything else is appended. */
+const AISLE_ORDER = ["Fruit & veg", "Meat & fish — eat in this order", "Chilled",
+                     "Bakery", "Cupboard", "Wine — cooking"];
+function plannedCart(){
+  const byGroup = {};
+  const packs = CONTENT.packs || {};
+  for(const k in packs){
+    const p = packs[k], qty = p.qty == null ? 1 : p.qty;
+    if(qty <= 0) continue;
+    (byGroup[p.g || "Cupboard"] = byGroup[p.g || "Cupboard"] || []).push({
+      n: qty > 1 ? p.n + "  ×" + qty : p.n,
+      d: p.d || "", p: +(qty * p.price).toFixed(2), est: !!p.est
+    });
+  }
+  const known = AISLE_ORDER.filter(g => byGroup[g]);
+  const rest  = Object.keys(byGroup).filter(g => AISLE_ORDER.indexOf(g) < 0).sort();
+  return known.concat(rest).map(g => ({g, items: byGroup[g]}));
+}
+function plannedTotal(){ let t = 0; plannedCart().forEach(g => g.items.forEach(i => { t += i.p; })); return t; }
+function plannedRemaining(){
+  let t = 0;
+  plannedCart().forEach(g => g.items.forEach(i => { if(!STATE.checked.includes(i.n)) t += i.p; }));
+  return t;
+}
+
+function viewShopPlanned(){
+  let h = '<div class="note good"><b>' + esc(CONTENT.store || "") + '</b></div>';
+  const c = CONTENT.cost || {};
+  if(c.aldi_tuesday != null && c.tesco_saturday != null)
+    h += '<div class="note held"><b>' + money(c.aldi_tuesday) + '</b> on Tuesday, <b>' +
+         money(c.tesco_saturday) + '</b> at Tesco on Saturday.</div>';
+  plannedCart().forEach(g => {
+    h += '<div class="grouptitle">' + esc(g.g) + '</div><div class="card"><ul class="list">';
+    g.items.forEach(i => {
+      const on = STATE.checked.includes(i.n);
+      h += '<li><button class="row' + (on ? " done" : "") + '" data-item="' + esc(i.n) + '" aria-pressed="' + on + '">' +
+           '<span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>' +
+           '<span class="rowmain"><span class="name">' + esc(i.n) + '</span>' +
+           (i.d ? '<span class="det">' + esc(i.d) + '</span>' : "") +
+           '</span><span class="price">' + money(i.p) + '</span></button></li>';
+    });
+    h += "</ul></div>";
+  });
+  /* The running total, sticky at the bottom. The single most-used thing in the
+     aisle, and the tick handler updates #remain in place on every tap. */
+  h += '<div class="totalbar"><span>Left to buy</span><strong id="remain">' + money(remainingTotal()) + '</strong>' +
+       '<span style="color:var(--ink-3)">of ' + money(cartTotal()) + '</span>' +
+       '<button class="reset" id="resetbtn">Reset</button></div>';
+  return h;
+}
+
+/* One day, with the option that is picked and the two that are not. */
+function plannedDayCard(set){
+  const o = picked(set.key);
+  let h = '<div class="card"><div class="card-h"><h3>' + esc(set.day || set.key) + '</h3>' +
+          '<button class="cookbtn" data-cook="' + esc(o.n).replace(/"/g, "&quot;") + '">Cook mode</button>' +
+          '</div><div class="card-b">' +
+          (set.slot ? '<div class="eyebrow">' + esc(set.slot) + "</div>" : "") +
+          (set.spec ? '<p style="font-size:15px;margin:8px 0 12px">' + set.spec + "</p>" : "") +
+          '<div class="grouptitle">Your pick</div>' +
+          '<p style="font-size:16px;font-weight:600;margin:0 0 8px">' + esc(o.n) + "</p>";
+  const facts = [];
+  if(o.time) facts.push(["Time", o.time]);
+  if(o.cost) facts.push(["Cost", o.cost]);
+  if(facts.length)
+    h += '<div class="facts" style="margin:10px 0;border-radius:8px;overflow:hidden;border:1px solid var(--line)">' +
+         facts.map(f => '<div class="fact"><div class="fl">' + f[0] + '</div><div class="fv">' + esc(f[1]) + "</div></div>").join("") +
+         "</div>";
+  if(o.split)  h += '<div class="splitbar"><b>The cut:</b> ' + o.split + "</div>";
+  if(o.clears) h += '<div class="clears" style="margin-top:10px"><b>Clears:</b> ' + o.clears + "</div>";
+  if(o.makes && o.makes.length)
+    h += '<p class="mh">What makes it</p><ul class="makes">' + o.makes.map(x => "<li>" + x + "</li>").join("") + "</ul>";
+  return h + "</div></div>";
+}
+
+function viewWeekPlanned(){
+  let h = "";
+  (CONTENT.notes || []).forEach(n => { h += '<div class="note warn">' + n + "</div>"; });
+  (CONTENT.choices || []).forEach(set => { h += plannedDayCard(set); });
+  if((CONTENT.slots || []).length){
+    h += '<div class="grouptitle">Standing slots</div><div class="card"><div class="card-b">' +
+         '<div class="plates">' + CONTENT.slots.map(sl =>
+           '<div class="plate"><div class="who">' + esc(sl.label || sl.key) + "</div></div>").join("") +
+         "</div></div></div>";
+  }
+  return h;
+}
+
+function viewChoosePlanned(){
+  /* ⚠️ Says exactly what changing a pick does, and what it does not. The
+     original copy promised the list would move with it; in this format it
+     cannot, and a promise the app cannot keep is worse than no promise. */
+  let h = '<div class="note"><b>Three options a day, one already chosen.</b> Changing your pick changes the ' +
+          'recipe you cook and follows through to Recipes and The week. <b>It does not change the shopping ' +
+          'list</b> — the trolley was worked out when the week was built.</div>';
+  (CONTENT.choices || []).forEach(set => {
+    h += '<div class="grouptitle">' + esc(set.day || set.key) + "</div>";
+    if(set.slot) h += '<p class="det mono" style="margin:-2px 0 10px">' + esc(set.slot) + "</p>";
+    (set.opts || []).forEach((o, oi) => {
+      const on = pickIdx(set.key) === oi;
+      h += '<div class="choice' + (on ? " pick" : "") + '" data-pick="' + esc(set.key) +
+           '" data-idx="' + oi + '" role="button" tabindex="0" aria-pressed="' + on + '">' +
+           '<div class="choice-h"><span class="cn">' + esc(o.n) + '</span>' +
+           (on ? '<span class="badge on">chosen</span>' : '<span class="badge pickme">tap to choose</span>') +
+           '</div>' +
+           ((o.time || o.cost) ? '<div class="facts">' +
+             (o.time ? '<div class="fact"><div class="fl">Time</div><div class="fv">' + esc(o.time) + '</div></div>' : "") +
+             (o.cost ? '<div class="fact"><div class="fl">Cost</div><div class="fv">' + esc(o.cost) + '</div></div>' : "") +
+             '</div>' : "") +
+           '<div class="choice-b">' +
+           (o.clears ? '<div class="clears"><b>Clears:</b> ' + o.clears + '</div>' : "") +
+           (o.makes && o.makes.length ? '<p class="mh">What makes it</p><ul class="makes">' +
+              o.makes.map(x => "<li>" + x + "</li>").join("") + '</ul>' : "") +
+           '</div></div>';
+    });
+  });
+  return h;
+}
+
+function viewRecipesPlanned(){
+  let h = "";
+  if(!LIBRARY) h += '<div class="note"><b>Reading the library…</b></div>';
+  (CONTENT.choices || []).forEach(set => {
+    const o = picked(set.key);
+    /* ⚠️ No library method is usually not a gap. Half this week's weekend is
+       leftovers and assemblies — "Friday's ragù, the portion held back",
+       "Full English", "Leftovers and eggs" — which have no method by design.
+       Calling those "not written yet" would invent a problem, so the card
+       simply shows what the week itself says about the dish. */
+    h += libraryCardFor(o, set) || plannedDayCard(set);
+  });
+  return h;
+}
+
+/* The week names the dish; the library holds the method. */
+function libraryCardFor(o, set){
+  const r = libFind(o.n);
+  if(!r || !r.method) return null;
+  return '<div class="card"><div class="card-h"><h3>' + esc(r.name) + "</h3>" +
+    '<button class="cookbtn" data-cook="' + esc(r.name).replace(/"/g, "&quot;") + '">Cook mode</button>' +
+    '</div><div class="card-b">' +
+    '<div class="eyebrow">' + esc(set.day || "") + (set.slot ? " · " + esc(set.slot) : "") + "</div>" +
+    (o.split ? '<div class="splitbar" style="margin-top:10px"><b>The cut:</b> ' + o.split + "</div>" : "") +
+    libraryBody(r) + "</div></div>";
+}
+
 /* ---------- render ---------- */
-const TABS = [
+const TABS_LEGACY = [
   {id:"shop",  label:"Shop",     fn:viewShop},
   {id:"week",  label:"The week", fn:viewWeek},
   {id:"pick",  label:"Choose",   fn:viewChoose},
@@ -1424,6 +1602,17 @@ const TABS = [
   {id:"pan",   label:"Pantry",   fn:viewPantry},
   {id:"rec",   label:"Receipt",  fn:viewReceipt}
 ];
+/* The planned week has no per-option ingredient maps and no macros, so Slots
+   and Receipt have nothing behind them. A tab that cannot answer its question
+   is dropped rather than shown empty. */
+const TABS_PLANNED = [
+  {id:"shop",  label:"Shop",     fn:viewShopPlanned},
+  {id:"week",  label:"The week", fn:viewWeekPlanned},
+  {id:"pick",  label:"Choose",   fn:viewChoosePlanned},
+  {id:"cook",  label:"Recipes",  fn:viewRecipesPlanned},
+  {id:"pan",   label:"Pantry",   fn:viewPantry}
+];
+function TABSET(){ return planned() ? TABS_PLANNED : TABS_LEGACY; }
 let active = "shop";
 
 function render(){
@@ -1442,9 +1631,9 @@ function render(){
     esc(CONTENT.store) + ' · ' + esc(CONTENT.week) + '</div>' +
     '<h1>Clousto Kitchen</h1>' +
     '<p class="sub">One shop today, nine days of food. <b>Four dinners still to choose</b> \u2014 see Choose.</p></header>' +
-    '<nav class="tabs" role="tablist">' + TABS.map(t =>
+    '<nav class="tabs" role="tablist">' + TABSET().map(t =>
       '<button role="tab" data-tab="' + t.id + '" aria-selected="' + (t.id === active) + '">' + t.label + "</button>").join("") + "</nav>" +
-    TABS.map(t => '<section class="panel' + (t.id === active ? " on" : "") + '" id="p-' + t.id + '">' + t.fn() + "</section>").join("");
+    TABSET().map(t => '<section class="panel' + (t.id === active ? " on" : "") + '" id="p-' + t.id + '">' + t.fn() + "</section>").join("");
 }
 
 /* ---------- publish ---------- */
