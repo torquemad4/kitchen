@@ -138,10 +138,14 @@ print a half-line.
 nothing while there is rice in the house; it becomes a line only if the pantry says the
 rice has run short.
 
-🔴 **The live week (2026-08-30) predates this rule and fails it** — eleven held keys have
-no pack: rice, couscous, sultana, almond, pb, honey, chickpea, bulgur, fava, panko,
-flour. Two of them are currently short, so **peanut butter and sultanas cannot appear on
-this week's list at all.** Nothing breaks; the rule applies to the next publish.
+⚠️ **The week marked `live` is `2026-08-30`, "Sun 30 Aug – Mon 7 Sep" — that week has now
+ENDED.** It is still `live` only because nothing has replaced it. **This week's menu has
+not been built yet**; it was the original ask on 7 Sep and the plumbing was fixed first.
+
+So the eleven held keys with no pack (rice, couscous, sultana, almond, pb, honey,
+chickpea, bulgur, fava, panko, flour) are a property of a finished week, not a list anyone
+is about to shop. **Nothing needs retro-fixing.** The rule lands on the next publish,
+which is the week stage A builds — exactly where it should.
 
 ⚠️ A true numeric diff still needs `pantry.qty`, which does not exist and whose semantics
 are open (§5.3). The week's `held` map remains the only source of quantities.

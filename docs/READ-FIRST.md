@@ -170,11 +170,11 @@ These are Karl's to make. If a change depends on one, ask.
    mushrooms, merlot, apricots, mustard, bacon lardons…). ⚠️ **Karl's decision, 7 Sep:
    Clousto sources these in stage A, the next time a recipe needing them is picked.**
    Do not bulk-add them speculatively.
-1f. 🔴 **The live week has eleven held keys with no `packs` entry** — rice, couscous,
-   sultana, almond, pb, honey, chickpea, bulgur, fava, panko, flour. Two are currently
-   short, so **peanut butter and sultanas cannot appear on this week's list.** `PUT
-   /api/week` now refuses such a week, so it cannot recur, but the published one predates
-   the rule. Fixing it means republishing the week with those packs.
+1f. ⚠️ **The week marked `live` is last week.** `2026-08-30` covered "Sun 30 Aug – Mon 7
+   Sep" and has ended; it stays `live` because nothing has replaced it. **Do not read it
+   as the current shopping list** — this week's menu has not been built yet. Its eleven
+   pack-less held keys need no retro-fix; `PUT /api/week` enforces the rule on the next
+   publish.
 2. **Split-portion recipes.** Two recipes state Karl/Maria splits rather than
    per-portion figures. `kcal`/`portions` are NULL rather than guessed.
 3. **Pantry numeric balance vs free-text `amount`.** `amount` is free text *on purpose*.
