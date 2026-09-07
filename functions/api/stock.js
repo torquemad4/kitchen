@@ -24,9 +24,16 @@ const STALE = { chilled: 7, bakery: 7, "pasta & grains": 21, "dry goods": 21,
 export async function onRequestGet({ env }) {
   try {
     const { results } = await env.DB.prepare(
+      // The unit comes from recipe_ingredients rather than being guessed. An item
+      // with no pack still needs one on the list, and inventing "g" for something
+      // measured in tins would be a small confident lie of exactly the kind this
+      // system keeps getting bitten by.
       `SELECT i.key, i.name, i.pack_key, i.aliases,
               p.id AS pantry_id, p.item, p.category, p.level, p.amount,
-              p.how_checked, p.last_checked, p.floor, p.notes
+              p.how_checked, p.last_checked, p.floor, p.notes,
+              (SELECT ri.unit FROM recipe_ingredients ri
+                WHERE ri.ingredient_key = i.key AND ri.unit IS NOT NULL
+                GROUP BY ri.unit ORDER BY COUNT(*) DESC LIMIT 1) AS unit
          FROM ingredients i
          LEFT JOIN pantry p ON p.id = i.pantry_id`
     ).all();
@@ -42,7 +49,7 @@ export async function onRequestGet({ env }) {
         : null;
       const limit = STALE[r.category] ?? 30;
       const entry = {
-        key: r.key, name: r.name, tracked,
+        key: r.key, name: r.name, tracked, unit: r.unit || null,
         item: r.item || null, level: r.level || null, amount: r.amount || null,
         howChecked: r.how_checked || null, lastChecked: r.last_checked || null,
         weakEvidence: WEAK.includes(r.how_checked),

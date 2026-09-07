@@ -754,25 +754,33 @@ function ingredientNeed(withSource){
   return withSource ? {t, src} : t;
 }
 
-/* ⭐ STAGE B, and it is one rule.
-   `CONTENT.held` is a snapshot of the pantry taken by hand when the week was
-   published and frozen into the document. The pantry has moved since. When the
-   live pantry says an ingredient is OUT, the frozen claim loses and the item
-   goes on the cart.
+/* ⭐ STAGE B. Held is a BINARY JUDGEMENT, not a hedge.
 
-   ⛔ This is the 3 September failure, closed. The beef & stout stew card listed
-      tomato paste and roasted garlic paste as HELD on a count taken 18 August.
-      Both were gone, and it was discovered at the pan, mid-recipe.
+   Either the pantry confirms there is enough and the line stays off the list, or
+   it does not and the line goes on. There is no "probably", no advisory note and
+   nothing on the Shop tab that is a maybe — the tab has always said so itself.
 
-   ⚠️ Only `out` overrides. `low` does NOT silently add to the cart, because the
-      pantry holds no quantities — "low" cannot tell you whether what is left
-      covers 150 g. It raises a warning instead and leaves the arithmetic alone.
-      Under-buying strands someone at the hob; over-buying costs a pound. */
+   `CONTENT.held` carries the only quantities anyone has, taken by hand when the
+   week was published. The live pantry carries levels, which are fresher. The rule
+   that reconciles them:
+
+     out · low · unmeasured  →  we do NOT know there is enough  →  held = 0
+     ok · plenty             →  the pantry agrees with the week →  keep the number
+     no pantry row           →  nothing contradicts the week    →  keep the number
+
+   ⛔ `out` overriding a held claim is the 3 September failure closed: the beef &
+      stout stew card called tomato paste HELD on a count taken 18 August, it was
+      gone, and that was found at the pan.
+
+   ⚠️ `low` counts as NOT held, deliberately. "Low" cannot tell you whether what is
+      left covers 150 g, and that is precisely what not knowing the quantity means.
+      A spare costs a pound; being short strands someone at the hob. */
 function heldFor(k){
   const held = CONTENT.held[k] || 0;
   if(!held) return 0;
   const st = STOCK && STOCK[k];
-  return (st && st.overrideHeld) ? 0 : held;
+  if(!st || !st.tracked) return held;
+  return (st.level === "ok" || st.level === "plenty") ? held : 0;
 }
 
 function effectiveCart(){
@@ -782,7 +790,21 @@ function effectiveCart(){
     const short = t[k] - held;
     if(short <= 1e-9) continue;
     const p = CONTENT.packs[k];
-    if(!p) continue;
+    if(!p){
+      /* ⛔ Needed, not held, and this week was built without a product for it.
+         It still goes ON THE LIST. The list is what gets carried into the shop,
+         and an item missing from it is an item nobody puts in the trolley. The
+         quantity is known; the price is not, so it carries none and adds nothing
+         to the total. Stage A giving it a pack is the fix. */
+      const stk = (STOCK && STOCK[k]) || null;
+      const label = (stk && (stk.item || stk.name)) || HELD_LABEL[k] || k.replace(/_/g, " ");
+      (byGroup["Cupboard"] = byGroup["Cupboard"] || []).push({
+        n: label, d: "", p: null, est: false,
+        need: Math.round(short*10)/10 + ((stk && stk.unit) || ""),
+        held: null, tags: (src[k] || [])
+      });
+      continue;
+    }
     const packs = Math.ceil(short / p.size - 1e-9);
     if(packs < 1) continue;
     (byGroup[p.g] = byGroup[p.g] || []).push({
@@ -796,8 +818,8 @@ function effectiveCart(){
   const order = ["Fruit & veg","Meat & fish — eat in this order","Chilled","Bakery","Cupboard"];
   return order.filter(g => byGroup[g]).map(g => ({g, items: byGroup[g]}));
 }
-function cartTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{t+=i.p;})); return t; }
-function remainingTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{ if(!STATE.checked.includes(i.n)) t+=i.p; })); return t; }
+function cartTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{t+=(i.p||0);})); return t; }
+function remainingTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{ if(!STATE.checked.includes(i.n)) t+=(i.p||0); })); return t; }
 const HELD_LABEL = {
   rice:"rice", couscous:"couscous", noodles:"egg noodles", sultana:"sultanas", almond:"flaked almonds",
   pb:"peanut butter", honey:"honey", tuna:"tinned tuna", sweetpot:"sweet potato", chickpea:"chickpeas",
@@ -825,69 +847,11 @@ function heldLines(){
 }
 
 /* ---------- views ---------- */
-/* Every place the week's frozen `held` map and the live pantry disagree, or where
-   the claim is too old to lean on. This is the panel that would have caught
-   3 September before anyone got to the pan. */
-function stockWarnings(){
-  if(!STOCK) return null;
-  const need = ingredientNeed(), gone = [], thin = [], old = [], untracked = [], unbuyable = [];
-  for(const k in need){
-    if(!(CONTENT.held[k] > 0)) continue;          /* only claims of held stock */
-    const st = STOCK[k];
-    const label = (CONTENT.packs[k] && CONTENT.packs[k].n) || HELD_LABEL[k] || k.replace(/_/g," ");
-    if(!st || !st.tracked){ untracked.push(label); continue; }
-    /* ⛔ Running short of something the week has no pack for. The list can say so
-       but cannot fix it: with no pack there is no price, no size and nothing to
-       tick. Stage A has to add one. Saying nothing would be the worse failure —
-       that is how someone gets to the hob without an ingredient. */
-    if((st.level === "out" || st.level === "low") && !CONTENT.packs[k]){
-      unbuyable.push({label, st}); continue;
-    }
-    if(st.level === "out"){ gone.push({label, st}); continue; }
-    if(st.level === "low" || st.level === "unmeasured"){ thin.push({label, st}); continue; }
-    if(st.stale || st.weakEvidence) old.push({label, st});
-  }
-  return {gone, thin, old, untracked, unbuyable};
-}
-
-function stockPanel(){
-  const w = stockWarnings();
-  if(!w) return "";
-  const how = s => esc(s.howChecked || "not recorded") + (s.lastChecked ? ", " + s.daysSinceChecked + " days ago" : "");
-  let h = "";
-  if(w.gone.length)
-    h += '<div class="note stop"><b>' + w.gone.length + ' item' + (w.gone.length>1?"s":"") +
-      ' the week thought we had, the pantry says we do not.</b> Moved onto the list above. ' +
-      w.gone.map(g => "<b>" + esc(g.label) + "</b> (" + how(g.st) + ")").join(" · ") +
-      '<br><span class="det">This is the 3 September failure caught early — a count that was correct when it was made, with nothing to decrement it since.</span></div>';
-  if(w.unbuyable.length)
-    h += '<div class="note stop"><b>' + w.unbuyable.length + ' item' + (w.unbuyable.length>1?"s are":" is") +
-      ' running short and this week has no pack to buy ' + (w.unbuyable.length>1?"them":"it") + ' in.</b> ' +
-      '<b>The list cannot add ' + (w.unbuyable.length>1?"them":"it") + ' — put ' + (w.unbuyable.length>1?"them":"it") + ' in the trolley yourself.</b> ' +
-      w.unbuyable.map(g => "<b>" + esc(g.label) + "</b> — " + esc(g.st.level) +
-        (g.st.amount ? ", " + esc(g.st.amount) : "")).join(" · ") + "</div>";
-  if(w.thin.length)
-    h += '<div class="note warn"><b>' + w.thin.length + ' held item' + (w.thin.length>1?"s are":" is") +
-      ' low or unmeasured.</b> Still counted as held, because the pantry records levels rather than quantities and cannot say whether what is left covers the recipe. <b>Worth a look before you leave.</b> ' +
-      w.thin.map(g => "<b>" + esc(g.label) + "</b> — " + esc(g.st.level) + (g.st.amount ? ", " + esc(g.st.amount) : "")).join(" · ") + "</div>";
-  if(w.old.length)
-    h += '<div class="note held"><b>' + w.old.length + ' held claim' + (w.old.length>1?"s are":" is") +
-      ' older than they should be, or rest on recall rather than a look.</b> ' +
-      w.old.map(g => esc(g.label) + " (" + how(g.st) + ")").join(" · ") + "</div>";
-  if(w.untracked.length)
-    h += '<div class="note"><b>' + w.untracked.length + ' held item' + (w.untracked.length>1?"s have":" has") +
-      ' no pantry row at all</b> — nothing is tracking ' + (w.untracked.length>1?"them":"it") +
-      ', which is not the same as knowing we have ' + (w.untracked.length>1?"them":"it") + ': ' +
-      w.untracked.map(esc).join(" · ") + "</div>";
-  return h;
-}
-
 function viewShop(){
   const changed = ALLKEYS.filter(k => !isDefault(k));
   let h = '<div class="note good"><b>This list is calculated from your picks, not typed out.</b> Quantities come from what each chosen meal actually uses, multiplied by the days it runs, minus what is already in the house — then rounded up to how the shop sells it. Change anything on Choose or Slots and the lines and the total move with it.</div>';
   if(changed.length) h += '<div class="note held"><b>' + changed.length + ' changed from the default plan.</b> Total is now <b>' + money(cartTotal()) + '</b>.</div>';
   h += '<div class="note"><b>Only what is being bought.</b> Anything the house already holds in sufficient quantity is absent by design \u2014 there is no "already have it" column, and nothing here is a maybe.</div>';
-  h += stockPanel();
 
   effectiveCart().forEach(g => {
     h += '<div class="grouptitle">' + esc(g.g) + '</div><div class="card"><ul class="list">';
@@ -901,7 +865,7 @@ function viewShop(){
              i.tags.map(function(x){ return '<span class="tag ' + tagClass(x) + '">' + esc(x) + '</span>'; }).join("") +
              '<span class="tag qty">needs ' + esc(i.need) + '</span>' +
              (i.held ? '<span class="tag qty">' + esc(i.held) + ' held</span>' : "") + '</span>' +
-           '</span><span class="price">' + money(i.p) + (i.est ? "*" : "") + '</span></button></li>';
+           '</span><span class="price">' + (i.p == null ? "" : money(i.p) + (i.est ? "*" : "")) + '</span></button></li>';
     });
     h += "</ul></div>";
   });

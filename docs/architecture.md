@@ -99,24 +99,36 @@ boundary is why stages A and E are conversations and B/C/D are code.
 published week might use (pack key, canonical key, alias). The cart reads it through
 `heldFor()`.
 
-**One rule: when the live pantry says `out`, the week's frozen `held` claim loses and the
-item goes on the list.** That is the 3 September failure closed — a count correct when
-made, with nothing to decrement it since.
+> ⛔ **KARL'S RULE, 7 Sep 2026 — THE SHOP TAB CARRIES NO MAYBES.**
+> *"Things are in the list or they are not, we know the quantity or we do not, we put it
+> in the cart or we do not."*
+>
+> The tab's own copy already said it — *"nothing here is a maybe"* — and a first attempt
+> at stage B broke it, adding an advisory panel of warnings about items that might need
+> attention. **Every such decision is binary and is expressed as a line, or as no line.
+> There is no advisory copy, no "check this", no "cannot add".**
 
-⚠️ **`low` deliberately does NOT move the cart.** The pantry records levels, not
-quantities, so "low" cannot tell you whether what remains covers 150 g. It raises a
-warning and leaves the arithmetic alone. Under-buying strands someone at the hob;
-over-buying costs a pound.
+**Held is therefore a judgement, not a hedge:**
 
-⛔ **What stage B still cannot do, and says so on screen.** Eleven held keys have no pack
-in the current week. If one of them runs short the list can flag it but **cannot buy it**
-— there is no price, no size and nothing to tick. Today that is peanut butter, whose own
-pantry note already says *"ON THE NEXT CART"*. The Shop tab prints "the list cannot add
-it — put it in the trolley yourself" rather than staying quiet. **Stage A supplying a
-pack is the real fix.**
+| the live pantry says | verdict | effect |
+|---|---|---|
+| `out` · `low` · `unmeasured` | we do **not** know there is enough | held = 0 → **it goes on the list** |
+| `ok` · `plenty` | the pantry agrees with the week | keep the week's number → stays off |
+| no pantry row | nothing contradicts the week | keep the week's number → stays off |
 
-A true numeric diff needs `pantry.qty`, which does not exist and whose semantics are
-still open (§5.3). The week's `held` map remains the only source of numbers.
+⛔ `out` overriding a held claim is the 3 September failure closed.
+⚠️ `low` counting as **not held** is deliberate: "low" cannot say whether what remains
+covers 150 g, and that is exactly what not knowing the quantity means. A spare costs a
+pound; being short strands someone at the hob.
+
+**An ingredient with no pack still gets a line.** Eleven held keys have no product in the
+current week. Rather than a note saying it cannot be added, the line appears with its
+quantity and **no price**, contributes nothing to the total, and ticks like any other.
+The list is what gets carried into the shop; an item missing from it is an item nobody
+puts in the trolley. Stage A giving it a pack is the fix.
+
+⚠️ A true numeric diff still needs `pantry.qty`, which does not exist and whose semantics
+are open (§5.3). The week's `held` map remains the only source of quantities.
 
 ---
 

@@ -156,19 +156,23 @@ arithmetic; see `heldFor()` below and `architecture.md` §2.1.
 `CONTENT.floor` is added to the *need*, so the emergency floor is a requirement the
 cart cannot leave the house below.
 
-⭐ **`heldFor(k)` is stage B, and it is one rule.** `CONTENT.held` is a hand-made snapshot
-of the pantry frozen into the week; `/api/stock` is the live answer. When the pantry says
-`out`, `heldFor` returns 0 and the item goes on the cart whatever the snapshot claims.
-`low` does *not* override — the pantry has levels, not quantities, so it cannot know
-whether what is left covers the recipe; it warns via `stockWarnings()` instead.
+⭐ **`heldFor(k)` is stage B, and it is a BINARY judgement.** `CONTENT.held` is a hand-made
+snapshot frozen into the week; `/api/stock` is the live answer. `out`, `low` and
+`unmeasured` all return 0 — we do not know there is enough, so the line goes on the list.
+`ok` and `plenty`, or no pantry row at all, keep the week's number.
 
-`stockWarnings()` returns five classes and `stockPanel()` renders them on Shop: `gone`
-(moved onto the list), `unbuyable` (short, and the week has no pack for it — the list
-says so because silence is how someone reaches the hob without an ingredient), `thin`,
-`old` (stale or recall-based), `untracked`.
+⛔ **No advisory UI. Ever.** See `architecture.md` §2.1 for Karl's rule. A first cut of
+this added a warnings panel and was rejected: the Shop tab's own copy says *"nothing here
+is a maybe"*. If something needs attention it is a line, or it is not there.
+
+**An ingredient with no pack still emits a line** — `effectiveCart()` pushes it into
+`Cupboard` with `p: null`, its quantity, and no price. `cartTotal()`/`remainingTotal()`
+coalesce `i.p || 0`; the renderer omits the price span when `i.p == null`. It ticks like
+any other line and enters the offline outbox normally. The unit comes from
+`recipe_ingredients` via `/api/stock`, never guessed.
 
 ⚠️ With `STOCK` null — offline, first visit, endpoint down — the cart is byte-identical to
-before stage B and no panel renders. There is a regression check for that.
+before stage B. There is a regression check for that.
 
 ### 3.4 The library module (added 7 Sep 2026)
 

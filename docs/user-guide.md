@@ -69,23 +69,20 @@ The running total updates as you go.
   the list as a requirement, so the cart can never leave the house below it. In
   practice this is a cheese rule; tuna and pasta are always well above their floor.
 
-### What the pantry notes on this tab mean
+### The list is checked against the pantry
 
-Quantities still come from the week published at the start of the week, including a
-snapshot of the pantry taken then. **What is checked live is whether you actually still
-have the things that snapshot claims.** You may see:
+Quantities still come from the week published at the start of the week. **What is checked
+live is whether you still actually have the things that week assumed.**
 
-- **"the pantry says we do not"** — the week thought something was in the house and the
-  pantry knows it is gone, so it has been **added to your list**. This is the 3 September
-  problem caught before you get to the hob rather than at it.
-- **"running short and this week has no pack to buy it in"** — ⚠️ **the list cannot add
-  this one; put it in the trolley yourself.** It is short, but the week was built without
-  a product for it, so there is no price and nothing to tick.
-- **"low or unmeasured"** — still counted as held. The pantry records levels, not
-  amounts, so it cannot tell whether what is left covers the recipe. Worth a look in the
-  cupboard before you leave.
-- **"older than they should be"** — the claim stands on a check from a while ago, or on
-  someone's recall rather than a look.
+There is nothing to read and nothing to decide: **if the pantry cannot confirm we have
+enough of something, it appears on the list.** If it can, it does not. No warnings, no
+"check this one", no maybes.
+
+- Something the week thought was in the house but the pantry knows is gone, or is running
+  low, or that nobody has looked at — **it is simply on your list.**
+- A few items have no product attached to them in this week's plan. They still appear as
+  a line, with the quantity and **no price**, and they tick like everything else. They add
+  nothing to the total.
 
 ---
 

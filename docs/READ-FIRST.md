@@ -145,6 +145,7 @@ deploy — say what was verified (locally, against real data) and ask Karl to lo
 | **Compressed recipe cards** | Week 2 lost the peppers from the stir-fry and the lemon from the salmon. *The dish was not bad — the card was the defect.* |
 | **Fuzzy name matching** | Two recipes differ only by *CHICKEN* vs *tofu crumble*. Ambiguity must resolve to no match. |
 | **Rebuilding a view from a subset** | ✅ *fixed 7 Sep.* The Recipes tab was rewritten to build a fresh card from the library and re-add the week's fields one at a time; it dropped the per-person plates, and each patch found only the next missing thing. **When new data supersedes part of a view, replace that part — never rebuild the view and re-add the old fields.** A denylist loses exactly what nobody remembered. Now guarded by a regression check (`code.md` §5). |
+| **Advisory UI on the Shop tab** | A first cut of stage B added a panel of warnings — "cannot add", "check before you leave". Rejected by Karl, 7 Sep: *"Things are in the list or they are not, we know the quantity or we do not, we put it in the cart or we do not."* The tab's own copy already said *"nothing here is a maybe"*. **Never express a shopping decision as prose; express it as a line, or as no line.** |
 | **Deploying to a preview** | `wrangler pages deploy` can land on a preview branch. Always confirm `Environment = Production`. |
 | **`--commit-dirty=true`** | The 7 Sep deploy matches no commit. Commit before or immediately after deploying. |
 | **Assuming the handover is right** | The 7 Sep handover said `times_cooked` was "0 or null across the board". It was 2,2,2,1,1. **Check the data.** |
@@ -168,9 +169,8 @@ These are Karl's to make. If a change depends on one, ask.
    mushrooms, merlot, apricots, mustard, bacon lardons…). ⚠️ **Karl's decision, 7 Sep:
    Clousto sources these in stage A, the next time a recipe needing them is picked.**
    Do not bulk-add them speculatively.
-1f. **Eleven held keys have no pack in the current week**, so if one runs short the cart
-   can flag it but cannot buy it (today: peanut butter). Stage A supplying a pack is the
-   fix; the Shop tab says so explicitly meanwhile.
+1f. **Eleven held keys have no pack in the current week.** They now appear on the list as
+   priced-less lines rather than as a warning. Stage A giving them a pack is the fix.
 2. **Split-portion recipes.** Two recipes state Karl/Maria splits rather than
    per-portion figures. `kcal`/`portions` are NULL rather than guessed.
 3. **Pantry numeric balance vs free-text `amount`.** `amount` is free text *on purpose*.
