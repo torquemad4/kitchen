@@ -218,3 +218,20 @@ CREATE TABLE IF NOT EXISTS ingredients (
 );
 CREATE INDEX IF NOT EXISTS idx_ingredients_pack   ON ingredients(pack_key);
 CREATE INDEX IF NOT EXISTS idx_ingredients_pantry ON ingredients(pantry_id);
+
+-- ⭐ What a recipe actually consumes. The relation that made stages B–E possible.
+-- `origin` records how the row was arrived at, and the two are not equal evidence:
+--   'week'  — lifted from weeks.doc dinUse/sunUse: hand-authored, quantified, trusted.
+--   'prose' — parsed from the recipe's compressed ingredient one-liner. Good enough
+--             to plan on, but a NULL qty means the prose carried no number, never zero.
+CREATE TABLE IF NOT EXISTS recipe_ingredients (
+  recipe_id      TEXT NOT NULL,
+  ingredient_key TEXT NOT NULL,
+  qty            REAL,          -- NULL = not stated in the source, NOT zero
+  unit           TEXT,
+  source         TEXT,          -- 'buy' | 'held', the BUY/HELD tag on the card
+  origin         TEXT,          -- 'week' | 'prose'
+  note           TEXT,
+  updated_at     TEXT DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (recipe_id, ingredient_key)
+);

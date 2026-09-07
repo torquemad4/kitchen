@@ -279,8 +279,14 @@ cook_log(id, recipe_id, week_id, started_at, ended_at, step_times, elapsed_min,
 
 ingredients(key, name, category, pack_key, pantry_id, aliases, in_bundle, updated_at)
   -- ⭐ THE JOIN, live since 7 Sep 2026. 119 rows, reviewed and signed off.
-  -- 54 carry a pack_key, 47 a pantry_id, 2 an alias, 30 are still inside a bundle.
+  -- 54 carry a pack_key, 76 a pantry_id, 2 an alias. in_bundle is now empty:
+  -- every ingredient has a real pantry row of its own.
   -- ⚠️ `aliases` is what lets published weeks keep resolving — see §4.
+
+recipe_ingredients(recipe_id, ingredient_key, qty, unit, source, origin, note)
+  -- ⭐ 297 rows across all 36 recipes, live 7 Sep 2026. 0 orphan keys.
+  -- 90 rows `origin='week'` are authoritative (hand-authored, quantified).
+  -- 207 are `origin='prose'`; a NULL qty means the source stated no number.
 
 params(key, value, kind, note, ruling_url, updated_at)          -- 0 rows
 profiles(id, name, household, status, …, restrictions_stated, …)-- 0 rows
