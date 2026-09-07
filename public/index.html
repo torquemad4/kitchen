@@ -699,9 +699,11 @@ const tagClass = t => /floor/i.test(t) ? "floor"
                   : /ragù|ragu|beef/i.test(t) ? "beef"
                   : /S1|S2|S3|S4|shake|fuel|bagel|traybake|floor|bonus/i.test(t) ? "slot" : "";
 
-const PICKKEYS  = ["mon","tue","wed","thu"];
-const SLOTKEYS  = ["k1","k2","k3","k4","kb","mb","ml"];
-const ALLKEYS   = PICKKEYS.concat(SLOTKEYS);
+/* Derived from the week, never hardcoded: the days a week contains and the
+   standing slots it runs both change week to week. */
+function PICKKEYS(){ return (CONTENT.choices || []).map(c => c.key); }
+function SLOTKEYS(){ return (CONTENT.slots   || []).map(s => s.key); }
+function ALLKEYS(){  return PICKKEYS().concat(SLOTKEYS()); }
 function chooseSet(key){
   return CONTENT.choices.find(c => c.key === key) || CONTENT.slots.find(c => c.key === key);
 }
@@ -718,8 +720,6 @@ function isDefault(key){ return pickIdx(key) === defaultIdx(key); }
 const YFOOD = {k:400, p:25.0, c:31.0, f:18.0};
 function macAdd(t, o, n){ n = n || 1; t[0]+=o.k*n; t[1]+=o.p*n; t[2]+=o.c*n; t[3]+=o.f*n; return t; }
 
-const SLOTKEYS_CART = ["k1","k2","k3","k4","kb","mb","ml"];
-
 function shortName(n){
   let x = n.split(" — ")[0].split(" with ")[0];
   // only cut at a comma when what survives still identifies the dish
@@ -727,59 +727,64 @@ function shortName(n){
   if(head.length >= 10) x = head;
   return x.length > 24 ? x.slice(0,22) + "…" : x;
 }
-const DAYTAG  = {mon:"MON", tue:"TUE", wed:"WED", thu:"THU"};
-const SLOTTAG = {k1:"S1", k2:"S2", k3:"S3", k4:"S4", kb:"BONUS", mb:"MARIA b", ml:"MARIA l"};
+/* The tag on a shopping line: which meal put it there. */
+function tagFor(set){
+  const t = (set.day || set.label || set.key).split("·")[0].trim();
+  return t.length > 12 ? t.slice(0,11) + "…" : t;
+}
 
+/* ⭐ Every option carries `use` — what ONE serving of it consumes, keyed on pack
+   keys. A slot's is multiplied by the days it runs. That is what makes the
+   trolley follow the picks, and what lets every line say which meals it is for. */
 function ingredientNeed(withSource){
   const t = {}, src = {};
   const add = (m, mult, label) => {
-    for(const k in m){
+    for(const k in (m || {})){
       if(!m[k]) continue;
       t[k] = (t[k]||0) + m[k]*mult;
       if(label){ (src[k] = src[k] || []); if(src[k].indexOf(label) < 0) src[k].push(label); }
     }
   };
-  SLOTKEYS_CART.forEach(key => {
-    const i = pickIdx(key), days = CONTENT.dayCount[key];
-    if(key === "ml" && i === 0) add(CONTENT.use.ml[CONTENT.mlFallback], days - CONTENT.mlYfoodDays, SLOTTAG.ml + " " + shortName(chooseSet("ml").opts[CONTENT.mlFallback].n));
-    else add(CONTENT.use[key][i], days, SLOTTAG[key] + " " + shortName(picked(key).n));
+  (CONTENT.slots || []).forEach(sl => {
+    const o = picked(sl.key);
+    add(o.use, sl.days || 1, tagFor(sl) + " " + shortName(o.n));
   });
-  add(CONTENT.mariaFill, 6, "Maria's top-up");
-  add(CONTENT.sunUse, 1, "SUN " + shortName(CONTENT.sunDinner.n));
-  PICKKEYS.forEach(d => add(CONTENT.dinUse[d][pickIdx(d)], 1, DAYTAG[d] + " " + shortName(picked(d).n)));
-  for(const k in CONTENT.fixed) add({[k]:CONTENT.fixed[k]}, 1, "staple");
+  (CONTENT.choices || []).forEach(ch => {
+    const o = picked(ch.key);
+    add(o.use, 1, tagFor(ch) + " " + shortName(o.n));
+  });
+  for(const k in (CONTENT.fixed || {})) add({[k]:CONTENT.fixed[k]}, 1, "staple");
   // 🔒 the emergency-meal floor is a REQUIREMENT, not a hope: it is added to the
   // need so the cart can never leave the house below it.
-  for(const k in CONTENT.floor) add({[k]:CONTENT.floor[k]}, 1, "🔒 emergency floor");
+  for(const k in (CONTENT.floor || {})) add({[k]:CONTENT.floor[k]}, 1, "floor");
   return withSource ? {t, src} : t;
 }
 
-/* ⭐ STAGE B. Held is a BINARY JUDGEMENT, not a hedge.
+/* ⭐ STAGE B. Held is a binary judgement, and it goes to whichever source is
+   FRESHER — not automatically to the pantry.
 
-   Either the pantry confirms there is enough and the line stays off the list, or
-   it does not and the line goes on. There is no "probably", no advisory note and
-   nothing on the Shop tab that is a maybe — the tab has always said so itself.
+   `CONTENT.held` is what the week was built from. `/api/stock` is what the
+   pantry table says. Either can be the stale one:
 
-   `CONTENT.held` carries the only quantities anyone has, taken by hand when the
-   week was published. The live pantry carries levels, which are fresher. The rule
-   that reconciles them:
+   • The week of 30 Aug was published with `held` taken on 18 August. By 3 Sep
+     the tomato paste was gone, the card still called it HELD, and that was
+     discovered at the pan. There, the pantry was fresher and had to win.
 
-     out · low · unmeasured  →  we do NOT know there is enough  →  held = 0
-     ok · plenty             →  the pantry agrees with the week →  keep the number
-     no pantry row           →  nothing contradicts the week    →  keep the number
+   • The week of 8 Sep was built the same evening from Karl's stated stock. The
+     pantry row for oats still reads `low` from 20 August — before a shop that
+     was never recorded, because stage E does not exist. There, the WEEK is
+     fresher, and letting the pantry win buys a second jar of peanut butter.
 
-   ⛔ `out` overriding a held claim is the 3 September failure closed: the beef &
-      stout stew card called tomato paste HELD on a count taken 18 August, it was
-      gone, and that was found at the pan.
-
-   ⚠️ `low` counts as NOT held, deliberately. "Low" cannot tell you whether what is
-      left covers 150 g, and that is precisely what not knowing the quantity means.
-      A spare costs a pound; being short strands someone at the hob. */
+   So compare the dates and believe the more recent one. A stale source is not
+   made trustworthy by which table it lives in. */
 function heldFor(k){
-  const held = CONTENT.held[k] || 0;
+  const held = CONTENT.held ? (CONTENT.held[k] || 0) : 0;
   if(!held) return 0;
   const st = STOCK && STOCK[k];
   if(!st || !st.tracked) return held;
+  /* No date on either side: nothing to compare, so the week stands. */
+  if(!CONTENT.built || !st.lastChecked) return held;
+  if(CONTENT.built >= st.lastChecked) return held;      /* the week is fresher */
   return (st.level === "ok" || st.level === "plenty") ? held : 0;
 }
 
@@ -809,53 +814,35 @@ function effectiveCart(){
       tags: (src[k] || [])
     });
   }
+  /* ⛔ NEVER DROP A GROUP. This filtered to five known aisle names and silently
+     discarded everything else — which for the week of 8 Sep meant the "Wine —
+     cooking" group and "⚠️ TESCO — Maria, Saturday morning": a whole second shop
+     and a £40 lamb joint, gone from the list without a trace.
+     Known aisles keep their walking order; anything else is appended. */
   const order = ["Fruit & veg","Meat & fish — eat in this order","Chilled","Bakery","Cupboard"];
-  return order.filter(g => byGroup[g]).map(g => ({g, items: byGroup[g]}));
+  const known = order.filter(g => byGroup[g]);
+  const rest  = Object.keys(byGroup).filter(g => order.indexOf(g) < 0).sort();
+  return known.concat(rest).map(g => ({g, items: byGroup[g]}));
 }
 /* Both formats answer these; the planned week reads its packs, the original
    recomputes from the use-maps. The tick handler calls remainingTotal() on every
    tap, so this must never throw. */
-function cartTotal(){
-  if(planned()) return plannedTotal();
-  let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{t+=i.p;})); return t;
-}
-function remainingTotal(){
-  if(planned()) return plannedRemaining();
-  let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{ if(!STATE.checked.includes(i.n)) t+=i.p; })); return t;
-}
-const HELD_LABEL = {
-  rice:"rice", couscous:"couscous", noodles:"egg noodles", sultana:"sultanas", almond:"flaked almonds",
-  pb:"peanut butter", honey:"honey", tuna:"tinned tuna", sweetpot:"sweet potato", chickpea:"chickpeas",
-  pepper:"mixed peppers", bulgur:"bulgur", fava:"Lemnian fava", panko:"panko", flour:"plain flour",
-  sesame_oil:"toasted sesame oil"
-};
-function orphanLines(){
-  const t = ingredientNeed(), out = [];
-  for(const k in CONTENT.held){
-    if((t[k] || 0) > 0) continue;
-    out.push(HELD_LABEL[k] || k.replace(/_/g," "));
-  }
-  return out.sort();
-}
-function heldLines(){
-  const t = ingredientNeed(), out = [];
-  for(const k in t){
-    const held = heldFor(k);   /* an item the pantry says is OUT is not "held" */
-    if(!held) continue;
-    const p = CONTENT.packs[k];
-    if(t[k] - held > 1e-9) continue;
-    out.push((p ? p.n.replace(/,.*$/,"") : k.replace(/_/g," ")) + " (" + Math.round(t[k]*10)/10 + " needed, held)");
-  }
-  return out.sort();
-}
+function cartTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{t+=i.p;})); return t; }
+function remainingTotal(){ let t=0; effectiveCart().forEach(g=>g.items.forEach(i=>{ if(!STATE.checked.includes(i.n)) t+=i.p; })); return t; }
+/* ==========================================================================
+   THE VIEWS. Three questions and nothing else: what to buy, what I am eating
+   each day, and how to cook it.
 
-/* ---------- views ---------- */
+   ⛔ Karl, 7 Sep 2026: "the front end is only for shopping, picking, and
+      cooking, nothing more. Don't tell me what went wrong before, don't tell me
+      what's uncertain."
+
+   So: no build notes, no provenance, no warnings, no caveats. The week document
+   carries `notes` and every option carries `spec` — none of it renders here.
+   ========================================================================== */
+
 function viewShop(){
-  const changed = ALLKEYS.filter(k => !isDefault(k));
-  let h = '<div class="note good"><b>This list is calculated from your picks, not typed out.</b> Quantities come from what each chosen meal actually uses, multiplied by the days it runs, minus what is already in the house — then rounded up to how the shop sells it. Change anything on Choose or Slots and the lines and the total move with it.</div>';
-  if(changed.length) h += '<div class="note held"><b>' + changed.length + ' changed from the default plan.</b> Total is now <b>' + money(cartTotal()) + '</b>.</div>';
-  h += '<div class="note"><b>Only what is being bought.</b> Anything the house already holds in sufficient quantity is absent by design \u2014 there is no "already have it" column, and nothing here is a maybe.</div>';
-
+  let h = "";
   effectiveCart().forEach(g => {
     h += '<div class="grouptitle">' + esc(g.g) + '</div><div class="card"><ul class="list">';
     g.items.forEach(i => {
@@ -864,344 +851,131 @@ function viewShop(){
            '<span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>' +
            '<span class="rowmain"><span class="name">' + esc(i.n) + '</span>' +
            (i.d ? '<span class="det">' + esc(i.d) + '</span>' : "") +
+           /* ⭐ What each line is FOR. Every meal that put it in the trolley. */
            '<span class="tags">' +
-             i.tags.map(function(x){ return '<span class="tag ' + tagClass(x) + '">' + esc(x) + '</span>'; }).join("") +
+             i.tags.map(x => '<span class="tag ' + tagClass(x) + '">' + esc(x) + '</span>').join("") +
              '<span class="tag qty">needs ' + esc(i.need) + '</span>' +
-             (i.held ? '<span class="tag qty">' + esc(i.held) + ' held</span>' : "") + '</span>' +
-           '</span><span class="price">' + money(i.p) + (i.est ? "*" : "") + '</span></button></li>';
+             (i.held ? '<span class="tag qty">' + esc(i.held) + ' held</span>' : "") +
+           '</span></span>' +
+           '<span class="price">' + money(i.p) + (i.est ? "*" : "") + '</span></button></li>';
     });
     h += "</ul></div>";
   });
-
-  const orphans = orphanLines();
-  if(orphans.length){
-    h += '<div class="note warn"><b>Held stock with no route this week: ' + orphans.map(esc).join(", ") + '.</b> ' +
-         'Not a shopping problem — nothing here is being bought — but the chickpeas and peppers were bought on 24 August for a dinner that got skipped, and this is the second week running they have no meal attached. Karl, 30 Aug: the stockpile gets drained deliberately next week. ' +
-         '⭐ Two of the Wednesday options use the peppers, and the plain flour has exactly one route in the whole library: the beef &amp; stout stew on Thursday, before it expires in October.</div>';
-  }
-
-  const held = heldLines();
-  if(held.length){
-    h += '<div class="grouptitle">Covered by the cupboard \u2014 not on the list</div>' +
-         '<div class="card"><div class="card-b"><p class="det" style="margin:0">' + held.map(esc).join(" \u00b7 ") + '</p></div></div>';
-  }
-
-  h += '<div class="grouptitle">Not from Aldi</div><div class="card"><div class="card-b">' +
-       '<div class="name">' + esc(CONTENT.offcart.n) + ' &nbsp;<span class="price">' + money(CONTENT.offcart.p) + '</span></div>' +
-       '<div class="det" style="margin-top:6px">' + esc(CONTENT.offcart.d) + '</div></div></div>';
-  h += '<p class="foot" style="border:0;padding-top:4px">* Priced from a category listing rather than a confirmed product page. Everything else is a verified Aldi price.</p>';
   h += '<div class="totalbar"><span>Left to buy</span><strong id="remain">' + money(remainingTotal()) + '</strong>' +
        '<span style="color:var(--ink-3)">of ' + money(cartTotal()) + '</span>' +
        '<button class="reset" id="resetbtn">Reset</button></div>';
   return h;
 }
 
-function karlDay(day){
-  const rows = [];
-  if(day.away) return rows;
-  (day.karl || []).forEach(k => {
-    const o = picked(k);
-    rows.push({tag: k.toUpperCase().replace("K","S"), t: o.n, m: o.k + " kcal · " + o.p.toFixed(1) + " g P"});
-  });
-  if(day.yfood){
-    rows.push({tag:"S3", t:"yfood ×2", m:"800 kcal · 50.0 g P", yf:true});
-    if(day.yfood > 2) rows.push({tag:"S4", t:"yfood ×1", m:"400 kcal · 25.0 g P", yf:true});
-  }
-  if(day.dinner){
-    const o = day.dinner === "sun" ? CONTENT.sunDinner : picked(day.dinner);
-    rows.push({tag:"S5", t:o.n, m:o.k + " kcal · " + o.p.toFixed(1) + " g P", shared:true, r:day.dinner});
-  } else if(day.id === "fri"){
-    rows.push({tag:"S5", t:"Eating out on the road", m:"assume ≥ 895 kcal", away:true});
-  }
-  return rows;
-}
-function mariaDay(day){
-  const rows = [];
-  if(day.away) return rows;
-  if(!day.mSkipBreakfast){
-    const b = picked("mb");
-    rows.push({tag:"B", t:b.n, m:b.k + " kcal"});
-  }
-  const l = mariaLunchFor(day);
-  rows.push({tag:"L", t:l.n, m:l.k + " kcal"});
-  if(day.dinner){
-    const o = day.dinner === "sun" ? CONTENT.sunDinner : picked(day.dinner);
-    rows.push({tag:"D", t:o.n, m:o.mk + " kcal · " + o.mp.toFixed(1) + " g P", shared:true, r:day.dinner});
-  } else if(day.id === "fri"){
-    rows.push({tag:"D", t:"Out", m:"", away:true});
-  }
-  if(day.id !== "sun"){
-    const tot = rows.reduce((a,r) => a + (parseInt(r.m,10) || 0), 0);
-    const gap = 1700 - tot;
-    if(gap > 60) rows.push({tag:"+", t:"An apple and a yoghurt", m:"~" + gap + " kcal to 1,700", fill:true});
-  }
-  return rows;
-}
-function colRows(rows){
-  if(!rows.length) return '<div class="mrow away"><span class="mtag">—</span><span class="mbody"><span class="mt">Away. Nothing provisioned.</span></span></div>';
-  return rows.map(r =>
-    '<div class="mrow' + (r.away ? " away" : "") + (r.fill ? " fill" : "") + '">' +
-      '<span class="mtag' + (r.shared ? " sh" : "") + (r.yf ? " yf" : "") + '">' + esc(r.tag) + '</span>' +
-      '<span class="mbody"><span class="mt">' + esc(r.t) +
-        (r.r ? ' <span class="badge on" data-goto="' + r.r + '" role="button" tabindex="0" style="cursor:pointer">card</span>' : "") +
-      '</span>' + (r.m ? '<span class="mm">' + esc(r.m) + '</span>' : "") + '</span></div>').join("");
+/* "Tue 8 · dinner" -> {day:"Tue 8", meal:"dinner"} */
+function dayParts(set){
+  const bits = String(set.day || set.key).split("·").map(x => x.trim());
+  return {day: bits[0], meal: bits[1] || "dinner"};
 }
 
 function viewWeek(){
-  let h = '<div class="note good"><b>Two eaters, two different days.</b> Karl runs five wake-anchored slots; Maria runs three meals. <b>The only shared thing is dinner</b> — one dish, cooked once, cut three parts to two. Breakfast and lunch are individual for both, and everything on this tab follows what is picked on Choose and Slots.</div>';
-  h += '<div class="legend"><span><i class="sw sh"></i>shared, cut 3:2</span><span><i class="sw yf"></i>yfood</span><span><i class="sw"></i>individual</span></div>';
-  CONTENT.schedule.forEach(day => {
-    const kr = karlDay(day), mr = mariaDay(day);
-    h += '<div class="day"><div class="day-h"><span class="d">' + esc(day.d) + '</span><span class="w">' + esc(day.w) + '</span></div>';
-    h += '<div class="twocol">' +
-         '<div class="col"><div class="colh">Karl · 2,800 kcal</div>' + colRows(kr) +
-           (day.kNote ? '<div class="colnote">' + esc(day.kNote) + '</div>' : "") + '</div>' +
-         '<div class="col"><div class="colh">Maria · 1,700 kcal</div>' + colRows(mr) +
-           (day.mNote ? '<div class="colnote">' + esc(day.mNote) + '</div>' : "") + '</div>' +
-         '</div>';
-    if(day.dinner){
-      const o = day.dinner === "sun" ? CONTENT.sunDinner : picked(day.dinner);
-      h += '<div class="splitbar"><b>The cut:</b> ' + (o.split || "Karl 3 : Maria 2.") + '</div>';
-    }
-    h += '</div>';
+  let h = "", order = [], byDay = {};
+  (CONTENT.choices || []).forEach(ch => {
+    const d = dayParts(ch).day;
+    if(!byDay[d]){ byDay[d] = []; order.push(d); }
+    byDay[d].push(ch);
   });
+
+  order.forEach(d => {
+    h += '<div class="day"><div class="day-h"><span class="d">' + esc(d) + "</span></div>";
+    byDay[d].forEach(ch => {
+      const o = picked(ch.key), meal = dayParts(ch).meal;
+      h += '<div class="twocol">' +
+        '<div class="col"><div class="colh">' + esc(meal) + "</div>" +
+          '<div class="mrow"><span class="mtag sh">K</span><span class="mbody">' +
+            '<span class="mt">' + esc(o.n) +
+            ' <span class="badge on" data-goto="' + esc(ch.key) + '" role="button" tabindex="0" style="cursor:pointer">card</span></span>' +
+            (o.k != null ? '<span class="mm">' + o.k + " kcal · " + Number(o.p).toFixed(1) + " g P</span>" : "") +
+          "</span></div>" +
+          (o.mk != null ? '<div class="mrow"><span class="mtag">M</span><span class="mbody">' +
+            '<span class="mt">' + esc(o.n) + "</span>" +
+            '<span class="mm">' + o.mk + " kcal · " + Number(o.mp).toFixed(1) + " g P</span></span></div>" : "") +
+        "</div></div>";
+      if(o.split) h += '<div class="splitbar"><b>The cut:</b> ' + o.split + "</div>";
+    });
+    h += "</div>";
+  });
+
+  /* The standing meals, with how many days each runs. */
+  if((CONTENT.slots || []).length){
+    h += '<div class="grouptitle">Every day</div><div class="card"><div class="card-b">';
+    CONTENT.slots.forEach(sl => {
+      const o = picked(sl.key);
+      h += '<div class="mrow"><span class="mtag">' + esc(tagFor(sl)) + "</span><span class=\"mbody\">" +
+           '<span class="mt">' + esc(o.n) + "</span>" +
+           '<span class="mm">' + (o.k != null ? o.k + " kcal · " + Number(o.p).toFixed(1) + " g P · " : "") +
+           (sl.days || 1) + (sl.days === 1 ? " day" : " days") + "</span></span></div>";
+    });
+    h += "</div></div>";
+  }
   return h;
 }
 
+/* One pickable option. Used by both Choose and Slots. */
+function optionCard(setKey, o, oi){
+  const on = pickIdx(setKey) === oi;
+  return '<div class="choice' + (on ? " pick" : "") + '" data-pick="' + esc(setKey) +
+    '" data-idx="' + oi + '" role="button" tabindex="0" aria-pressed="' + on + '">' +
+    '<div class="choice-h"><span class="cn">' + esc(o.n) + "</span>" +
+      (on ? '<span class="badge on">chosen</span>' : '<span class="badge pickme">tap to choose</span>') +
+    "</div>" +
+    '<div class="facts">' +
+      (o.time ? '<div class="fact"><div class="fl">Time</div><div class="fv">' + esc(o.time) + "</div></div>" : "") +
+      (o.cost ? '<div class="fact"><div class="fl">Cost</div><div class="fv">' + esc(o.cost) + "</div></div>" : "") +
+      (o.k != null ? '<div class="fact"><div class="fl">Karl</div><div class="fv">' + o.k + " kcal · " + Number(o.p).toFixed(1) + " g P</div></div>" : "") +
+      (o.mk != null ? '<div class="fact"><div class="fl">Maria</div><div class="fv">' + o.mk + " kcal · " + Number(o.mp).toFixed(1) + " g P</div></div>" : "") +
+    "</div>" +
+    ((o.d || o.clears || (o.makes && o.makes.length)) ? '<div class="choice-b">' +
+      (o.d ? '<p style="margin:0 0 6px;font-size:14.5px">' + o.d + "</p>" : "") +
+      (o.clears ? '<div class="clears"><b>Clears:</b> ' + o.clears + "</div>" : "") +
+      (o.makes && o.makes.length ? '<p class="mh">What makes it</p><ul class="makes">' +
+        o.makes.map(x => "<li>" + x + "</li>").join("") + "</ul>" : "") +
+      "</div>" : "") +
+    "</div>";
+}
+
 function viewChoose(){
-  let h = '<div class="note good"><b>Tap any card to choose it.</b> The Shop, The week and Receipt tabs all follow your choice straight away — the cart adds and drops the right lines, and the receipt recalculates. Tonight is already settled: sesame-peanut noodles with crisp chilli chicken, card on the Recipes tab.</div>';
-  h += '<div class="note"><b>How to read a card.</b> <i>Clears</i> is what it takes out of the sachet drawer, which is the two-week goal. <i>What makes it</i> is the two or three steps that separate the good version from the dull one — the ones a rushed cook drops. Full step-by-step gets written for whatever you land on.</div>';
-  const changed = PICKKEYS.filter(k => !isDefault(k));
-  if(changed.length){
-    h += '<div class="note held"><b>' + changed.length + ' swapped.</b> ' +
-      changed.map(k => esc(chooseSet(k).day) + " → " + esc(picked(k).n)).join(" · ") +
-      '. Cart is now <b>' + money(cartTotal()) + '</b>.</div>';
-  }
-  CONTENT.choices.forEach(set => {
-    h += '<div class="grouptitle">' + esc(set.slot) + '</div>';
-    h += '<p class="det" style="margin:-2px 0 10px">' + esc(set.spec) + '</p>';
-    set.opts.forEach((o, oi) => {
-      const on = pickIdx(set.key) === oi;
-      h += '<div class="choice' + (on ? " pick" : "") + '" data-pick="' + set.key + '" data-idx="' + oi + '" role="button" tabindex="0" aria-pressed="' + on + '">' +
-           '<div class="choice-h"><span class="cn">' + esc(o.n) + '</span>' +
-           (on ? '<span class="badge on">chosen</span>' : '<span class="badge pickme">tap to choose</span>') +
-           (o.badge === "cart" ? '<span class="badge buy">changes the cart</span>' : "") + '</div>' +
-           '<div class="facts">' +
-             '<div class="fact"><div class="fl">Time</div><div class="fv">' + o.time + '</div></div>' +
-             '<div class="fact"><div class="fl">Cost</div><div class="fv">' + esc(o.cost) + '</div></div>' +
-             '<div class="fact"><div class="fl">Karl 3/5</div><div class="fv">' + o.k + ' kcal · ' + o.p.toFixed(1) + ' g P</div></div>' +
-             '<div class="fact"><div class="fl">Maria 2/5</div><div class="fv">' + o.mk + ' kcal · ' + o.mp.toFixed(1) + ' g P</div></div>' +
-           '</div>' +
-           '<div class="choice-b"><div class="clears"><b>Clears:</b> ' + o.clears + '</div>' +
-           '<p class="mh">What makes it</p><ul class="makes">' + o.makes.map(x => "<li>" + x + "</li>").join("") + '</ul>' +
-           (o.warn ? '<div class="note warn" style="margin:11px 0 0">' + o.warn + '</div>' : "") +
-           '</div></div>';
-    });
+  let h = "";
+  (CONTENT.choices || []).forEach(set => {
+    h += '<div class="grouptitle">' + esc(set.day || set.key) + "</div>";
+    (set.opts || []).forEach((o, oi) => { h += optionCard(set.key, o, oi); });
   });
   return h;
 }
 
 function viewSlots(){
-  let h = '<div class="note good"><b>Tap any card to choose it</b> — same as the dinners. These are the individual meals: Karl\'s five slots and Maria\'s two. Everything here feeds straight into The week and the Receipt.</div>';
-  ["Karl","Maria"].forEach(who => {
-    h += '<h2 class="whohead">' + who + '</h2>';
-    CONTENT.slots.filter(set => set.who === who).forEach(set => {
-      h += '<div class="grouptitle">' + esc(set.label) + '</div>';
-      h += '<p class="det" style="margin:-2px 0 10px">' + esc(set.spec) + '</p>';
-      set.opts.forEach((o, oi) => {
-        const on = pickIdx(set.key) === oi;
-        h += '<div class="choice' + (on ? " pick" : "") + '" data-pick="' + set.key + '" data-idx="' + oi + '" role="button" tabindex="0" aria-pressed="' + on + '">' +
-             '<div class="choice-h"><span class="cn">' + esc(o.n) + '</span>' +
-             (on ? '<span class="badge on">chosen</span>' : '<span class="badge pickme">tap to choose</span>') +
-             (o.badge === "cart" ? '<span class="badge buy">changes the cart</span>' : "") +
-             (o.badge === "held" ? '<span class="badge held">held stock</span>' : "") + '</div>' +
-             '<div class="facts">' +
-               '<div class="fact"><div class="fl">Energy</div><div class="fv">' + o.k + ' kcal</div></div>' +
-               '<div class="fact"><div class="fl">Protein</div><div class="fv">' + o.p.toFixed(1) + ' g</div></div>' +
-               '<div class="fact"><div class="fl">Carb</div><div class="fv">' + o.c.toFixed(1) + ' g</div></div>' +
-               '<div class="fact"><div class="fl">Fat</div><div class="fv">' + o.f.toFixed(1) + ' g</div></div>' +
-             '</div>' +
-             '<div class="choice-b"><p style="margin:0;font-size:14.5px">' + esc(o.d) + '</p>' +
-             (o.warn ? '<div class="note warn" style="margin:11px 0 0">' + esc(o.warn) + '</div>' : "") +
-             '</div></div>';
-      });
-    });
+  let h = "";
+  (CONTENT.slots || []).forEach(set => {
+    h += '<div class="grouptitle">' + esc(set.label || set.key) +
+         (set.days ? " · " + set.days + (set.days === 1 ? " day" : " days") : "") + "</div>";
+    (set.opts || []).forEach((o, oi) => { h += optionCard(set.key, o, oi); });
   });
   return h;
 }
 
-function recipeCardPending(key){
-  const o = picked(key), set = chooseSet(key);
-  /* ⭐ The library usually HAS this one now. Before the migration the week only
-     ever carried a card for the default, so changing a pick meant losing the
-     method entirely; all 36 recipes are in D1, so the honest "not written yet"
-     banner is only shown when it is still true. */
-  const lib = libFind(o.n);
-  const haveMethod = !!(lib && lib.method);
-  return '<div class="card" id="r-' + key + '"><div class="card-h"><h3>' + esc(o.n) + '</h3>' + '<button class="cookbtn" data-cook="' + esc(o.n).replace(/"/g,'&quot;') + '">Cook mode</button>' + '</div><div class="card-b">' +
-    '<div class="eyebrow">' + esc(set.day) + ' · your pick</div>' +
-    (haveMethod ? "" :
-    '<div class="note warn" style="margin-top:10px"><b>The full step-by-step for this one is not written yet.</b> You changed the pick, so the card gets authored next — same treatment as the others: equipment named in every step, state cues instead of time cues, per-plate quantities. Everything below is enough to shop for it and to know what matters.</div>') +
-    '<div class="facts" style="margin:12px 0;border-radius:8px;overflow:hidden;border:1px solid var(--line)">' +
-      '<div class="fact"><div class="fl">Time</div><div class="fv">' + o.time + '</div></div>' +
-      '<div class="fact"><div class="fl">Cost</div><div class="fv">' + esc(o.cost) + '</div></div>' +
-      '<div class="fact"><div class="fl">Karl 3/5</div><div class="fv">' + o.k + ' kcal · ' + o.p.toFixed(1) + ' g P</div></div>' +
-      '<div class="fact"><div class="fl">Maria 2/5</div><div class="fv">' + o.mk + ' kcal · ' + o.mp.toFixed(1) + ' g P</div></div>' +
-    '</div>' +
-    (o.split ? '<div class="splitbar"><b>The cut:</b> ' + o.split + '</div>' : "") +
-    '<div class="clears" style="margin-top:12px"><b>Clears:</b> ' + o.clears + '</div>' +
-    '<p class="mh">What makes it</p><ul class="makes">' + o.makes.map(x => "<li>" + x + "</li>").join("") + '</ul>' +
-    (o.warn ? '<div class="note warn" style="margin:11px 0 0">' + o.warn + '</div>' : "") +
-    /* Same substitution as the week card: everything above is the week's own
-       reasoning about this pick, and the library adds the method beneath it. */
-    (haveMethod ? libraryBody(lib) : "") +
-    '</div></div>';
-}
-
+/* The week names the dish; the library holds the method, verbatim. */
 function viewRecipes(){
-  let h = '<div class="note good"><b>Only what is actually being cooked.</b> Change a dinner on Choose and this tab follows. Every card is a <b>shared</b> dish cut three parts to two — nothing here is cooked twice.</div>';
-  if(!LIBRARY) h += '<div class="note"><b>Reading the library…</b> Showing the copy stored with this week until it arrives.</div>';
-  ["sun"].concat(PICKKEYS).forEach(key => {
-    /* A swapped pick has no card in the week at all — the week only ever
-       carried one for the default. That path is recipeCardPending(), which now
-       gets the library's method appended to it. */
-    if(key !== "sun" && !isDefault(key)){ h += recipeCardPending(key); return; }
-    const r = CONTENT.recipes[key];
-    if(!r) return;
-    const o = key === "sun" ? CONTENT.sunDinner : picked(key);
-    h += '<div class="card" id="r-' + key + '"><div class="card-h"><h3>' + esc(r.name) + '</h3>' + '<button class="cookbtn" data-cook="' + esc(r.name).replace(/"/g,'&quot;') + '">Cook mode</button>' + '</div><div class="card-b">' +
-         '<div class="eyebrow">' + esc(r.when) + '</div>' +
-         '<p class="det mono" style="margin:6px 0 12px">' + esc(r.meta) + '</p>' +
-         '<p style="font-size:15px;margin:0 0 4px">' + esc(r.lead) + '</p>';
-    (r.notes || []).forEach(n => { h += '<div class="note ' + n.k + '">' + n.t + '</div>'; });
-    h += '<div class="plates">' + r.plates.map(pl =>
-         '<div class="plate"><div class="who">' + esc(pl.who) + '</div><div class="amt">' + esc(pl.amt) + '</div><div class="mac">' + esc(pl.mac) + '</div></div>').join("") + '</div>';
-    if(o && o.split) h += '<div class="splitbar"><b>The cut:</b> ' + o.split + '</div>';
-    h += '<div class="grouptitle" style="margin-top:16px">Ingredients — for the whole dish</div><div class="ing">' +
-         r.ing.map(x => "• " + x).join("<br>") + '</div>';
-    h += '<div class="equip"><h4>Get these out first</h4><ul>' +
-         r.equip.map(e => "<li>" + (e.r ? '<span class="req">required</span> ' : "") + e.t + "</li>").join("") + "</ul></div>";
-    /* ⭐ The ONE substitution. Everything above this line is the week's card,
-       exactly as it has always been. The library supplies the full verbatim
-       method where it has one; where it does not, the week's own compressed
-       steps still render, so this is never worse than before. */
-    const lib = libFind(r.name);
-    if(lib && lib.method) h += libraryBody(lib);
-    else h += '<div class="grouptitle">Method</div><ol class="steps">' + r.steps.map(x => "<li>" + x + "</li>").join("") + "</ol>";
-    h += "</div></div>";
+  let h = "";
+  (CONTENT.choices || []).forEach(set => {
+    const o = picked(set.key), r = libFind(o.n);
+    h += '<div class="card" id="r-' + esc(set.key) + '"><div class="card-h"><h3>' + esc(o.n) + "</h3>" +
+      '<button class="cookbtn" data-cook="' + esc(o.n).replace(/"/g, "&quot;") + '">Cook mode</button>' +
+      '</div><div class="card-b">' +
+      '<div class="eyebrow">' + esc(set.day || set.key) + "</div>" +
+      (o.split ? '<div class="splitbar" style="margin-top:10px"><b>The cut:</b> ' + o.split + "</div>" : "") +
+      ((r && r.method) ? libraryBody(r)
+        : ((o.makes && o.makes.length) ? '<p class="mh">What makes it</p><ul class="makes">' +
+            o.makes.map(x => "<li>" + x + "</li>").join("") + "</ul>" : "")) +
+      "</div></div>";
   });
   return h;
 }
 
-const TARGET = [2800,170,339,85];
-const MARIA_TARGET = 1700;
-
-function karlDayTotals(day){
-  const t = [0,0,0,0];
-  if(day.away) return t;
-  (day.karl || []).forEach(k => macAdd(t, picked(k)));
-  if(day.yfood) macAdd(t, YFOOD, day.yfood);
-  if(day.dinner) macAdd(t, day.dinner === "sun" ? CONTENT.sunDinner : picked(day.dinner));
-  return t;
-}
-function mariaLunchFor(day){
-  let l = picked("ml");
-  if(day.mLunchOverride === "real" && pickIdx("ml") === 0) l = chooseSet("ml").opts[CONTENT.mlFallback];
-  return l;
-}
-function mariaDayTotal(day){
-  if(day.away) return 0;
-  let t = (day.mSkipBreakfast ? 0 : picked("mb").k) + mariaLunchFor(day).k;
-  if(day.dinner) t += (day.dinner === "sun" ? CONTENT.sunDinner : picked(day.dinner)).mk;
-  return t;
-}
-const FULLDAYS = ["mon","tue","wed","thu"];
-function weekTotals(){
-  const t = [0,0,0,0];
-  CONTENT.schedule.filter(d => FULLDAYS.includes(d.id)).forEach(d => {
-    const x = karlDayTotals(d); for(let i=0;i<4;i++) t[i]+=x[i];
-  });
-  return t;
-}
-const sign = n => (n>=0 ? "+" : "\u2212") + Math.abs(n).toFixed(n===Math.round(n)?0:1);
-
-function viewReceipt(){
-  let h = '<div class="note good"><b>What this plan actually delivers</b>, against what Clophie asked for. <b>Every number here is computed from your picks</b> — change a breakfast or a dinner and this tab moves. Reported, not adjusted: the point is that a week quietly landing at 2,650 instead of 2,800 gets caught here rather than never.</div>';
-
-  const wt = weekTotals(), tg = TARGET.map(x => x*4);
-  const labels = ["Calories","Protein","Carbohydrate","Fat"], unit = ["","g","g","g"];
-  h += '<div class="grouptitle">Karl — weekly variance, the four full days</div>';
-  h += '<div class="tw"><table><caption>Mon 31 to Thu 3. Sunday, Friday, the weekend and Monday the 7th are partial or away days by design and are excluded, so the comparison is like for like.</caption>' +
-       '<tr><th>Measure</th><th>Delivered</th><th>Target</th><th>Variance</th><th>%</th></tr>' +
-       labels.map((l,i) => {
-         const d = wt[i]-tg[i], pc = 100*d/tg[i];
-         return '<tr><td>' + l + '</td><td class="n">' + Math.round(wt[i]).toLocaleString() + " " + unit[i] +
-                '</td><td class="n">' + tg[i].toLocaleString() + " " + unit[i] +
-                '</td><td class="n ' + (Math.abs(pc)<5 ? "ok" : (d>0?"pos":"neg")) + '">' + sign(d) + " " + unit[i] +
-                '</td><td class="n">' + (pc>=0?"+":"\u2212") + Math.abs(pc).toFixed(1) + '%</td></tr>';
-       }).join("") + "</table></div>";
-
-  h += '<div class="grouptitle">Per day, both of you</div><div class="tw"><table>' +
-       '<tr><th>Day</th><th>Karl kcal</th><th>P</th><th>C</th><th>F</th><th>vs 2,800</th><th>Maria kcal</th><th>vs 1,700</th></tr>' +
-       CONTENT.schedule.filter(d => !d.away).map(d => {
-         const k = karlDayTotals(d), mv = mariaDayTotal(d);
-         const partial = !FULLDAYS.includes(d.id);
-         return '<tr><td>' + esc(d.d.replace(" Aug","").replace(" Sep","")) + '</td><td class="n">' + Math.round(k[0]).toLocaleString() +
-                '</td><td class="n">' + k[1].toFixed(1) + '</td><td class="n">' + k[2].toFixed(0) + '</td><td class="n">' + k[3].toFixed(1) +
-                '</td><td class="n">' + (partial ? '<span style="color:var(--ink-3)">partial</span>' : sign(Math.round(k[0]-2800))) +
-                '</td><td class="n">' + Math.round(mv).toLocaleString() +
-                '</td><td class="n">' + (partial ? '<span style="color:var(--ink-3)">partial</span>' : sign(Math.round(mv-MARIA_TARGET))) + '</td></tr>';
-       }).join("") + "</table></div>";
-  h += '<p class="det" style="margin-top:-2px">Maria\'s figure excludes the daily fruit-and-yoghurt top-up shown on The week, which is what closes her to 1,700.</p>';
-
-  h += '<div class="grouptitle">Karl — per slot</div><div class="tw"><table><caption>kcal / protein. Protein per slot is the hard number, so it leads the variance column.</caption>' +
-       '<tr><th>Slot</th><th>Target</th><th>Delivered</th><th>Variance</th></tr>';
-  const st = {k1:[190,10], k2:[570,45], k3:[765,50], k4:[380,25]};
-  ["k1","k2","k3","k4"].forEach(key => {
-    const o = picked(key), t = st[key];
-    h += '<tr><td>' + key.toUpperCase().replace("K","S") + ' · ' + esc(o.n) + '</td><td class="n">' + t[0] + " / " + t[1] +
-         '</td><td class="n">' + o.k + " / " + o.p.toFixed(1) + '</td><td class="n">' + sign(o.k-t[0]) + " / " + sign(+(o.p-t[1]).toFixed(1)) + '</td></tr>';
-  });
-  h += '<tr><td>S3 office · yfood ×2</td><td class="n">765 / 50</td><td class="n">800 / 50.0</td><td class="n">+35 / 0</td></tr>' +
-       '<tr><td>S4 office · yfood ×1</td><td class="n">380 / 25</td><td class="n">400 / 25.0</td><td class="n">+20 / 0</td></tr>';
-  const kb = picked("kb");
-  h += '<tr><td>Bonus top-up · ' + esc(kb.n) + '</td><td class="n">200 / 20</td><td class="n">' + kb.k + " / " + kb.p.toFixed(1) +
-       '</td><td class="n">' + sign(kb.k-200) + " / " + sign(+(kb.p-20).toFixed(1)) + '</td></tr>';
-  CONTENT.schedule.filter(d => d.dinner).forEach(d => {
-    const o = d.dinner === "sun" ? CONTENT.sunDinner : picked(d.dinner);
-    h += '<tr><td>S5 ' + esc(d.d.split(" ").slice(0,2).join(" ")) + '</td><td class="n">895 / 40</td><td class="n">' +
-         o.k + " / " + o.p.toFixed(1) + '</td><td class="n">' + sign(o.k-895) + " / " + sign(+(o.p-40).toFixed(1)) + '</td></tr>';
-  });
-  h += "</table></div>";
-
-  const fatOver = wt[3]-tg[3];
-
-  // ⭐ Karl's own rule: where a slot misses, the fix is a NAMED top-up on his plate,
-  // never a change to the 3:2 ratio. So compute the top-up instead of just reporting the gap.
-  const carbGap = (tg[2] - wt[2]) / 4;
-  if(carbGap > 15){
-    h += '<div class="grouptitle">Your prescribed top-up</div>';
-    h += '<div class="note stop"><b>Carbohydrate is running ' + Math.round(carbGap) + ' g a day short on these picks.</b> ' +
-      'That is not a fault in the plan — it is what choosing the two richest dinners of the set does, and the answer you set yourself is a named top-up rather than a change to the 3:2 cut.<br><br>' +
-      '⭐ <b>Add roughly ' + Math.round(carbGap/0.78/10)*10 + ' g of dry rice, or three slices of bread, to your own plate each evening.</b> ' +
-      'It goes on your plate, not into the pot — Maria&rsquo;s portion is already right.' +
-      (fatOver > 20 ? '<br><br>⚠️ Fat is also <b>' + Math.round(fatOver/4) + ' g a day over</b>, which is the same cause: thighs and bacon on Tuesday, suet on Thursday, both on office days where three yfood have already spent 54 g of the 85 g budget. Calories still land within 1%, so this is a shape difference rather than a shortfall — but it is the collision escalated below, showing up in the actual numbers rather than in the abstract.' : "") +
-      '</div>';
-  }
-
-  h += '<div class="grouptitle">Unmet slots, and why</div>';
-  h += '<div class="note warn"><b>Friday 4 September, dinner — both of you.</b> Not provisioned; you are on the M1 at 17:30 and eating out, and Karl has confirmed he will take at least the 895 kcal the slot asks for. <b>Not counted as delivered</b>, because Clousto did not provide it and cannot verify it.</div>';
-  h += '<div class="note warn"><b>Saturday 5 and Sunday 6.</b> Away days. No target, nothing provisioned — the indulgence valve, working as specified.</div>';
-  h += '<div class="note warn"><b>Monday 7 September, S4 and S5.</b> Outside the requested scope. Thursday\'s spare covers dinner if you want it.</div>';
-
-  h += '<div class="grouptitle">Escalations to Karl</div>';
-  h += '<div class="note stop"><b>The fat budget and yfood are in tension on office days.</b> yfood is about 40% fat by calories, so three units spend 54 g of the 85 g daily allowance before anything solid is eaten, leaving roughly 18 g for the whole of dinner. That is why Tuesday takes chicken breast rather than thigh and Thursday takes 5% mince against every source that says otherwise. <b>The week currently lands ' + sign(Math.round(fatOver)) + ' g on fat.</b> It works, but it permanently constrains what the dinner rotation can be — Clousto\'s constraint colliding with Clophie\'s number, and per the interface that is your decision rather than a negotiation between systems.</div>';
-  h += '<div class="note stop"><b>The yfood subscription is under-supplying by half.</b> Set at six units a week, which matched two units on each of three office days. The plan now takes three on each of four: <b>eleven units in this stretch</b>, and a 1.07 kg bag is twelve. Left alone you run out mid-September. On its own dated task.</div>';
-  h += '<div class="note good"><b>Maria\'s record is complete as of 30 Aug 2026.</b> She stated her own 1,700 kcal target in this session — it had been recorded, wrongly, as Karl\'s figure for her. And she has now answered the restriction question directly: <b>dairy MILK only, and yoghurt and cheese are fine.</b> No other restrictions. <b>That closes the last NOT-ASKED field on her profile</b>, and it is the first time either eater\'s record has been complete and first-hand. ⭐ The milk carve-out is enforced as a block: dairy milk is never substituted into her food. Yoghurt, cheese, feta and halloumi are all explicitly permitted.</div>';
-
-  h += '<p class="foot">Figures are label-derived, not measured. yfood powder is taken at 400 kcal / 25 g protein per 85 g unit; the ready-to-drink bottle Maria is trialling is 500 kcal / 30 g.</p>';
-  return h;
-}
 
 /* ------------------------------------------------------------------ library
    ⭐ D1 became the system of record for the recipe library and the pantry on
@@ -1377,8 +1151,10 @@ function libraryBody(r){
     (facts.length ? '<div class="facts" style="margin:14px 0;border-radius:8px;overflow:hidden;border:1px solid var(--line)">' +
       facts.map(f => '<div class="fact"><div class="fl">' + f[0] + '</div><div class="fv">' + esc(f[1]) + "</div></div>").join("") +
     "</div>" : "") +
-    (r.cookingNotes ? '<div class="note warn" style="margin-top:12px">' + mdInline(r.cookingNotes) + "</div>" : "") +
-    (r.eatingNotes  ? '<div class="note good" style="margin-top:10px">' + mdInline(r.eatingNotes)  + "</div>" : "") +
+    /* ⛔ cookingNotes and eatingNotes deliberately NOT rendered. They record what
+       happened on past cooks — "cooked from the compressed card, the peppers were
+       dropped" — which is history, not how to make it. The verbatim method carries
+       every technique cue already. */
     /* Verbatim and whole — headline, intro, the BUY/HELD ingredient list, the
        method, the research, the notes. ⛔ Deliberately NOT sliced to avoid
        repeating the week's own ingredient list. Duplication is a cosmetic cost;
@@ -1394,12 +1170,7 @@ const LEVEL_ORDER = {out:0, low:1, unmeasured:2, ok:3, plenty:4};
 
 function viewPantry(){
   if(!PANTRY) return '<div class="note"><b>The pantry is loading.</b> If this stays here you are offline and it has not been cached on this phone yet — the shopping list above still works.</div>';
-  const weak = PANTRY.filter(r => r.weakEvidence).length;
-  const unm  = PANTRY.filter(r => r.level === "unmeasured").length;
-  let h = '<div class="note good"><b>What is actually in the house.</b> ' + PANTRY.length + ' lines, read from D1 rather than Notion.</div>' +
-    '<div class="note warn"><b>' + weak + ' of these rest on weak evidence</b> (recalled or inferred) and <b>' + unm + ' are unmeasured</b> — nobody has looked, which is not the same as "fine". ' +
-    '⚠️ A counted number with no decrement mechanism decays into a guess while keeping its confident label: on 3 Sep two pastes recorded as held on 18 Aug turned out to be gone, at the pan. <b>Check the date before you cook from a line.</b></div>';
-
+  let h = "";
   const cats = [];
   PANTRY.forEach(r => { if(cats.indexOf(r.category || "—") < 0) cats.push(r.category || "—"); });
   cats.forEach(cat => {
@@ -1424,195 +1195,15 @@ function viewPantry(){
 }
 
 
-/* ==========================================================================
-   THE PLANNED WEEK — the format Clousto has produced since 8 Sep 2026.
-
-   ⭐ The two formats differ in WHO DID THE ARITHMETIC.
-
-   The original week shipped raw material — `dinUse`, `use`, `held`, `floor` —
-   and the app computed the shopping list from it, which is why changing a pick
-   moved the lines and the total. The planned week ships the ANSWER: every pack
-   carries the `qty` to buy, and the pantry-first work was done in the Cowork
-   conversation that built it.
-
-   ⚠️ THE COST OF THAT, STATED PLAINLY: with no per-option ingredient maps, a
-      changed dinner pick CANNOT change the shopping list. The recipe you cook
-      follows your pick; the trolley does not. Nothing in the UI may imply
-      otherwise.
-
-   Legacy weeks still render through the original path — `planned()` picks. */
-function planned(){ return !!(CONTENT && !CONTENT.dinUse); }
-
-/* ⛔ Never drop a group. The original renderer filtered to five known aisle
-   names, which would silently have discarded this week's "Wine — cooking" and
-   "⚠️ TESCO — Maria, Saturday morning" — a separate shop, dropped without a
-   trace. Known aisles keep their walking order; anything else is appended. */
-const AISLE_ORDER = ["Fruit & veg", "Meat & fish — eat in this order", "Chilled",
-                     "Bakery", "Cupboard", "Wine — cooking"];
-function plannedCart(){
-  const byGroup = {};
-  const packs = CONTENT.packs || {};
-  for(const k in packs){
-    const p = packs[k], qty = p.qty == null ? 1 : p.qty;
-    if(qty <= 0) continue;
-    (byGroup[p.g || "Cupboard"] = byGroup[p.g || "Cupboard"] || []).push({
-      n: qty > 1 ? p.n + "  ×" + qty : p.n,
-      d: p.d || "", p: +(qty * p.price).toFixed(2), est: !!p.est
-    });
-  }
-  const known = AISLE_ORDER.filter(g => byGroup[g]);
-  const rest  = Object.keys(byGroup).filter(g => AISLE_ORDER.indexOf(g) < 0).sort();
-  return known.concat(rest).map(g => ({g, items: byGroup[g]}));
-}
-function plannedTotal(){ let t = 0; plannedCart().forEach(g => g.items.forEach(i => { t += i.p; })); return t; }
-function plannedRemaining(){
-  let t = 0;
-  plannedCart().forEach(g => g.items.forEach(i => { if(!STATE.checked.includes(i.n)) t += i.p; }));
-  return t;
-}
-
-function viewShopPlanned(){
-  let h = '<div class="note good"><b>' + esc(CONTENT.store || "") + '</b></div>';
-  const c = CONTENT.cost || {};
-  if(c.aldi_tuesday != null && c.tesco_saturday != null)
-    h += '<div class="note held"><b>' + money(c.aldi_tuesday) + '</b> on Tuesday, <b>' +
-         money(c.tesco_saturday) + '</b> at Tesco on Saturday.</div>';
-  plannedCart().forEach(g => {
-    h += '<div class="grouptitle">' + esc(g.g) + '</div><div class="card"><ul class="list">';
-    g.items.forEach(i => {
-      const on = STATE.checked.includes(i.n);
-      h += '<li><button class="row' + (on ? " done" : "") + '" data-item="' + esc(i.n) + '" aria-pressed="' + on + '">' +
-           '<span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>' +
-           '<span class="rowmain"><span class="name">' + esc(i.n) + '</span>' +
-           (i.d ? '<span class="det">' + esc(i.d) + '</span>' : "") +
-           '</span><span class="price">' + money(i.p) + '</span></button></li>';
-    });
-    h += "</ul></div>";
-  });
-  /* The running total, sticky at the bottom. The single most-used thing in the
-     aisle, and the tick handler updates #remain in place on every tap. */
-  h += '<div class="totalbar"><span>Left to buy</span><strong id="remain">' + money(remainingTotal()) + '</strong>' +
-       '<span style="color:var(--ink-3)">of ' + money(cartTotal()) + '</span>' +
-       '<button class="reset" id="resetbtn">Reset</button></div>';
-  return h;
-}
-
-/* One day, with the option that is picked and the two that are not. */
-function plannedDayCard(set){
-  const o = picked(set.key);
-  let h = '<div class="card"><div class="card-h"><h3>' + esc(set.day || set.key) + '</h3>' +
-          '<button class="cookbtn" data-cook="' + esc(o.n).replace(/"/g, "&quot;") + '">Cook mode</button>' +
-          '</div><div class="card-b">' +
-          (set.slot ? '<div class="eyebrow">' + esc(set.slot) + "</div>" : "") +
-          (set.spec ? '<p style="font-size:15px;margin:8px 0 12px">' + set.spec + "</p>" : "") +
-          '<div class="grouptitle">Your pick</div>' +
-          '<p style="font-size:16px;font-weight:600;margin:0 0 8px">' + esc(o.n) + "</p>";
-  const facts = [];
-  if(o.time) facts.push(["Time", o.time]);
-  if(o.cost) facts.push(["Cost", o.cost]);
-  if(facts.length)
-    h += '<div class="facts" style="margin:10px 0;border-radius:8px;overflow:hidden;border:1px solid var(--line)">' +
-         facts.map(f => '<div class="fact"><div class="fl">' + f[0] + '</div><div class="fv">' + esc(f[1]) + "</div></div>").join("") +
-         "</div>";
-  if(o.split)  h += '<div class="splitbar"><b>The cut:</b> ' + o.split + "</div>";
-  if(o.clears) h += '<div class="clears" style="margin-top:10px"><b>Clears:</b> ' + o.clears + "</div>";
-  if(o.makes && o.makes.length)
-    h += '<p class="mh">What makes it</p><ul class="makes">' + o.makes.map(x => "<li>" + x + "</li>").join("") + "</ul>";
-  return h + "</div></div>";
-}
-
-function viewWeekPlanned(){
-  let h = "";
-  (CONTENT.notes || []).forEach(n => { h += '<div class="note warn">' + n + "</div>"; });
-  (CONTENT.choices || []).forEach(set => { h += plannedDayCard(set); });
-  if((CONTENT.slots || []).length){
-    h += '<div class="grouptitle">Standing slots</div><div class="card"><div class="card-b">' +
-         '<div class="plates">' + CONTENT.slots.map(sl =>
-           '<div class="plate"><div class="who">' + esc(sl.label || sl.key) + "</div></div>").join("") +
-         "</div></div></div>";
-  }
-  return h;
-}
-
-function viewChoosePlanned(){
-  /* ⚠️ Says exactly what changing a pick does, and what it does not. The
-     original copy promised the list would move with it; in this format it
-     cannot, and a promise the app cannot keep is worse than no promise. */
-  let h = '<div class="note"><b>Three options a day, one already chosen.</b> Changing your pick changes the ' +
-          'recipe you cook and follows through to Recipes and The week. <b>It does not change the shopping ' +
-          'list</b> — the trolley was worked out when the week was built.</div>';
-  (CONTENT.choices || []).forEach(set => {
-    h += '<div class="grouptitle">' + esc(set.day || set.key) + "</div>";
-    if(set.slot) h += '<p class="det mono" style="margin:-2px 0 10px">' + esc(set.slot) + "</p>";
-    (set.opts || []).forEach((o, oi) => {
-      const on = pickIdx(set.key) === oi;
-      h += '<div class="choice' + (on ? " pick" : "") + '" data-pick="' + esc(set.key) +
-           '" data-idx="' + oi + '" role="button" tabindex="0" aria-pressed="' + on + '">' +
-           '<div class="choice-h"><span class="cn">' + esc(o.n) + '</span>' +
-           (on ? '<span class="badge on">chosen</span>' : '<span class="badge pickme">tap to choose</span>') +
-           '</div>' +
-           ((o.time || o.cost) ? '<div class="facts">' +
-             (o.time ? '<div class="fact"><div class="fl">Time</div><div class="fv">' + esc(o.time) + '</div></div>' : "") +
-             (o.cost ? '<div class="fact"><div class="fl">Cost</div><div class="fv">' + esc(o.cost) + '</div></div>' : "") +
-             '</div>' : "") +
-           '<div class="choice-b">' +
-           (o.clears ? '<div class="clears"><b>Clears:</b> ' + o.clears + '</div>' : "") +
-           (o.makes && o.makes.length ? '<p class="mh">What makes it</p><ul class="makes">' +
-              o.makes.map(x => "<li>" + x + "</li>").join("") + '</ul>' : "") +
-           '</div></div>';
-    });
-  });
-  return h;
-}
-
-function viewRecipesPlanned(){
-  let h = "";
-  if(!LIBRARY) h += '<div class="note"><b>Reading the library…</b></div>';
-  (CONTENT.choices || []).forEach(set => {
-    const o = picked(set.key);
-    /* ⚠️ No library method is usually not a gap. Half this week's weekend is
-       leftovers and assemblies — "Friday's ragù, the portion held back",
-       "Full English", "Leftovers and eggs" — which have no method by design.
-       Calling those "not written yet" would invent a problem, so the card
-       simply shows what the week itself says about the dish. */
-    h += libraryCardFor(o, set) || plannedDayCard(set);
-  });
-  return h;
-}
-
-/* The week names the dish; the library holds the method. */
-function libraryCardFor(o, set){
-  const r = libFind(o.n);
-  if(!r || !r.method) return null;
-  return '<div class="card"><div class="card-h"><h3>' + esc(r.name) + "</h3>" +
-    '<button class="cookbtn" data-cook="' + esc(r.name).replace(/"/g, "&quot;") + '">Cook mode</button>' +
-    '</div><div class="card-b">' +
-    '<div class="eyebrow">' + esc(set.day || "") + (set.slot ? " · " + esc(set.slot) : "") + "</div>" +
-    (o.split ? '<div class="splitbar" style="margin-top:10px"><b>The cut:</b> ' + o.split + "</div>" : "") +
-    libraryBody(r) + "</div></div>";
-}
-
 /* ---------- render ---------- */
-const TABS_LEGACY = [
+const TABS = [
   {id:"shop",  label:"Shop",     fn:viewShop},
   {id:"week",  label:"The week", fn:viewWeek},
   {id:"pick",  label:"Choose",   fn:viewChoose},
   {id:"opts",  label:"Slots",    fn:viewSlots},
   {id:"cook",  label:"Recipes",  fn:viewRecipes},
-  {id:"pan",   label:"Pantry",   fn:viewPantry},
-  {id:"rec",   label:"Receipt",  fn:viewReceipt}
-];
-/* The planned week has no per-option ingredient maps and no macros, so Slots
-   and Receipt have nothing behind them. A tab that cannot answer its question
-   is dropped rather than shown empty. */
-const TABS_PLANNED = [
-  {id:"shop",  label:"Shop",     fn:viewShopPlanned},
-  {id:"week",  label:"The week", fn:viewWeekPlanned},
-  {id:"pick",  label:"Choose",   fn:viewChoosePlanned},
-  {id:"cook",  label:"Recipes",  fn:viewRecipesPlanned},
   {id:"pan",   label:"Pantry",   fn:viewPantry}
 ];
-function TABSET(){ return planned() ? TABS_PLANNED : TABS_LEGACY; }
 let active = "shop";
 
 function render(){
@@ -1631,9 +1222,9 @@ function render(){
     esc(CONTENT.store) + ' · ' + esc(CONTENT.week) + '</div>' +
     '<h1>Clousto Kitchen</h1>' +
     '<p class="sub">One shop today, nine days of food. <b>Four dinners still to choose</b> \u2014 see Choose.</p></header>' +
-    '<nav class="tabs" role="tablist">' + TABSET().map(t =>
+    '<nav class="tabs" role="tablist">' + TABS.map(t =>
       '<button role="tab" data-tab="' + t.id + '" aria-selected="' + (t.id === active) + '">' + t.label + "</button>").join("") + "</nav>" +
-    TABSET().map(t => '<section class="panel' + (t.id === active ? " on" : "") + '" id="p-' + t.id + '">' + t.fn() + "</section>").join("");
+    TABS.map(t => '<section class="panel' + (t.id === active ? " on" : "") + '" id="p-' + t.id + '">' + t.fn() + "</section>").join("");
 }
 
 /* ---------- publish ---------- */
