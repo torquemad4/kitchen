@@ -4,6 +4,20 @@
 Cloudflare Access. The week's shopping list and every recipe card, on a URL
 that does not move.
 
+## Documentation
+
+Full documentation is in [`docs/`](docs/). It is the single source of truth.
+
+| | |
+|---|---|
+| ⭐ [`docs/READ-FIRST.md`](docs/READ-FIRST.md) | **Read before changing anything.** Orientation, the invariants, and which documents a given change obliges you to update. |
+| [`docs/architecture.md`](docs/architecture.md) | The loop, stage ownership, the data model, known-broken. |
+| [`docs/user-guide.md`](docs/user-guide.md) | How Karl and Maria use it. |
+| [`docs/code.md`](docs/code.md) | Repo layout, endpoints, `index.html` internals, deploying, testing. |
+
+Operating skills: `~/projects/skills/clousto` (safe reads and writes),
+`clousto-menu` (the weekly menu conversation), `clousto-receipt` (receipt → pantry).
+
 ## Why this exists
 
 The week used to be a literal inside an HTML artifact, so publishing a new week
@@ -29,9 +43,21 @@ writes a row; the hostname never changes.
 the aisle works with no signal and both phones converge. The `picks` and
 `cart_state` tables already exist for it, so it is code only, no migration.
 
-**Stage 3.** Pantry, recipe library and profiles migrate out of Notion; the
-Access service token and `GET /api/planning-export` / `PUT /api/week` land, and
-weekly builds stop being hand-assembled.
+**Stage 3 — half done, 7 Sep 2026.** The **recipe library and pantry have migrated
+out of Notion into D1** and are the system of record: 36 recipes with their full
+verbatim method, 56 pantry rows with the evidence grading intact, served by
+`GET /api/recipes` and `GET /api/pantry` and rendered by the app. Notion is no longer
+authoritative for either, though the databases stay in place, stale, until Karl says
+otherwise.
+
+⚠️ **What did NOT migrate is the machine-readable half.** Structured ingredient
+quantities still live inside `weeks.doc`, keyed on pack keys, bound to a week rather
+than to a recipe — so the cart is still built from a frozen snapshot of the pantry
+rather than a live diff against it. That join is the largest piece of outstanding work
+and blocks the pre-cook checks and the post-cook decrement. See
+[`docs/architecture.md`](docs/architecture.md) §4.
+
+Profiles, the Access service token and `GET /api/planning-export` are still outstanding.
 
 **Stages 4–5.** Receipt loop into R2, then the Clophie macro feed and the
 scheduled build that starts the consecutive-automatic-weeks count.
