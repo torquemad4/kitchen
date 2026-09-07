@@ -438,6 +438,79 @@ each pointing at the Notion ruling that set it:
 > cheese in the house."* In practice this is a **cheese rule** — tuna sits at 3× its
 > floor and pasta at many multiples; cheese is the only one that ever reaches zero.
 
+### 5.5 The week document — the contract between Cowork and the app
+
+⭐ **This section is canonical.** `~/projects/skills/clousto-menu` describes how to
+build a week; **this describes the shape it must arrive in.** The skills directory is
+not version-controlled, so where the two disagree, this wins.
+
+On 7 Sep 2026 a week was published in a shape the engine could not read. The site went
+down showing *"This week could not be loaded"* with the previous week already closed,
+and the week that eventually rendered contained no breakfasts. Both failures came from
+the same place: nothing had ever written the schema down.
+
+```jsonc
+{
+  "week": "Tue 8 – Sun 13 Sep 2026", "store": "Aldi, Reading", "built": "2026-09-07",
+
+  "packs": {                     // the CATALOGUE of buyable products
+    "oats": { "n": "Porridge oats, 1 kg", "size": 1000, "u": "g",
+              "price": 0.85, "g": "Cupboard", "d": "why", "qty": 1 }
+  },
+  "held":  { "rice": 900 },      // in the house, in pack-key units
+  "fixed": { "bread_seed": 2 },  // bought every week regardless
+  "floor": { "tuna": 2 },        // 🔒 the emergency meal
+
+  "choices": [{                  // one entry per DECISION, three options each
+    "key": "tue", "day": "Tue 8", "slot": "…", "spec": "…",
+    "opts": [{ "n": "Pasta con le sarde", "pick": true,
+               "time": "…", "cost": "…", "clears": "…", "split": "…", "makes": ["…"],
+               "k": 885, "p": 51, "c": 92, "f": 28, "mk": 590, "mp": 34,
+               "use": { "sardine": 4, "fusilli": 200 } }]
+  }],
+
+  "slots": [{                    // ⛔ SAME SHAPE. A label is not a slot.
+    "key": "k1", "label": "Pre-workout", "days": 6,
+    "opts": [{ "n": "The pour", "pick": true, "k": 190, "p": 9.8,
+               "use": { "milk_skim": 250, "banana": 1 } }]
+  }],
+
+  "notes": ["…"],
+  "cost":  { "week_total": 136.67 }
+}
+```
+
+**The three fields that carry the load:**
+
+⭐ **`use`** — what ONE serving of that option consumes, keyed on pack keys, in the
+pack's unit; × `days` for a slot. This is what lets a changed pick change the trolley.
+Without it the app can render a list but never recompute one. An option consuming
+nothing new writes `"use": {}` **explicitly** — a deliberate empty map and a forgotten
+one must not look alike.
+
+⭐ **`slots[].opts`** — the standing daily meals. The 30 Aug week carried seven slots
+of three or four options each: pre-workout, breakfast, two midday, a bonus, and Maria's
+breakfast and lunch, with day counts of 6/6/3/3/5/6/7. Those counts vary per slot and
+are not the length of the week. **A slot with a label and no options means the week
+silently contains no breakfast** — Karl, 7 Sep: *"we always had 3 options for breakfast
+in the morning, as well as a pre-workout. That's not there any more."*
+
+⭐ **`packs[k]` for every key in `held`** — enforced by `PUT /api/week` (§2.1). Held
+stock runs out after publication; without a pack the shortfall cannot be priced.
+
+**The self-check that proves a week is coherent:** sum `use` across the default picks
+(× `days` for slots), add `fixed` and `floor`, subtract `held`, round each up to its
+pack size. That must reproduce every `packs[].qty`. If it does not, the stated menu and
+the stated list disagree and one of them is wrong.
+
+⚠️ **`opts[].n` must match a `recipes.name` exactly** where the dish is a library
+recipe — that is the join the Recipes tab resolves through. Assemblies and leftovers
+("Full English", "Friday's ragù, the portion held back") legitimately match nothing.
+
+⚠️ **Cowork writes to `weeks` directly, so `PUT /api/week` validation does not run.**
+Anything relying on that endpoint to catch a malformed week will not catch it.
+
+
 ---
 
 ## 6. Runtime architecture ✅ BUILT
