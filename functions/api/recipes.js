@@ -17,10 +17,16 @@
 // has poor signal, the page caches this to localStorage, and one fetch that
 // works beats six that fail in an aisle.
 
+// ⭐ `cook` itself is NOT in this list — it is 6-8 KB per recipe and the page
+//    fetches the one it needs from /api/recipe. But whether a card EXISTS has
+//    to travel with the library, because the page decides from it whether to
+//    offer Cook mode at all. Shipping the flag costs a byte; shipping the
+//    cards would triple the payload the aisle has to download.
 const FIELDS = `id, name, slot, status, rating, ingredients, method, source,
                 est_min, hands_on_min, elapsed_min, times_cooked, last_cooked,
                 uses_pantry, vegan_variant, cooking_notes, eating_notes,
-                notion_url, headline, kcal, protein_g, portions, cost_per_portion`;
+                notion_url, headline, kcal, protein_g, portions, cost_per_portion,
+                (cook IS NOT NULL AND cook <> '') AS has_cook`;
 
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
@@ -64,6 +70,11 @@ function shape(r) {
     //    number invented to look tidy is worse than a visibly broken one.
     timesCooked: r.times_cooked, lastCooked: r.last_cooked,
     usesPantry: !!r.uses_pantry, veganVariant: !!r.vegan_variant,
+    // ⛔ The page renders the Cook mode button ONLY when this is true. A button
+    //    that opens "no cook card for this one yet" is a control that lies, and
+    //    on 9 Sep 2026 that was 35 of 38 recipes — including every dish in the
+    //    live week. Things are on the page or they are not.
+    hasCook: !!r.has_cook,
     cookingNotes: r.cooking_notes, eatingNotes: r.eating_notes,
     notionUrl: r.notion_url,
     // The headline is hand-written prose and varies. It is kept raw alongside

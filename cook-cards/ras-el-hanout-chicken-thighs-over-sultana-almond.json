@@ -1,0 +1,98 @@
+{
+  "recipe": "Ras el hanout chicken thighs over sultana & almond couscous",
+  "servesNote": "2 portions — Karl 3 : Maria 2. Of ~5 thighs, Karl 3 and Maria 2; the couscous splits the same way. Maria's next-day lunch comes out of this and is very good.",
+  "estimatedMin": 62,
+  "handsOnMin": 13,
+  "adaptations": [
+    "⚠️ THE PASTE SACHETS ARE NOT IN THE HOUSE. The library card asks for one sachet each of tomato paste and roasted garlic paste. Both were recorded OUT on 3 Sep — they are the two that were caught at the pan. Tuesday's shop bought jars instead: use 2 tbsp of the tomato double concentrate (200 g tube) and 1 tbsp of the Ready Set Cook! chopped garlic (200 g jar). Same job, and the jars mean this stops being a one-outing dish.",
+    "⭐ The chopped garlic is raw, where the sachet was roasted and sweeter. It goes into the paste and then under the skin, so it gets 45 minutes at 220°C and comes out mellow. Do not be tempted to add extra to compensate up front.",
+    "⚠️ RAS EL HANOUT IS SACHETS ONLY, no jar behind it, and the house held two. Use one. If the box is empty, 1 tsp cumin + ½ tsp coriander + ½ tsp cinnamon + ½ tsp paprika + a grind of pepper gets close enough to cook from — this dish is carried by the rendered fat and the lemon more than by the blend."
+  ],
+  "ingredients": [
+    { "qty": "700 g", "item": "bone-in skin-on chicken thighs (~5)", "prep": "patted dry, salted — see prep 1", "held": false },
+    { "qty": "2 (~300 g)", "item": "red onions", "prep": "cut root-to-tip into 6 wedges each, ⭐ kept intact at the root", "held": false },
+    { "qty": "2 (~200 g)", "item": "carrots", "prep": "halved lengthways, then 5 cm batons", "held": false },
+    { "qty": "1", "item": "lemon", "prep": "half juiced at the end, the rest in wedges", "held": false },
+    { "qty": "15 g", "item": "coriander or parsley", "prep": "chopped, half through the couscous and half over", "held": false },
+    { "qty": "3 tbsp", "item": "natural yoghurt", "prep": "on the side, not in the pan", "held": false },
+    { "qty": "1½ tbsp", "item": "olive oil", "prep": "1 tbsp for the veg, ½ tbsp into the paste", "held": false },
+    { "qty": "1 sachet", "item": "ras el hanout", "prep": "⚠️ sachets only, no jar — see the adaptations", "held": true },
+    { "qty": "2 tbsp", "item": "tomato double concentrate", "prep": "⚠️ from the 200 g tube — the sachet is gone", "held": true },
+    { "qty": "1 tbsp", "item": "chopped garlic", "prep": "⚠️ from the 200 g jar — the roasted paste sachet is gone", "held": true },
+    { "qty": "1 sachet", "item": "chicken stock", "prep": "into the couscous, dry", "held": true },
+    { "qty": "1 sachet", "item": "saffron (optional)", "prep": "crumbled between your fingers into the couscous", "held": true },
+    { "qty": "100 g", "item": "couscous", "prep": "", "held": true },
+    { "qty": "40 g", "item": "sultanas", "prep": "swell with the couscous, not added after", "held": true },
+    { "qty": "25 g", "item": "flaked almonds", "prep": "toasted dry — step 3", "held": true },
+    { "qty": "1 tsp", "item": "cumin", "prep": "on the vegetables", "held": true },
+    { "qty": "½ tsp", "item": "smoked paprika", "prep": "on the vegetables", "held": true },
+    { "qty": "¼ tsp", "item": "cinnamon", "prep": "on the vegetables", "held": true },
+    { "qty": "to taste", "item": "Maldon salt and black pepper", "prep": "1 tsp Maldon on the skin, ½ tsp on the veg, more at the end", "held": true }
+  ],
+  "equipment": [
+    { "item": "Large roasting tin", "why": "⭐ goes into the oven EMPTY as it heats — the veg must hit hot metal" },
+    { "item": "Plate", "why": "the thighs sit uncovered on it while the salt works" },
+    { "item": "Large bowl", "why": "tossing the vegetables with oil and spice" },
+    { "item": "Small bowl", "why": "mixing the spice paste" },
+    { "item": "Heatproof bowl with a plate that fits it", "why": "the couscous steams under the plate, undisturbed" },
+    { "item": "Small dry pan", "why": "toasting the almonds" },
+    { "item": "Chopping board and knife", "why": "" },
+    { "item": "Fork", "why": "separating the couscous — a spoon compacts it" },
+    { "item": "Tongs", "why": "" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "⭐ THIGHS OUT AND SALTED THE MOMENT YOU WALK IN — everything else fits inside the ten minutes this needs. Out of the pack, pat every surface dry INCLUDING UNDER THE LOOSE FLAP OF SKIN, then scatter 1 tsp Maldon over the skin, crushing it between your fingers. Leave uncovered on a plate. The salt draws moisture to the surface and it evaporates; skin cannot begin to brown until its surface is dry. Ten minutes of this is worth more than any amount of oil later.",
+    "Oven to 220°C / 200°C fan, with the large roasting tin inside as it heats. The vegetables should hit hot metal, not cold.",
+    "Toss the onion wedges and carrots with 1 tbsp oil, the cumin, paprika, cinnamon, ½ tsp salt and pepper. ⭐ Keep the onion wedges intact at the root so they go jammy rather than falling into strands.",
+    "Mix ½ tbsp oil with the ras el hanout, 2 tbsp tomato concentrate and 1 tbsp chopped garlic into a loose paste — a teaspoon of water only if it is too stiff to spread.",
+    "⭐ Rub the paste over the thighs, UNDER THE SKIN as well as on top, working a finger in at the edge to lift it. Spicing that sits on top is the commonest way this dish tastes flat."
+  ],
+  "steps": [
+    {
+      "text": "Pull out the hot tin, tip in the vegetables in a single layer, sit the thighs on top <b>skin side up, spaced so none touch. Nothing piled up.</b> A crowded tray steams. The veg below release plenty of moisture and that is the water the chicken needs — but the skin has to stay proud of it, in dry heat. <b>Leave the tray uncovered.</b>",
+      "min": 2,
+      "max": 4
+    },
+    {
+      "text": "Roast <b>until the skin is deep bronze and taut, the fat has visibly rendered into the tray, and the onion tips are blackening at the edges.</b> Pierced against the bone, the juice should run clear with no pink thread. ⚠️ Covering the tray fixes dryness and destroys the skin — a bone-in fatty cut will not dry out in this time.",
+      "min": 40,
+      "max": 50
+    },
+    {
+      "text": "Meanwhile, almonds into a small dry pan, <b>shaking almost continuously until they smell nutty and the flat faces are pale-toast coloured.</b> Tip straight onto a cold plate — left in the pan they carry on and turn bitter.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Couscous, sultanas, the chicken stock sachet and a pinch of salt into the heatproof bowl, plus the saffron crumbled between your fingers if using. Pour over 150 ml boiling water, <b>stir ONCE, cover tightly with a plate, and leave it undisturbed. Do not stir again while it swells</b> — that is what makes couscous pasty.",
+      "min": 8,
+      "max": 10
+    },
+    {
+      "text": "⭐ <b>Rest the thighs on a board a full 8 minutes. Do not cover them tightly with foil</b>, which softens the skin you just spent 45 minutes making.",
+      "min": 8,
+      "max": 8
+    },
+    {
+      "text": "Uncover the couscous — it should look swollen and dry. <b>Drag a fork through in short strokes, lifting and separating rather than mixing</b>, until every grain is loose. Add the toasted almonds and half the herbs.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "⭐ <b>Tip the vegetables and ALL the pan juices into the couscous</b>, plus any juice pooled under the resting chicken, and fork through again. <b>This is the step that makes the dish</b> — the rendered chicken fat and spiced juices are the seasoning, and a version that serves couscous plain alongside has thrown them away.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Squeeze in the juice of half the lemon, taste, and <b>add more salt and lemon until it tastes bright rather than heavy.</b> The dish is sweet from the sultanas and the onions and needs the acid to stand up to them.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Serve with the thighs on top, the remaining herbs over, yoghurt on the side and lemon wedges. <b>Maria's next-day lunch:</b> strip the meat off the bones while warm and store it <b>in</b> the couscous — the meat stays moist and the couscous keeps absorbing. Yoghurt, lemon and a few almonds kept separate.",
+      "min": 2,
+      "max": 3
+    }
+  ]
+}

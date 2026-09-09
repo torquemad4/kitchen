@@ -396,12 +396,16 @@ function cookFmt(s){
   return m + ":" + (r<10?"0":"") + r;
 }
 
-async function openCook(name){
+/* Takes the LIBRARY ID. The week document carries abbreviated option labels and
+   matching on those is the join libFind() exists to do carefully; by the time a
+   Cook mode button has rendered, that join has already resolved, so hand the id
+   over rather than making the endpoint repeat the guess. */
+async function openCook(id){
   var el = document.getElementById("cook");
   el.hidden = false;
   el.innerHTML = '<div class="cbody"><p class="big">Loading the card…</p></div>';
   try{
-    var res = await fetch("/api/recipe?name=" + encodeURIComponent(name), {cache:"no-store"});
+    var res = await fetch("/api/recipe?id=" + encodeURIComponent(id), {cache:"no-store"});
     var j = await res.json();
     if(!res.ok) throw new Error(j && j.error ? j.error : ("HTTP " + res.status));
     COOK = {
@@ -1094,7 +1098,11 @@ function viewSlots(){
       page is read in an aisle; it does not get to lose a dinner because a
       name failed to match. */
 let LIBRARY = null, PANTRY = null, STOCK = null;
-const LIB_KEY = "clousto.library.v1", PANTRY_KEY = "clousto.pantry.v1",
+/* ⚠️ v2 as of 9 Sep 2026: the library payload gained `hasCook`, and the Cook mode
+   button is rendered from it. A phone holding a v1 cache would read objects with
+   no such field and silently offer no Cook mode until the network answered.
+   ⛔ Bump this whenever the payload SHAPE changes, not when its contents do. */
+const LIB_KEY = "clousto.library.v2", PANTRY_KEY = "clousto.pantry.v1",
       STOCK_KEY = "clousto.stock.v1";
 
 /* Cached to localStorage on purpose: Aldi has poor signal, and a library that
@@ -1296,8 +1304,11 @@ function viewRecipes(){
     '<button role="tab" data-recipe="' + esc(c.key) + '" aria-selected="' + (c.key === set.key) + '">' +
     esc(String(c.day || c.key)) + "</button>").join("") + "</nav>";
 
+  /* ⛔ Cook mode is offered ONLY where a card exists. It used to render on every
+     recipe and 35 of 38 opened "no cook card for this one yet" — a control that
+     lies about what it does. Keyed on the library id, not the week's label. */
   h += '<div class="card" id="r-' + esc(set.key) + '"><div class="card-h"><h3>' + esc(o.n) + "</h3>" +
-    '<button class="cookbtn" data-cook="' + esc(o.n).replace(/"/g, "&quot;") + '">Cook mode</button>' +
+    ((r && r.hasCook) ? '<button class="cookbtn" data-cook="' + esc(r.id) + '">Cook mode</button>' : "") +
     '</div><div class="card-b">' +
     '<div class="eyebrow">' + esc(set.day || set.key) + "</div>" +
     (o.split ? '<div class="splitbar" style="margin-top:10px"><b>' +

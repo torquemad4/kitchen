@@ -1,0 +1,100 @@
+{
+  "recipe": "Slow-roast lamb shoulder with anchovy, garlic & rosemary",
+  "servesNote": "8 portions from a 2.7 kg joint — five on Saturday night at ~175 g each, then 210–285 g each for Sunday's three, and enough spare that Sunday dinner for two needs nothing bought for it. ⭐ Maria cooks this alone on Saturday; Karl is out until evening.",
+  "adaptations": [
+    "⏰ WORK BACKWARDS FROM DINNER — this is the only timing that matters. To eat at 7:00 pm: joint home BY 11:30 am · 11:45 unwrap, salt, oven on to 170°C/150°C fan · 12:45 into the oven covered · 5:15 UNCOVER, oven up to 220°C/200°C fan · 5:45 out to rest, gravy and veg now · 6:30 potatoes and carrots in at 200°C · 7:00 eat.",
+    "⚠️ IF THE SHOP RUNS LATE, push the whole column back — do not shorten the covered stage. The joint is forgiving about total time and unforgiving about being cut short.",
+    "⛔ BUY THE BIGGEST SHOULDER ON THE SHELF. Bone-to-meat ratio varies enormously on this cut and weight is a poor predictor of yield — if there is a choice, take the one that looks meatiest, not the one closest to 2.7 kg.",
+    "⭐ SUNDAY IS THREE PEOPLE EATING THIS AGAIN, and that shapes Saturday: HOLD BACK 250–300 ml OF GRAVY deliberately, make more than Saturday needs, and store the leftover meat submerged in its juices. Reheat covered at 150–160°C with the reserved gravy over it, 20–25 min, and stop the moment it is hot through. ⛔ No air fryer, no skillet, no re-crisping — those tested worst and dry it out."
+  ],
+  "estimatedMin": 375,
+  "handsOnMin": 35,
+  "ingredients": [
+    { "qty": "1 × 2.7 kg", "item": "lamb shoulder, bone-in", "prep": "⛔ Tesco, Saturday morning — the biggest on the shelf", "held": false },
+    { "qty": "1 bulb", "item": "fresh garlic", "prep": "⛔ NOT the jarred chopped garlic — see prep 4", "held": false },
+    { "qty": "1 tin (~50 g)", "item": "anchovy fillets", "prep": "⭐ half into the slits, the rest chopped into the gravy", "held": false },
+    { "qty": "2 kg", "item": "potatoes", "prep": "1.5 kg in large chunks for roasting", "held": false },
+    { "qty": "1 kg", "item": "carrots", "prep": "4 halved lengthways for the bed, the rest in batons", "held": false },
+    { "qty": "1 kg", "item": "onions", "prep": "3 sliced into THICK DISCS for the bed", "held": false },
+    { "qty": "2 × 220 g", "item": "green beans", "prep": "boiled 4 minutes right at the end", "held": false },
+    { "qty": "to ~1 litre, weak", "item": "chicken stock cubes", "prep": "⚠️ WEAKER than the packet says — 300 ml in the tin, the rest for the gravy", "held": false },
+    { "qty": "a few sprigs", "item": "rosemary", "prep": "needles into the slits, sprigs on the bed", "held": true },
+    { "qty": "a few", "item": "bay leaves", "prep": "on the bed", "held": true },
+    { "qty": "5 tsp", "item": "plain flour", "prep": "the gravy roux", "held": true },
+    { "qty": "3 × 20 g", "item": "mint sauce sachets", "prep": "⛔ THREE, not six — one or two in the gravy, one on the table", "held": true },
+    { "qty": "~1½ tsp + more", "item": "salt", "prep": "generously all over, an hour ahead", "held": true },
+    { "qty": "plenty", "item": "black pepper", "prep": "", "held": true },
+    { "qty": "for rubbing", "item": "oil", "prep": "", "held": true },
+    { "qty": "", "item": "greaseproof paper AND foil", "prep": "⛔ both, and in that order — see step 2", "held": true }
+  ],
+  "equipment": [
+    { "item": "The largest roasting tin you own", "why": "⛔ check the joint fits BEFORE the oven goes on" },
+    { "item": "A second roasting tin", "why": "⛔ potatoes and carrots cook separately — crowding the lamb tin steams everything grey" },
+    { "item": "Greaseproof paper and foil", "why": "⛔ paper against the meat, foil over the tin. Not foil alone" },
+    { "item": "Small sharp knife", "why": "the 10–12 slits" },
+    { "item": "A fork", "why": "⭐ testing — the fork decides when it is done, not the clock" },
+    { "item": "Sieve and a jug", "why": "the gravy, and the jug goes in the freezer to set the fat" },
+    { "item": "A container the leftover meat fits in WITH liquid around it", "why": "⭐ Sunday depends on this" },
+    { "item": "A tea towel", "why": "over the loose foil tent during the rest" }
+  ],
+  "equipmentDerived": false,
+  "prep": [
+    "⭐ UNWRAP THE JOINT THE MOMENT IT IS HOME and <b>pat the whole surface dry with kitchen paper. A wet surface will never brown.</b> Salt it generously all over — about 1½ teaspoons — and leave it on the counter while the oven comes up. <b>This is not about bringing it to room temperature, which does nothing over a cook this long.</b> It is so the salt starts working and the surface dries further.",
+    "Heat the oven to <b>170°C / 150°C fan / gas 3.</b>",
+    "Peel and slice <b>3 onions into thick DISCS</b> — discs, not chunks — and lay them across the base of the tin with <b>4 carrots halved lengthways.</b> Add a few bay leaves and a couple of rosemary sprigs. ⭐ <b>This bed is not a garnish. It lifts the joint clear of its own rendered fat so the underside roasts instead of deep-frying</b>, and it becomes the body of the gravy later.",
+    "<b>Make 10–12 slits in the joint</b>, top and underside, about 2 cm deep. Into each one push <b>a sliver of fresh garlic, a small piece of anchovy fillet and a few rosemary needles.</b> ⛔ <b>Fresh garlic cloves, never the jarred chopped garlic</b> — jarred is packed in liquid, it leaks straight back out of the slit, and its sour note concentrates rather than mellows over a long cook. ⭐ <b>The anchovies are the single best thing in this recipe and they will not taste of fish</b> — over five hours they dissolve completely and leave savoury depth through the inside of the joint. Use about half the tin; the rest goes in the gravy.",
+    "Rub the outside with oil, a little more salt and plenty of black pepper. Sit the joint <b>on the onion and carrot bed, fat side up.</b>"
+  ],
+  "steps": [
+    {
+      "text": "Pour <b>300 ml of WEAK chicken stock into the tin — around the joint, never over it.</b> ⚠️ <b>Make the stock weaker than the packet says.</b> This is the most common way the dish is ruined: a litre of strong stock gives you a litre and a half of thin fatty liquor that tastes of stock cube instead of lamb. The liquid is insurance against a scorched tin and a little help with heat transfer. <b>It is not a braising medium.</b>",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "⛔ <b>Lay greaseproof paper DIRECTLY on the meat, then foil over the whole tin, crimped tight around all four edges.</b> The paper layer is not fussiness: foil touching wet acidic meat for five hours welds to the surface and tears the crust off when you pull it away, and acid against aluminium in a hot oven pits the foil into the juices. There is vinegar and mint sauce in this dish. <b>Use the paper.</b>",
+      "min": 3,
+      "max": 5
+    },
+    {
+      "text": "⭐ <b>Into the oven for 4½ hours. Then leave it alone.</b> ⚠️ <b>Every time the door opens you lose heat and add roughly 20 minutes. Do not baste, do not check, do not peek.</b> The tin is sealed and the steam inside is doing everything basting would.",
+      "min": 270,
+      "max": 270
+    },
+    {
+      "text": "<b>Take the foil and paper off.</b> Oven up to <b>220°C / 200°C fan</b> and give it <b>30 minutes uncovered</b> to crisp the fat cap. ⭐ <b>The blast comes at the end, not the beginning:</b> browning at the start colours meat while the fat cap is still solid; browning at the end crisps fat that five hours have already rendered. ⚠️ <b>Look in the tin before you turn the heat up — if it has gone dry, add 150 ml of water.</b> A tin that scorches at 220°C turns every drop of the gravy bitter.",
+      "min": 30,
+      "max": 30
+    },
+    {
+      "text": "⭐⭐ <b>Test it with a FORK, not a clock. The fork should meet no resistance at all</b> — it should turn in the meat like it is turning in butter. With a thermometer, <b>90–95°C</b> in the thickest part away from the bone. <b>THE MOST IMPORTANT THING ON THIS CARD: if it feels tough, it is NOT done — it is not overdone.</b> This cut gets tougher before it gets tender; between about 60°C and 70°C the collagen contracts and squeezes out water but has not yet turned to gelatin. <b>Cooks panic here and pull it out.</b> Give it another 45 minutes covered and test again. ⛔ <b>Stopping around 70°C is the worst possible outcome — worse than either end.</b>",
+      "min": 2,
+      "max": 45
+    },
+    {
+      "text": "<b>Rest it 30–45 minutes</b> on a warm dish, tented <b>LOOSELY</b> with foil and a tea towel over the top. ⚠️ <b>Loosely.</b> Tight foil on a crisped fat cap softens it back to flab within fifteen minutes. The rest is not really about juices redistributing — it lets the gelatin firm up so the meat holds together when you pull it, and buys the half hour needed for gravy and vegetables.",
+      "min": 30,
+      "max": 45
+    },
+    {
+      "text": "<b>While it rests — potatoes and carrots.</b> Oven to 200°C. Cut 1.5 kg potatoes into large chunks and the remaining carrots into batons, toss in oil and salt, roast 30 minutes. ⛔ <b>In a SEPARATE tin.</b> Crowding them into the lamb tin means everything sits in released liquid and steams grey. Green beans on to boil for 4 minutes right at the end.",
+      "min": 30,
+      "max": 35
+    },
+    {
+      "text": "<b>The gravy.</b> Tip the tin's contents through a sieve into a jug and <b>stand the jug in the freezer for 15 minutes</b> so the fat sets into a layer you can lift straight off. ⭐ <b>You will pour off 200–400 ml of fat from a joint this size, and not doing it is the commonest way this gravy goes wrong — not rich, just greasy.</b> Mash the softened onion and garlic through the sieve as you go; that is the body, and you want the juice, not the pulp. Set the tin over low heat with about a tablespoon of the reserved fat, <b>stir in 5 tsp plain flour and cook until it turns golden</b>, scraping every scrap of fond off the base. Add the de-fatted juices <b>a little at a time, back to the boil between each addition</b>, or it goes lumpy. Top up with weak stock to about 700 ml. Chop the remaining anchovies very finely and stir them in. Simmer two minutes.",
+      "min": 20,
+      "max": 25
+    },
+    {
+      "text": "⭐ <b>OFF THE HEAT, stir in ONE sachet of mint sauce. Taste. Add a second if it needs it.</b> Off the heat, and at the very end: five hours of cooking has flattened every high note in this dish and the acid is what brings it back — but added early it thins the gravy's body and the mint cooks away to nothing. ⚠️ <b>Hold back 250–300 ml of this gravy for Sunday before it reaches the table.</b>",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Pull the meat apart with two forks</b> rather than carving it. It will not slice cleanly and it is not meant to. ⭐ <b>Leftovers go into the container coated in or submerged in their juices</b>, sealed — not dry on a plate under clingfilm. The fat sets on top and seals it, and the gelatin that made this tender today melts again tomorrow.",
+      "min": 5,
+      "max": 8
+    }
+  ]
+}

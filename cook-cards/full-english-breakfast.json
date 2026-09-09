@@ -1,0 +1,123 @@
+{
+  "recipe": "Full English breakfast for five",
+  "servesNote": "5 portions — Sunday, five people, one cook, and the last shared meal before everyone leaves. ⭐ This is not a hard dish, it is a hard piece of scheduling, and the card is written accordingly.",
+  "estimatedMin": 50,
+  "handsOnMin": 20,
+  "adaptations": [
+    "⭐ THE WHOLE PLAN TURNS ON ONE FACT: a single oven cannot be at 200°C and 90°C at the same time, so the box that cooks the food cannot hold it until the food has finished cooking. Every decision below is arranged around that.",
+    "⚠️ CHECK THIS BEFORE SUNDAY, BECAUSE IT CHANGES THE PLAN: is your grill a separate compartment, or the element inside the main oven? Separate — the toast happens at the very end and arrives hot (the T-4 step). Inside the oven — you cannot grill and hold at 90°C in the same box, so the toast runs through the toaster early and is racked (the T-25 step). Follow one route and skip the other; both are on the timeline.",
+    "⏰ THE TIMES ARE COUNTED BACK FROM SERVING. T-50 means fifty minutes before you want to eat. The sausages set the clock and everything else fits around their thirty minutes."
+  ],
+  "ingredients": [
+    { "qty": "10 (2 packs)", "item": "pork sausages", "prep": "⛔ do NOT prick them", "held": false },
+    { "qty": "12 rashers", "item": "smoked back bacon", "prep": "separated onto a plate the night before; snip the fatty edge so it does not curl", "held": false },
+    { "qty": "2 packs", "item": "black pudding slices", "prep": "sliced 1.5–2 cm thick and skinned, night before", "held": false },
+    { "qty": "10", "item": "eggs, free range", "prep": "⭐ out of the fridge at T-50, cracked into four bowls at T-12", "held": false },
+    { "qty": "500 g", "item": "closed cup mushrooms", "prep": "⛔ brushed clean and halved, NEVER washed", "held": false },
+    { "qty": "5", "item": "vine tomatoes", "prep": "halved across the equator, green eye cut out, salted cut-side down overnight", "held": false },
+    { "qty": "2 × 410 g", "item": "baked beans", "prep": "opened into the saucepan the night before", "held": false },
+    { "qty": "10 slices", "item": "multiseed wholemeal loaf", "prep": "⚠️ the seeds scorch before the crumb browns — watch it", "held": false },
+    { "qty": "a knob + for the toast", "item": "butter", "prep": "out to soften the night before; a knob floats on the beans", "held": true },
+    { "qty": "a little", "item": "oil", "prep": "sausages and mushrooms", "held": true },
+    { "qty": "to taste", "item": "salt and black pepper", "prep": "⛔ the mushrooms are salted at T-14, not before", "held": true }
+  ],
+  "equipment": [
+    { "item": "Two baking trays", "why": "⛔ check both fit on separate shelves at once" },
+    { "item": "Two large frying pans", "why": "five eggs each, one pour per pan" },
+    { "item": "Small saucepan with a lid", "why": "beans — the lid and the butter both stop the skin forming" },
+    { "item": "Four small bowls", "why": "⭐⭐ for the eggs. This is the step that decides whether the eggs work" },
+    { "item": "A toast rack, or anything that stands toast upright", "why": "laid flat it traps its own steam and goes limp" },
+    { "item": "Kitchen paper", "why": "the tomatoes overnight, and lining the warmed platter" },
+    { "item": "Foil", "why": "⭐ the dam between mushrooms and tomatoes, and the platter" }
+  ],
+  "equipmentDerived": false,
+  "prep": [
+    "⏰ THE NIGHT BEFORE — DO NOT SKIP THIS. You will have been up early, and every one of these takes two minutes cold and feels impossible at 8 am.",
+    "Wipe and <b>halve the mushrooms</b> — brush them clean, ⛔ <b>never wash them</b>, you would only be adding water you then have to drive back off.",
+    "Halve the tomatoes <b>across the equator</b> and cut out the green eye. <b>Salt the cut faces and leave them cut-side down on kitchen paper in the fridge</b>, which draws the free water out overnight instead of onto the plate.",
+    "Slice the black pudding <b>1.5–2 cm thick</b> and skin it. Separate the bacon rashers onto a plate. Open the beans into the saucepan.",
+    "Stack the plates by the oven, lay the table, and put the butter out to soften."
+  ],
+  "steps": [
+    {
+      "text": "<b>T-50 · Oven on, 200°C fan / 220°C conventional.</b> Everything out of the fridge, <b>the eggs especially</b> — cold eggs spread thin and cook unevenly.",
+      "min": 10,
+      "max": 10
+    },
+    {
+      "text": "<b>T-40 · Sausages onto the LOWER tray</b>, lightly oiled, well spaced. ⛔ <b>Do not prick them.</b> Pricking lets the juices out and dries the meat — a myth that survives on repetition. <b>The sausages set the clock for the whole morning.</b>",
+      "min": 10,
+      "max": 10
+    },
+    {
+      "text": "<b>T-30 · Turn the sausages. Second tray onto the UPPER shelf:</b> mushrooms oiled, in a single layer with real gaps between them, <b>unsalted</b>; tomatoes <b>cut-side UP</b> in the remaining third, with <b>a folded strip of foil dammed between the two.</b> ⭐ <b>The gaps and the dam are the whole trick.</b> Moist food cannot brown until the surface water has gone, so a crowded tray steams and you get grey weeping mushrooms — and tomato liquid running into the mushrooms ruins both.",
+      "min": 5,
+      "max": 5
+    },
+    {
+      "text": "<b>T-25 · TOASTER ROUTE ONLY. Toast, five batches, through to T-13.</b> Stand each slice upright in a rack as it comes out and ⛔ <b>do not butter it yet.</b> Laid flat it traps its own steam and goes limp; buttered hot it goes soggy. <b>Cool and crisp is the correct outcome</b>, and it is what a toast rack is for. ⚠️ Skip this step entirely if your grill is a separate compartment.",
+      "min": 5,
+      "max": 12
+    },
+    {
+      "text": "<b>T-20 · Black pudding onto the sausage tray.</b> It is already cooked — this is reheating and crisping only. <b>Beans on the lowest ring, lid on, with a knob of butter floating on top.</b> The lid and the butter both stop the skin forming; the film is just evaporation from a still surface.",
+      "min": 2,
+      "max": 2
+    },
+    {
+      "text": "<b>T-18 · Bacon on the hob — six rashers, 3–4 minutes a side.</b> Snip the fatty edge so it does not curl. ⚠️ <b>If water pools in the pan, pour it off</b> — back bacon is wet-cured loin and will poach itself in its own liquid rather than browning. ⭐ It is on the hob and not in the oven on purpose: back bacon is lean loin, it holds worse than anything else on the plate, and this frees the oven shelf you do not have while leaving a pan of rendered fat for the eggs.",
+      "min": 4,
+      "max": 4
+    },
+    {
+      "text": "<b>T-14 · Second batch of bacon. Salt the mushrooms NOW</b> — not earlier. Salt draws water out, which is exactly what you spent the last fifteen minutes driving off.",
+      "min": 2,
+      "max": 2
+    },
+    {
+      "text": "⭐⭐ <b>T-12 · Crack all ten eggs into four small bowls</b> and season them. <b>This is the single most important step on the card and it is the one people skip.</b> You cannot crack ten eggs one at a time into hot pans — the first is three minutes older than the last and they will not finish together. Cracked ahead, each pan fills in one pour.",
+      "min": 2,
+      "max": 2
+    },
+    {
+      "text": "<b>T-10 · EVERYTHING OUT.</b> Open the door wide for a minute and dial the oven down to <b>90°C</b>. Sausages, black pudding and bacon onto a warmed platter lined with kitchen paper and into the oven — <b>sausages and pudding loosely covered, bacon UNCOVERED.</b> Covering the bacon traps steam and undoes the crisp you just made. <b>Plates in.</b> Mushrooms <b>drained</b> — they keep weeping — into their own dish, in. ⛔ <b>Tomatoes stay OUT, on their own tray, touching nothing.</b>",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "<b>T-9 · Two large frying pans on medium</b>, bacon fat plus a little butter.",
+      "min": 4,
+      "max": 4
+    },
+    {
+      "text": "<b>T-5 · Eggs in — one pour per pan, five each. Cover.</b> Two minutes on the heat.",
+      "min": 2,
+      "max": 2
+    },
+    {
+      "text": "<b>T-4 · GRILL ROUTE ONLY: ten slices of toast in two batches, while the eggs sit.</b> ⚠️ Watch it — the seeds on multiseed scorch before the crumb browns. Skip if you toasted at T-25.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "⛔ <b>T-3 · Pans OFF the heat, lids on, and leave them alone.</b> Three minutes gives soft-set yolks, four gives medium. <b>Do not lift the lids.</b> The residual heat finishes them with no attention from you, which is the entire point — it hands you back the three minutes when you most need your hands.",
+      "min": 3,
+      "max": 4
+    },
+    {
+      "text": "<b>T-2 · Butter the toast.</b> Stir the beans, heat off.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "<b>T-1 · Plates out.</b> Load everything except the eggs — beans, sausages, bacon, black pudding, mushrooms, and <b>tomatoes last, at the edge of the plate</b>, away from the toast.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "<b>T-0 · Eggs on. Go.</b>",
+      "min": 1,
+      "max": 1
+    }
+  ]
+}

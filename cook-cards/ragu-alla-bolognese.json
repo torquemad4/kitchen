@@ -1,0 +1,111 @@
+{
+  "recipe": "Ragù alla bolognese",
+  "servesNote": "2 portions — Karl 3 : Maria 2, and it doubles cleanly to 4 in the same casserole. ⭐ This week it is cooked Friday and eaten again Saturday lunch, so it IS the batch: keep the ragù and the pasta completely separate and dress only what is being eaten now.",
+  "estimatedMin": 200,
+  "handsOnMin": 20,
+  "adaptations": [
+    "⚠️ THE TOMATO PASTE SACHET IS NOT IN THE HOUSE — recorded OUT on 3 Sep. Use 1 tbsp of the tomato double concentrate from the tube. ⭐ Step 8 is the one that matters: it has to be fried on bare metal until it goes from bright red to dull brick, whichever container it came from. Raw paste tastes tinny.",
+    "⭐ THE WINE IS WHITE, and that is deliberate — the Costellore Pinot Grigio from Tuesday's shop. White keeps the sauce tasting of meat and dairy; red makes it taste of stewed fruit. Do not reach for the Merlot, which is Thursday's.",
+    "⭐ COOKING IT FOR TWO MEALS: this is Friday dinner and Saturday lunch. Undressed ragù keeps four days and is better on days 2 and 3; dressed pasta turns to paste overnight. Steps 12–14 are the per-meal part — do them again on Saturday with the rest."
+  ],
+  "ingredients": [
+    { "qty": "500 g", "item": "beef mince, 20% fat", "prep": "⛔ browned in TWO batches — see step 3", "held": false },
+    { "qty": "1 medium (~100 g)", "item": "onion", "prep": "hand-cut into 5 mm dice", "held": false },
+    { "qty": "1 (~70 g)", "item": "carrot", "prep": "hand-cut into 5 mm dice", "held": false },
+    { "qty": "1 stick (~50 g)", "item": "celery", "prep": "hand-cut into 5 mm dice", "held": false },
+    { "qty": "2 tsp", "item": "olive oil", "prep": "with the butter, for the soffritto", "held": false },
+    { "qty": "10 g", "item": "butter", "prep": "", "held": false },
+    { "qty": "100 ml", "item": "whole milk", "prep": "⭐ goes in EARLY, step 5 — the tenderising only works before acid arrives", "held": false },
+    { "qty": "a few gratings", "item": "nutmeg", "prep": "over the milk", "held": false },
+    { "qty": "100 ml", "item": "dry white wine", "prep": "⭐ white, not red", "held": false },
+    { "qty": "250 g", "item": "passata", "prep": "⚠️ passata, not tinned tomatoes — too much water in the tins", "held": false },
+    { "qty": "30 g", "item": "Parmesan or Grana Padano", "prep": "grated, and it goes in OFF the heat", "held": false },
+    { "qty": "1 tbsp", "item": "tomato double concentrate", "prep": "⚠️ from the tube — the sachet is gone", "held": true },
+    { "qty": "1 sachet, to 200 ml", "item": "chicken stock", "prep": "✅ a proven stand-in here — the 26 Aug bolognese used it and was better than ever", "held": true },
+    { "qty": "2", "item": "bay leaves", "prep": "⚠️ out again at step 10", "held": true },
+    { "qty": "160 g", "item": "tagliatelle, pappardelle or rigatoni", "prep": "for tonight's portion only", "held": true },
+    { "qty": "to taste", "item": "salt and plenty of black pepper", "prep": "⛔ a small pinch only until step 10 — it reduces for three hours", "held": true }
+  ],
+  "equipment": [
+    { "item": "Heavy casserole with a lid", "why": "⭐ the lid sits SLIGHTLY AJAR for the oven stage" },
+    { "item": "Chopping board and a sharp knife", "why": "⛔ not a processor — see prep 1" },
+    { "item": "Plate", "why": "the soffritto comes out while the meat browns" },
+    { "item": "Sieve over a bowl", "why": "draining the rendered fat off the mince at step 4" },
+    { "item": "Wide frying pan", "why": "finishing the pasta IN the sauce — a bowl will not do it" },
+    { "item": "Large pan for the pasta", "why": "" },
+    { "item": "Mug", "why": "⭐ the pasta water. Scoop it BEFORE draining; everyone forgets" },
+    { "item": "Grater", "why": "Parmesan and nutmeg" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "⭐ CHOP THE ONION, CARROT AND CELERY BY HAND INTO ROUGHLY 5 MM DICE — smaller than feels necessary. <b>Avoid a processor:</b> processor-minced vegetables release water and turn to purée, where hand-cut dice hold their shape long enough to sweeten and then dissolve. This is the longest job; do it first.",
+    "Measure the milk and the wine out now, and grate the Parmesan. Both liquids go in at moments where the pan needs watching and there is no time to be finding a measuring jug."
+  ],
+  "steps": [
+    {
+      "text": "Butter and oil in the heavy casserole over <b>LOW</b> heat. Soffritto in, stirring now and then, <b>until the onion is completely translucent, the carrot has lost its raw crunch, and the whole thing has slumped and smells sweet — no browning at all.</b> ⛔ <b>Do not salt yet.</b>",
+      "min": 10,
+      "max": 12
+    },
+    {
+      "text": "<b>Scrape the vegetables out onto a plate.</b> Meat wants high heat and vegetables want low heat; together you get neither right.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "Medium-high. ⭐ <b>HALF the mince, pressed into a flat slab with the back of a spoon, and leave it completely alone until you can see a deep brown crust when you lift an edge.</b> Flip the slab, brown the second side, then break it up. Repeat with the other half. <b>Browning in two batches is the biggest flavour lever here</b> — a crowded pan drops below browning temperature and you get grey pebbles in grey liquid.",
+      "min": 8,
+      "max": 12
+    },
+    {
+      "text": "⭐ <b>Tip the mince into a sieve over a bowl, or tilt the pan and spoon out the rendered fat, leaving about 1 tablespoon.</b> A 20% mince gives up 40–60 g; leaving it in makes a greasy sauce that never emulsifies onto the pasta.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Mince and vegetables back in. <b>Milk, nutmeg grated over, and simmer gently until the milk has all but disappeared and the meat looks glossy and coated rather than wet, with only a slick on the base.</b> ⛔ <b>Do not skip this and do not do it later</b> — the tenderising only works before acid arrives.",
+      "min": 8,
+      "max": 10
+    },
+    {
+      "text": "<b>Wine, scraping the base to lift the fond. Bubble until you can draw a spoon across the bottom and no watery liquid runs back into the channel.</b> ⚠️ This and the milk stage are the only points where the base can catch — watch it.",
+      "min": 4,
+      "max": 5
+    },
+    {
+      "text": "⭐ <b>Push the meat aside to expose bare hot metal. Squeeze the tomato concentrate onto that bare patch and fry it, stirring, until it changes from bright red to dull brick and smells roasted rather than sharp.</b> Raw paste tastes tinny; cooked-out paste is the deepest savoury note in the pot. Then stir it through.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Passata, stock, bay leaves. <b>A small pinch of salt ONLY</b> — it reduces for three hours and there is Parmesan to come. Bring to a bare simmer.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Oven to 140°C / 120°C fan. ⭐ <b>Lid slightly ajar. Cook until the sauce is dark brick red, orange fat pools at the edges, and a spoonful mounds on the spoon rather than running off it.</b> Stir every 45 min; splash in hot water if the meat pokes above the liquid and looks dry.",
+      "min": 150,
+      "max": 180
+    },
+    {
+      "text": "<b>Taste and season properly NOW</b> — salt, plenty of pepper. ⚠️ <b>Bay leaves out.</b> Still loose? Bubble it down uncovered on the hob.",
+      "min": 2,
+      "max": 6
+    },
+    {
+      "text": "Pasta into well-salted water, <b>1–2 minutes SHORT of the packet time.</b> ⭐ <b>Scoop out a mugful of the cooking water before draining.</b>",
+      "min": 7,
+      "max": 10
+    },
+    {
+      "text": "Tonight's ragù into a wide pan over medium — <b>only what is being eaten now.</b> Drained pasta and a good splash of pasta water, <b>tossed hard and continuously about a minute, adding more water a splash at a time, until the sauce clings to every strand and there is no loose liquid sliding around the pan.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "⭐ <b>Off the heat, Parmesan, toss again</b> — off the heat so the cheese melts into the emulsion rather than seizing into strings. Serve immediately. <b>The rest of the ragù goes into the fridge undressed</b> for Saturday.",
+      "min": 1,
+      "max": 2
+    }
+  ]
+}

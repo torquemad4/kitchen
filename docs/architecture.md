@@ -619,6 +619,8 @@ reason. A library that only works on a good connection is not a library.
 | **6 recipes have no cost/portion** | Never written in the source headline. They sort last in any price-first query. |
 | **2 recipes are split-portion** | *Sesame-peanut noodles (CHICKEN)* and *Weeknight beef ragù* state Karl/Maria splits, not per-portion figures. `kcal`/`portions` are NULL rather than guessed. Needs a representation decision. |
 | **8 recipes have no method** | Their Notion pages are genuinely blank. Mostly retired. 30 of 38 now carry one. |
+| **30 of 38 have no cook card** | `recipes.cook` is a restructuring of `method` into phased steps with timers. 8 exist; the live week's meals are all covered as of 9 Sep. The page offers Cook mode only where one exists, so the gap is visible as an absence rather than a dead button. |
+| **`full-english-breakfast.method` has 10 mojibake characters** | The timeline markers `T‑9` … `T‑0` came through the migration as `Tℑ9` … `Tℑ0` (U+2111). ⛔ Not repaired: `method` is verbatim by invariant 4 and this is Karl's to confirm as corruption rather than authorship. The cook card renders the timeline correctly. |
 | **Notion databases** | Stale but must stay until Karl positively confirms deletion **and** the page is verified reading D1. |
 | **No `shopping` table** | Per-store availability and price (§5.2). Store choice is expressed as a pack `g` group today, and receipt-line matching has nowhere to live. |
 | **Stage E does not exist** | Every shop puts food in the house the pantry never hears about, so its rows drift and stock has to be restated by hand. This is why the 8 Sep week was built from Karl's spoken stock rather than the table. |

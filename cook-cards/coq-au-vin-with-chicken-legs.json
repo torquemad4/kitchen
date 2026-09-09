@@ -1,0 +1,125 @@
+{
+  "recipe": "Coq au vin with chicken legs",
+  "servesNote": "2 portions — Karl 3 : Maria 2, a leg per plate on the mash. ⭐ Maria's next-day lunch is the best of the week: coq au vin is one of the few dishes uncontroversially better on day two.",
+  "estimatedMin": 110,
+  "handsOnMin": 25,
+  "adaptations": [
+    "⚠️ THE TOMATO PASTE SACHET IS NOT IN THE HOUSE — it was recorded OUT on 3 Sep. Use 1 tbsp of the tomato double concentrate from the 200 g tube Tuesday's shop bought. Same thing, and step 8 (cooking it from bright red to brick) matters more than which container it came out of.",
+    "⭐ THE WINE IS THE GRAPEVINE MERLOT, and this is not a preference. ATK singles out bold oaked reds as turning tannic and drying over a long reduction — the £3.99 Cabernet on the next shelf is the wrong bottle. Dry cider works if it comes to it, but it must be dry.",
+    "⚠️ The shop had closed cup mushrooms, not chestnut. They carry less flavour and more water, so step 6 takes the long end of its range — hold them until they have genuinely stopped squeaking and browned.",
+    "⭐ SPLITTING IT OVER TWO DAYS: stop after step 12, refrigerate, lift the set fat off cold, and finish from step 14. Delia's trick, and it halves the hands-on time on the day."
+  ],
+  "ingredients": [
+    { "qty": "750 g", "item": "chicken legs, bone in, skin on (3 large or 4 small)", "prep": "patted bone-dry and salted — see prep 1", "held": false },
+    { "qty": "60 g", "item": "smoked bacon lardons", "prep": "⚠️ 60 g, not the whole 200 g pack — heavily cured bacon overpowers the dish", "held": false },
+    { "qty": "200 g", "item": "mushrooms", "prep": "halved or quartered", "held": false },
+    { "qty": "2 small (~200 g)", "item": "onions, or 6 shallots", "prep": "thick wedges", "held": false },
+    { "qty": "2 (~200 g)", "item": "carrots", "prep": "2 cm chunks", "held": false },
+    { "qty": "4 cloves", "item": "garlic", "prep": "crushed", "held": false },
+    { "qty": "250 ml", "item": "red wine — Grapevine Merlot", "prep": "⛔ fruity medium-bodied, NOT Cabernet", "held": false },
+    { "qty": "350 g", "item": "potatoes", "prep": "for mash", "held": false },
+    { "qty": "15 g", "item": "butter", "prep": "into the mash", "held": false },
+    { "qty": "40 ml", "item": "milk", "prep": "warmed, into the mash", "held": false },
+    { "qty": "1 tbsp", "item": "oil", "prep": "into the rendered bacon fat", "held": false },
+    { "qty": "1 sachet + 200 ml water", "item": "chicken stock", "prep": "", "held": true },
+    { "qty": "1 tbsp", "item": "tomato double concentrate", "prep": "⚠️ from the tube — the sachet is gone", "held": true },
+    { "qty": "20 g", "item": "plain flour", "prep": "cooked out in step 8", "held": true },
+    { "qty": "2", "item": "bay leaves", "prep": "⚠️ out again before serving", "held": true },
+    { "qty": "1 tsp", "item": "dried thyme", "prep": "", "held": true },
+    { "qty": "1 tsp", "item": "red wine vinegar", "prep": "⭐ the correction, right at the end — not optional", "held": true },
+    { "qty": "1 tsp + ½ tsp", "item": "Maldon salt", "prep": "1 tsp on the legs up front, ½ tsp at the end", "held": true },
+    { "qty": "to taste", "item": "black pepper", "prep": "", "held": true }
+  ],
+  "equipment": [
+    { "item": "Heavy casserole with a lid", "why": "⭐ everything browns in this one pan — the fond it builds IS the sauce" },
+    { "item": "Slotted spoon", "why": "lifting the lardons out and leaving the fat behind" },
+    { "item": "Plate", "why": "the legs, the lardons and the mushrooms all rest out of the pan" },
+    { "item": "Saucepan", "why": "potatoes" },
+    { "item": "Masher", "why": "" },
+    { "item": "Small pan or jug", "why": "warming the milk — cold milk seizes mash" },
+    { "item": "Chopping board and knife", "why": "" },
+    { "item": "Tablespoon", "why": "⭐ skimming the fat at step 15" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "⭐ LEGS OUT OF THE FRIDGE FIRST — pat them bone-dry and salt all over with 1 tsp Maldon. Leave uncovered while you chop; 20 minutes if you can spare it. <b>Wet skin will not brown, it will grey and stick</b>, and everything this dish tastes of starts with that browning.",
+    "Oven to 170°C / 150°C fan. Chop while it comes up: onion wedges, carrot chunks, crushed garlic, mushrooms halved or quartered."
+  ],
+  "steps": [
+    {
+      "text": "Lardons into a <b>COLD</b> heavy casserole, no oil, medium heat. <b>Let them come up slowly so the fat renders rather than seizes</b>, until shrunk, golden at the edges and sitting in a shallow slick. Lift out with a slotted spoon; <b>leave the fat behind.</b>",
+      "min": 6,
+      "max": 8
+    },
+    {
+      "text": "Add the oil to the bacon fat, heat to medium-high. Pat the legs dry one last time, lay them <b>skin side down without crowding</b> — two at a time if that is what fits. <b>Now do not touch them.</b> Leave <b>until the skin is deep golden-brown and the leg releases cleanly when nudged.</b> ⭐ <b>If it sticks it isn't ready; a browned crust lets go by itself.</b> Turn, 2 minutes, out.",
+      "min": 6,
+      "max": 8
+    },
+    {
+      "text": "<b>Pour off all but about 1 tbsp of the fat</b> — there will be a lot, and left in it makes the sauce greasy. ⭐ <b>Keep every brown speck stuck to the pan; that is the sauce.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Medium-high, mushrooms in one layer with a pinch of salt. <b>Leave until the undersides are browned and they have stopped squeaking against the pan</b>, then stir until they have given up their water, it has boiled away, and they are glossy and browned all over. Out. <b>Browning them separately is the difference between mushrooms and grey mushroom-shaped things.</b>",
+      "min": 6,
+      "max": 9
+    },
+    {
+      "text": "Medium heat. Onion wedges and carrots with a pinch of salt, <b>stirring and scraping until the onions soften and the fond on the base has loosened into them.</b>",
+      "min": 6,
+      "max": 7
+    },
+    {
+      "text": "Garlic and tomato concentrate, one minute, <b>until the paste darkens from bright red to brick and smells sweet rather than tinny.</b> Scatter the flour, stir another minute <b>until no dry flour is visible</b> — this cooks out the raw taste that otherwise haunts the sauce.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "⭐ <b>Wine a third at a time</b>, stirring and scraping the base smooth after each addition. Bring to a proper bubble and reduce <b>until it has thickened slightly and the smell has changed from sharp alcohol to something rounded and winey.</b> <b>Do not skip this.</b> Unreduced wine is the single most common reason home coq au vin tastes harsh and thin.",
+      "min": 4,
+      "max": 5
+    },
+    {
+      "text": "Stock, 200 ml water, bay leaves, thyme, pepper.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Return the legs <b>skin side up</b>, arranged so the liquid comes two-thirds up and <b>the skin stays above the surface.</b> Bring to a bare simmer.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "⭐ <b>UNCOVERED into the oven until the meat has shrunk back from the drumstick bone and gives no resistance to a knife tip at the thigh joint.</b> Uncovered lets the exposed skin stay dry and the sauce reduce at the same time.",
+      "min": 70,
+      "max": 80
+    },
+    {
+      "text": "Last 20 minutes: potatoes into <b>cold</b> salted water, boil <b>until a knife slides in with no grip</b>, drain, and <b>leave them in the hot dry pan a minute to steam off</b> — wet potatoes make gluey mash. Mash with the butter and warmed milk, and salt <b>until it tastes like something you would eat on its own.</b>",
+      "min": 18,
+      "max": 22
+    },
+    {
+      "text": "Out of the oven. Scatter the lardons and mushrooms over and <b>let them sit in the residual heat 5 minutes</b> — adding them now rather than at the start is what keeps the bacon chewy and the mushrooms firm.",
+      "min": 5,
+      "max": 5
+    },
+    {
+      "text": "⭐ <b>Tilt the pan and spoon off the clear orange fat pooling at the low edge.</b> Thirty seconds, and it is the difference between rich and greasy.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "Taste. It should be glossy and coat a spoon — if it is thin, lift the chicken out and boil hard a few minutes. <b>Then the teaspoon of red wine vinegar and the last ½ tsp salt, and taste again. The vinegar is the correction</b>, not a garnish.",
+      "min": 2,
+      "max": 5
+    },
+    {
+      "text": "⚠️ <b>Bay leaves out.</b> A leg per plate on the mash, everything spooned over. <b>Maria's next-day lunch:</b> store the chicken sitting in its sauce, mash separately; reheat gently covered on low, and stir a teaspoon of water through the mash first.",
+      "min": 2,
+      "max": 3
+    }
+  ]
+}

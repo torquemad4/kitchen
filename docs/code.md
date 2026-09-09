@@ -308,8 +308,25 @@ escapes (`\~880` → `~880`). Escapes HTML **before** introducing any tag.
 what to get out, what to get ready, prep, then steps with per-step timers.
 `saveCook()` → `POST /api/cook` → `cook_log`, and reports elapsed vs estimated.
 
-Only 3 recipes have a `cook` card (`cook-cards/*.json`). The other 35 fall back to the
-verbatim method on the Recipes tab.
+**8 of 38 recipes have a `cook` card** (`cook-cards/*.json`, mirrored into `recipes.cook`).
+The other 30 fall back to the verbatim method on the Recipes tab.
+
+#### ⛔ Cook mode is offered only where a card exists
+
+`GET /api/recipes` returns **`hasCook`** — a computed `cook IS NOT NULL AND cook <> ''`,
+not the card itself, which is 6–8 KB a recipe and would triple the payload the aisle
+downloads. `viewRecipes()` renders the button only when `r && r.hasCook`, and passes
+**`r.id`**, not the week's option label — by the time a button has rendered, `libFind()`
+has already done that join carefully, so the endpoint should not repeat the guess.
+
+> ⚠️ **9 Sep 2026: the button used to render on every card and 35 of 38 opened
+> "No cook card for this one yet" — including every dish in the live week.** Karl:
+> *"The Clousto Kitchen app has no cook cards."* A control that is present and does
+> nothing is the same defect as a line with no price: it is the page talking about a
+> decision instead of being one. See `architecture.md` §7 invariant 10.
+
+⚠️ **`LIB_KEY` went to `clousto.library.v2`** because the payload gained a field the
+render now depends on. Bump it whenever the payload *shape* changes.
 
 🔴 Stages C and D (pre-cook checks, confirm + pantry decrement) attach here.
 
