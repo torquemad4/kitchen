@@ -1,0 +1,53 @@
+{
+  "recipe": "Spanish tortilla + big salad",
+  "servesNote": "2 portions — ~850 kcal / ~45 g protein each. ⭐ The most hands-on meal of the week, and a keepers-only dish: nothing in it is fresh enough to be at risk by the end of the week.",
+  "estimatedMin": 40,
+  "handsOnMin": 20,
+  "adaptations": [
+    "✅ THE TORTILLA ITSELF IS FULLY IN THE HOUSE — Tuesday bought potatoes, onions and 15 eggs, and there is a big bottle of olive oil plus 5 white wine vinegar sachets. The salad leaves and cucumber are not in; spinach and tomatoes are.",
+    "⛔ THE 100 ml OF OLIVE OIL IS THE TECHNIQUE, NOT A MISTAKE. The potatoes are POACHED in it, not fried. You drain it off afterwards and keep it, so very little is actually eaten — but going short here gives you fried potato in egg, which is a different and worse dish.",
+    "⭐ THIS IS AN OLDER CARD with four steps and few state cues. The two that matter are in it and are worth obeying literally: the potatoes must not COLOUR, and the centre should still be slightly soft when it comes out."
+  ],
+  "ingredients": [
+    { "qty": "~600 g", "item": "waxy potatoes", "prep": "sliced thin", "held": false },
+    { "qty": "1 large", "item": "onion", "prep": "sliced", "held": false },
+    { "qty": "6", "item": "eggs", "prep": "⭐ beaten and WELL salted", "held": false },
+    { "qty": "~100 ml", "item": "olive oil", "prep": "⛔ yes, that much — and it gets drained off and kept", "held": true },
+    { "qty": "to taste", "item": "salt", "prep": "", "held": true },
+    { "qty": "as available", "item": "lettuce, tomato, cucumber, spinach", "prep": "the salad", "held": false },
+    { "qty": "1 sachet", "item": "white wine vinegar", "prep": "the dressing, with oil — 5 in the house", "held": true }
+  ],
+  "equipment": [
+    { "item": "A frying pan", "why": "the poach, then wiped and hot for the set" },
+    { "item": "A sieve or colander over a bowl", "why": "⭐ draining the potatoes — KEEP the oil" },
+    { "item": "A mixing bowl", "why": "folding the eggs through the warm potato, then resting 10 min" },
+    { "item": "A plate that covers the pan", "why": "⭐ this is what you flip it with" },
+    { "item": "Chopping board and knife", "why": "" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Slice the potatoes thin and the onion. ⭐ <b>Have the flipping plate out and to hand before the pan is hot</b> — step 3 is not a moment to be going through a cupboard."
+  ],
+  "steps": [
+    {
+      "text": "⭐ <b>Potatoes and onion POACHED gently in the oil until soft but NOT COLOURED.</b> Drain — <b>keep the oil.</b>",
+      "min": 15,
+      "max": 20
+    },
+    {
+      "text": "Beaten eggs, <b>well salted</b>, folded through the warm potato. <b>Rest 10 min.</b>",
+      "min": 10,
+      "max": 12
+    },
+    {
+      "text": "Back into a hot pan with a little of the reserved oil. <b>Set the base, then FLIP WITH A PLATE</b> and set the other side.",
+      "min": 6,
+      "max": 10
+    },
+    {
+      "text": "⭐ <b>The centre should still be slightly soft when it comes out.</b> Dress the salad with oil and the vinegar sachet and serve alongside.",
+      "min": 2,
+      "max": 4
+    }
+  ]
+}

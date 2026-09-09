@@ -123,9 +123,8 @@ the research behind it and the notes on storing and reheating.
 ### Cook mode
 
 **The button is there when the dish has a cook card, and absent when it does not.**
-Eight recipes have one, and everything you are cooking this week is covered. The rest
-give you the full written method on the card instead, which is what the kitchen ran on
-before cook mode existed.
+Thirty recipes have one — every dish in the library that has a written method. The eight
+without are ones whose pages were always blank, so there is nothing to run.
 
 Tap **Cook mode** on a card. It runs in four phases, in the order a kitchen needs them:
 what to get out, what to get ready, what to do before the heat goes on, then the steps

@@ -1,0 +1,46 @@
+{
+  "recipe": "Salmon, sweet potato & spinach traybake",
+  "servesNote": "2 portions — ~850 kcal / ~55 g protein each, and the lowest hands-on dish in the library at ~8 minutes. ⭐ Day 1 after the shop, so the fish goes first.",
+  "estimatedMin": 30,
+  "handsOnMin": 8,
+  "adaptations": [
+    "✅ EVERYTHING IS IN THE HOUSE. Tuesday bought the salmon, the sweet potatoes and the baby spinach, and the cumin, smoked paprika and oil are all held. This is cookable right now with no shop.",
+    "⭐ THIS IS AN OLDER CARD with three steps and few state cues, unlike the researched ones. What it does carry is the right instinct: STATE CUES, NOT TIME CUES — the hob and pans are unknown quantities and Karl beats step estimates by roughly 30%. The timers below are a guide, the descriptions are the instruction.",
+    "⚠️ THE WEDGES NEED A REAL HEAD START. Sweet potato takes three times as long as a salmon fillet, and putting them in together is the one way this simple dish goes wrong."
+  ],
+  "ingredients": [
+    { "qty": "2 fillets", "item": "salmon", "prep": "⭐ sits ON the wedges, added late", "held": false },
+    { "qty": "~500 g", "item": "sweet potato", "prep": "cut into wedges", "held": false },
+    { "qty": "~200 g", "item": "baby spinach", "prep": "⭐ wilted in the residual heat of the tray at the very end", "held": false },
+    { "qty": "1 tbsp", "item": "olive oil", "prep": "", "held": true },
+    { "qty": "1 tsp", "item": "cumin", "prep": "on the wedges", "held": true },
+    { "qty": "1 tsp", "item": "smoked paprika", "prep": "on the wedges", "held": true },
+    { "qty": "to taste", "item": "salt and pepper", "prep": "", "held": true }
+  ],
+  "equipment": [
+    { "item": "A roasting tray", "why": "big enough that the wedges are not piled up" },
+    { "item": "Chopping board and knife", "why": "" },
+    { "item": "A hot pan", "why": "⭐ only if the tray has cooled too far to wilt the spinach on its own" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Oven hot. Cut the sweet potato into wedges — even ones, so they finish together."
+  ],
+  "steps": [
+    {
+      "text": "Toss the wedges in oil, cumin, paprika and salt. Spread on a tray and roast <b>until the edges colour and a knife goes through with no resistance.</b>",
+      "min": 18,
+      "max": 25
+    },
+    {
+      "text": "Sit the salmon on top, season, and return to the oven <b>until the flesh turns opaque and flakes when pressed.</b>",
+      "min": 10,
+      "max": 14
+    },
+    {
+      "text": "<b>Wilt the spinach in the residual heat of the tray</b>, or in a hot pan if the tray has cooled too far.",
+      "min": 1,
+      "max": 3
+    }
+  ]
+}

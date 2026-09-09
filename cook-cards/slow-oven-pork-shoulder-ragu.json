@@ -1,0 +1,105 @@
+{
+  "recipe": "Slow-oven pork shoulder ragù",
+  "servesNote": "2 portions — 880 kcal / 62 g protein each at £1.66/portion, ⭐ the cheapest dish in the library. £1.90 of pork shoulder and a tin of tomatoes turn into something that tastes like it took a weekend.",
+  "estimatedMin": 195,
+  "handsOnMin": 22,
+  "adaptations": [
+    "⏰ IT WANTS 3¼ HOURS ELAPSED. Start it before something else, not after — the hands-on splits 15 minutes up front and 7 at the end, and the middle is unattended.",
+    "⚠️ THE TOMATO PASTE SACHET IS OUT — 1 tbsp of the tomato double concentrate from the tube. Step 3 still stands: it has to be fried from red to brick before anything wet goes in.",
+    "⛔ USE-BY: this is the right home for pork at the far end of its date, and three hours at 150°C is the most forgiving thing you can do to a shoulder joint. BUT THE BRAISE FIXES TEXTURE, NOT SPOILAGE. If the pork smells sour, sharp or ammoniac when the pack opens, or the surface is tacky, it goes in the bin, not the oven. Cook it the day it is due, not the day after.",
+    "✅ THE PASTA, ONION, CARROT, CELERY, GARLIC, MILK AND GRANA PADANO ARE ALL IN THE HOUSE from Tuesday. The pork shoulder is not.",
+    "⭐ SCALE THE PORK TO 700 g WITHOUT CHANGING ANYTHING ELSE for a third portion. Shoulder steaks work too and save the trimming, at a higher price per kilo."
+  ],
+  "ingredients": [
+    { "qty": "500 g", "item": "British pork shoulder joint", "prep": "⭐ rind removed, 4–5 LARGE 5 cm chunks — big chunks, not dice", "held": false },
+    { "qty": "1", "item": "onion", "prep": "finely chopped", "held": false },
+    { "qty": "1", "item": "carrot", "prep": "finely chopped", "held": false },
+    { "qty": "1 stick", "item": "celery", "prep": "finely chopped", "held": false },
+    { "qty": "3 cloves", "item": "garlic", "prep": "", "held": false },
+    { "qty": "1 × 400 g tin", "item": "chopped tomatoes", "prep": "", "held": false },
+    { "qty": "100 ml", "item": "milk", "prep": "⭐ reduced to nothing BEFORE the tomatoes — see step 4", "held": false },
+    { "qty": "30 g", "item": "Grana Padano", "prep": "finely grated — half in off the heat, half at the table", "held": false },
+    { "qty": "1 tbsp", "item": "tomato double concentrate", "prep": "⚠️ from the tube — the sachet is gone", "held": true },
+    { "qty": "1 sachet, to 250 ml", "item": "chicken stock", "prep": "⛔ two-thirds up the meat, not covering it", "held": true },
+    { "qty": "1 sachet", "item": "balsamic vinegar", "prep": "⭐ in at the END — the sweet-sour top note where you can taste it", "held": true },
+    { "qty": "1 tsp", "item": "rosemary", "prep": "", "held": true },
+    { "qty": "1 tsp", "item": "oregano", "prep": "", "held": true },
+    { "qty": "1", "item": "bay leaf", "prep": "", "held": true },
+    { "qty": "a good pinch", "item": "chilli powder", "prep": "", "held": true },
+    { "qty": "1 tbsp", "item": "olive oil", "prep": "", "held": true },
+    { "qty": "150 g", "item": "pasta", "prep": "⭐ cooked a minute short, and finished IN the sauce", "held": true },
+    { "qty": "to taste", "item": "salt and plenty of black pepper", "prep": "⚠️ braises need more salt at the end than you expect", "held": true }
+  ],
+  "equipment": [
+    { "item": "Heavy casserole with a lid", "why": "browns, sweats, braises — and the lid goes ajar if it turns soupy" },
+    { "item": "A plate", "why": "the browned pork rests out of the pot" },
+    { "item": "A board and two forks", "why": "⭐ SHRED, don't chop" },
+    { "item": "A tablespoon", "why": "⭐ spooning the clear orange fat off before the meat goes back — do not skip this" },
+    { "item": "Large pan", "why": "the pasta" },
+    { "item": "A mug", "why": "the pasta water, scooped BEFORE draining" },
+    { "item": "Grater", "why": "" },
+    { "item": "Chopping board and knife", "why": "" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Oven to 150°C fan. Untie the joint if netted. ⭐ <b>Cut away any hard rind but LEAVE the soft fat marbled through and on the surface</b> — that fat makes the sauce silky, and you take the excess back out later on your terms.",
+    "Cut into <b>4–5 chunks about 5 cm across. Pat every surface dry</b> and season all over with salt. <b>Big chunks, not dice.</b>"
+  ],
+  "steps": [
+    {
+      "text": "Heat the oil in the casserole over medium-high <b>until it shimmers.</b> Pork in <b>so that no piece touches another</b> — two batches if the pot is small. <b>Leave each piece undisturbed until it lifts cleanly off the base and the underside is properly DARK brown, not tan</b>, then turn and repeat on two or three faces. ⛔ <b>Crowding is the single most common ruin of this dish:</b> the meat releases moisture, sits in it, steams grey, and the finished sauce tastes flat no matter how long it cooks. Out to a plate.",
+      "min": 10,
+      "max": 14
+    },
+    {
+      "text": "Heat to medium. Onion, carrot and celery with a pinch of salt, <b>until everything is soft, sweet-smelling and beginning to stick and colour on the base. Scrape the browned residue up as the vegetables sweat and it will dissolve into them.</b>",
+      "min": 10,
+      "max": 12
+    },
+    {
+      "text": "Garlic, tomato concentrate, rosemary, oregano, chilli. <b>1–2 minutes until the paste turns from red to brick and smells toasty.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "⭐ <b>Pour in the milk and let it bubble, scraping the base, until it has almost entirely disappeared and the vegetables look creamy.</b> This is the Bolognese trick doing two things: the dairy tenderises, and its sugars round off the tomato's edge later.",
+      "min": 3,
+      "max": 4
+    },
+    {
+      "text": "Tomatoes, stock, bay, and the pork with all its juices. ⛔ <b>The liquid should come about TWO-THIRDS up the meat — not cover it.</b> Simmer on the hob, lid on, then into the oven.",
+      "min": 3,
+      "max": 4
+    },
+    {
+      "text": "⭐ <b>2½–3 hours. Done when a chunk CRUSHES against the side of the pot under gentle pressure from a spoon and falls into strands with no resistance at all.</b> Check at 2 hours: catching? a splash of hot water. Soupy? lid slightly ajar for the rest. ⚠️ <b>Under-cooked braise is tough in exactly the same way over-cooked braise is, and the only reliable test is whether it crushes, not the clock.</b>",
+      "min": 150,
+      "max": 180
+    },
+    {
+      "text": "Pork onto a board, <b>shred with two forks</b>, discarding gristle. Meanwhile ⛔ <b>tilt the pot and spoon off most of the clear orange fat, leaving about a tablespoon. Do not skip this.</b>",
+      "min": 5,
+      "max": 7
+    },
+    {
+      "text": "Meat back in, <b>the balsamic</b>, medium heat. <b>Simmer uncovered, stirring, until it is a thick ragù that mounds on a spoon instead of running off it.</b> <b>Taste and season properly</b> — braises need more salt at the end than you expect.",
+      "min": 5,
+      "max": 10
+    },
+    {
+      "text": "Pasta in well-salted water <b>to just short of al dente</b> (a minute less than the packet). ⭐ <b>Before draining, scoop out a mugful of the cooking water.</b>",
+      "min": 8,
+      "max": 10
+    },
+    {
+      "text": "Drain, tip into the ragù over medium heat with a good splash of pasta water. ⭐ <b>Stir and toss vigorously for a minute or two: the starch emulsifies with the fat and the sauce goes from sitting ON the pasta to clinging to it and glossing it.</b> More water a splash at a time if it tightens.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "<b>Off the heat, stir in half the cheese, let it sit a minute</b>, then serve with the rest grated over and plenty of black pepper. ⭐ <b>Maria's next-day lunch: the best of the pork pair, and genuinely better on day two.</b> Add a tablespoon of water before reheating — the pasta keeps drinking the sauce overnight.",
+      "min": 2,
+      "max": 3
+    }
+  ]
+}

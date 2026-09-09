@@ -1,0 +1,99 @@
+{
+  "recipe": "Kung pao-style chicken with peppers and peanuts",
+  "servesNote": "2 portions — 875 kcal / 57 g protein each. ⭐ Thigh fillet deliberately, not breast: it is juicier AND cheaper at Aldi, so there is no trade-off. The peppers are structural components, not a garnish that can be dropped when you are in a hurry.",
+  "estimatedMin": 45,
+  "handsOnMin": 18,
+  "adaptations": [
+    "⛔ THE CORNFLOUR IS OUT AND THIS DISH NEEDS IT TWICE — 2 tsp to velvet the chicken and ~1 tsp to thicken the sauce. Velveting is described in the method as the non-negotiable step, and it is the starch that does the work. Without cornflour this becomes a plain stir-fry with a thin sauce. ⭐ Plain flour will thicken the sauce at a pinch; it will NOT velvet.",
+    "⛔ THE TOASTED SESAME OIL IS OUT. It goes in off the heat at the very end as a finishing aroma, so there is no substitute that behaves the same way — leave it out rather than replacing it with plain oil, which adds fat and nothing else.",
+    "⛔ THE GINGER & GARLIC PASTE IS OUT, but this recipe already calls for fresh garlic and fresh ginger separately, so just increase those slightly and skip the sachet.",
+    "⚠️ SOY IS DOWN TO 4 SACHETS, NO BOTTLE. This wants 2 tbsp (~30 ml) split between the velvet and the sauce — that is the 30 ml Gousto sachet almost exactly, so use it here and keep the 8 g ones for elsewhere.",
+    "⛔ NOT A GONG BAO, AND THE CARD WILL NOT PRETEND. Aldi Reading sells neither Sichuan peppercorns nor Chinkiang black vinegar. This takes the Chinese-American branch openly. Balsamic is the closest stand-in for the black vinegar.",
+    "⚠️ THIGH FILLETS ARE NOT IN THE HOUSE — Tuesday bought bone-in skin-on thighs and whole legs. Boning out thighs works; allow ten more minutes."
+  ],
+  "ingredients": [
+    { "qty": "500 g", "item": "chicken thigh fillets", "prep": "⭐ EVEN 2 cm cubes — even matters more than small", "held": false },
+    { "qty": "1 large", "item": "red or mixed pepper", "prep": "2 cm squares — ⛔ structural, not garnish", "held": false },
+    { "qty": "6", "item": "spring onions", "prep": "⭐ whites in 2 cm lengths, greens sliced, KEPT SEPARATE", "held": false },
+    { "qty": "3 cloves", "item": "garlic", "prep": "thinly sliced", "held": false },
+    { "qty": "15 g", "item": "ginger", "prep": "finely chopped", "held": false },
+    { "qty": "50 g", "item": "roasted salted peanuts", "prep": "⭐ toasted again dry, and added LAST", "held": false },
+    { "qty": "2 tbsp", "item": "light soy", "prep": "⭐ divided: 1 tbsp into the velvet, 1 tbsp into the sauce", "held": false },
+    { "qty": "2 tsp", "item": "sugar", "prep": "into the sauce, dissolved before the pan goes on", "held": false },
+    { "qty": "1½ tbsp", "item": "oil", "prep": "1 tbsp for the chicken, ½ tbsp for the peppers, 2 tsp into the velvet", "held": false },
+    { "qty": "1 sachet (~3 tsp)", "item": "cornflour", "prep": "⛔ out of stock — see the adaptations", "held": true },
+    { "qty": "1 sachet", "item": "Chinese rice wine", "prep": "into the velvet", "held": true },
+    { "qty": "1 sachet", "item": "toasted sesame oil", "prep": "⛔ out of stock — and it goes in OFF the heat", "held": true },
+    { "qty": "1 sachet", "item": "ginger & garlic paste", "prep": "⛔ out of stock — use extra fresh", "held": true },
+    { "qty": "1 sachet", "item": "vinegar", "prep": "⭐ balsamic is the closest stand-in for Chinese black vinegar", "held": true },
+    { "qty": "2 sachets", "item": "sriracha", "prep": "into the sauce", "held": true },
+    { "qty": "140 g", "item": "rice", "prep": "rinsed until the water runs clear", "held": true },
+    { "qty": "½ tsp", "item": "chilli powder", "prep": "with the aromatics", "held": true },
+    { "qty": "¼ tsp", "item": "black pepper", "prep": "into the sauce", "held": true },
+    { "qty": "½ tsp", "item": "salt", "prep": "on the peppers", "held": true }
+  ],
+  "equipment": [
+    { "item": "Your largest pan or a wok", "why": "⭐ your hob is the limiting factor, not the recipe" },
+    { "item": "A bowl for the velvet", "why": "the chicken sits in it 15–20 min" },
+    { "item": "A small bowl for the sauce", "why": "⛔ mixed COMPLETELY before the pan goes on — once it is hot there is no time" },
+    { "item": "A plate", "why": "the chicken comes out between batches, and the peanuts live here" },
+    { "item": "Small pan with a lid", "why": "rice" },
+    { "item": "Chopping board and knife", "why": "" },
+    { "item": "Tongs or a spatula", "why": "" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Cut the thighs into <b>EVEN</b> 2 cm cubes — even matters more than small, because unevenly sized pieces cannot all be done at the same moment.",
+    "⭐ <b>VELVET.</b> Chicken + 2 tbsp water + 1 tbsp soy in a bowl. <b>Stir and squeeze with your hand ~30 seconds until the liquid has been completely absorbed and the meat looks tacky rather than wet.</b> Then 2 tsp cornflour, the rice wine and 2 tsp oil, mixed <b>until every cube is slicked in a thin gluey coat.</b> Leave 15–20 min. <b>This is the non-negotiable step</b> — the starch sets into a micro-layer that shields the meat from the pan, and the water it absorbed stays inside.",
+    "Rinse the rice <b>until the water runs clear</b> and get it cooking.",
+    "⛔ <b>MIX THE SAUCE COMPLETELY BEFORE THE PAN GOES ON.</b> Remaining 1 tbsp soy, vinegar, 2 sriracha, sugar, ~1 tsp cornflour, black pepper, 1 tbsp water. <b>Stir until the sugar has dissolved and no cornflour is settled on the bottom. Set it next to the hob.</b>",
+    "Line everything else up within arm's reach: peppers, spring onion whites and greens in separate piles, garlic + ginger + chilli powder together, peanuts, sesame oil. ⭐ <b>A stir-fry is 4 minutes of cooking preceded by all the work.</b>"
+  ],
+  "steps": [
+    {
+      "text": "Peanuts into your largest pan, <b>dry</b>, medium heat, <b>shaking until they smell toasted and take a shade more colour.</b> Onto a plate. Do this even though they came roasted — it wakes them up, and a plate is where they need to be anyway.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>HIGHEST heat</b>, 1 tbsp oil. When it <b>shimmers and moves like water</b>, add <b>HALF</b> the chicken in a single layer and <b>leave it undisturbed until the undersides have set opaque with brown patches</b> (~90 sec). Toss 30–40 sec more <b>until the outsides are coloured but the centres still slightly translucent</b>, and out. Repeat with the second half. ⚠️ If the pan visibly stops sizzling when the chicken goes in, you have added too much.",
+      "min": 4,
+      "max": 6
+    },
+    {
+      "text": "Last ½ tbsp oil, still high. Peppers + ½ tsp salt. <b>Toss and spread until the edges have blistered and blackened in places but the squares still have a distinct CRUNCH when you bite one.</b> ⛔ <b>They should not soften</b> — charred outside, raw-crisp inside.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "⭐ <b>TURN THE HEAT DOWN TO MEDIUM — this matters.</b> Push the peppers aside, garlic + ginger + chilli powder into the clear space, <b>20–30 seconds, just until fragrant and the garlic is barely pale gold. Do not let them darken.</b> Aromatics burn in seconds at stir-fry heat and burnt garlic makes the whole dish acrid.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "Spring onion whites, toss, then all the chicken and its juices back in, heat to high, <b>~30 seconds until heated through and cooked to the centre.</b>",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "Stir the sauce again — the cornflour will have settled — and ⭐ <b>pour it around the EDGE of the pan, not into the middle.</b>",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "<b>Toss constantly 30–60 seconds until the sauce has gone from cloudy to glossy and clings to each piece instead of running to the bottom.</b> Too thick, a tbsp of water; too thin, 20 more seconds.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "⭐ <b>OFF THE HEAT ENTIRELY.</b> Sesame oil and the spring onion greens, toss once or twice. <b>Sesame oil goes in off the heat</b> — a finishing oil whose aroma compounds are volatile; cooked, it just tastes flat and slightly burnt.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "<b>Peanuts in LAST, right before plating</b>, so they are still fully crunchy. Serve over rice immediately. <b>Maria's next-day lunch:</b> chicken and sauce reheat well and the peppers stay pleasant, but <b>the peanuts go soft overnight — set a handful aside before serving and pack them separately</b>, with the spring onion greens, to add after heating.",
+      "min": 1,
+      "max": 2
+    }
+  ]
+}

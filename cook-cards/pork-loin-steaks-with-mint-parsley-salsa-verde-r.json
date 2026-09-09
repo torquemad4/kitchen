@@ -1,0 +1,99 @@
+{
+  "recipe": "Pork loin steaks with mint & parsley salsa verde, roast potatoes",
+  "servesNote": "2 portions — 870 kcal / 57 g protein each, £2.22/portion. ⭐ Lean pork is cheap and almost everyone cooks it badly; this is the recipe that fixes that. The green sauce does a cream-and-mustard sauce's job for a fraction of the cost, and unlike cream it is just as good cold.",
+  "estimatedMin": 55,
+  "handsOnMin": 20,
+  "adaptations": [
+    "⛔ READ THE USE-BY BEFORE ANYTHING ELSE. Pork loin steaks are the shortest-dated fresh meat in the shop and this is the last fresh-meat day of the week. COOK THEM ON THEIR USE-BY DATE, NOT AFTER. Fresh pork smells of almost nothing and feels dry-ish and firm; sour or faintly ammoniac, or slippery and tacky, bin it. A hot pan does not fix spoiled pork.",
+    "⚠️ THE ROASTED GARLIC PASTE SACHET IS OUT — the recipe already offers the alternative, so use 1 fresh clove from the bulb Tuesday bought. Crush it fine; it sits raw in the sauce, so it wants to be small.",
+    "⚠️ MINT SAUCE: six sachets were in the house and the lamb card spends three. Three left, and this takes one. They are best before Sep–Oct and nothing else in the rotation uses them, so this dish is their other route.",
+    "⚠️ CAPERS ARE OPTIONAL FOR A REASON — Aldi own-brand come and go and were unavailable across stores at the last check. Chopped gherkin does the same job; so does nothing.",
+    "⛔ THE PORK IS NOT IN THE HOUSE and was not on Tuesday's list. The potatoes are (2 kg)."
+  ],
+  "ingredients": [
+    { "qty": "480 g pack (3–4)", "item": "British pork loin steaks", "prep": "⭐ dry-brined 30–45 min — see prep", "held": false },
+    { "qty": "600 g", "item": "potatoes", "prep": "skin on, 3 cm chunks", "held": false },
+    { "qty": "20 g", "item": "flat-leaf parsley", "prep": "⭐ finely chopped, STALKS INCLUDED — they carry as much flavour as the leaves", "held": false },
+    { "qty": "1", "item": "lemon", "prep": "⛔ squeezed in at the very last moment — earlier and it dulls the herbs to olive-green", "held": false },
+    { "qty": "1 tsp", "item": "wholegrain mustard", "prep": "into the salsa verde", "held": false },
+    { "qty": "1 tbsp", "item": "capers or chopped gherkin", "prep": "⚠️ optional — see the adaptations", "held": false },
+    { "qty": "1 tsp", "item": "fine salt", "prep": "⭐ the dry brine, both sides", "held": true },
+    { "qty": "1 tsp", "item": "dried rosemary", "prep": "on the potatoes", "held": true },
+    { "qty": "1½ tbsp + 2½ tbsp + 1 tsp", "item": "olive oil", "prep": "1½ potatoes, 2½ salsa verde, 1 tsp the pan", "held": true },
+    { "qty": "1 sachet", "item": "mint sauce", "prep": "⚠️ 3 left after the lamb, best before Sep–Oct", "held": true },
+    { "qty": "1 clove", "item": "garlic", "prep": "⚠️ fresh — the roasted paste sachet is gone", "held": true },
+    { "qty": "½ sachet", "item": "cider vinegar", "prep": "⭐ HALF first, taste, then the rest if it needs it", "held": true },
+    { "qty": "plenty", "item": "black pepper", "prep": "", "held": true }
+  ],
+  "equipment": [
+    { "item": "A plate", "why": "⭐ the pork sits UNCOVERED on it in the fridge for the dry brine" },
+    { "item": "Roasting tin", "why": "potatoes spread so no two pieces touch" },
+    { "item": "Heavy frying pan", "why": "the steaks — pan only, no oven" },
+    { "item": "Tongs", "why": "⭐ holding the steaks on their fat edge to render it first" },
+    { "item": "A bowl", "why": "the salsa verde, made early so it can sit" },
+    { "item": "Chopping board and a sharp knife", "why": "" },
+    { "item": "Foil", "why": "tenting the pork loosely during the rest" },
+    { "item": "A meat thermometer if you have one", "why": "⭐ this dish is judged by feel or temperature, never by the clock" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "⭐ <b>DO THIS FIRST, BEFORE THE OVEN EVEN GOES ON.</b> Open the pork, <b>pat both sides of every steak completely dry</b>, and salt evenly both sides. <b>Uncovered on a plate in the fridge for 30–45 minutes while the potatoes roast.</b> The salt draws moisture to the surface, dissolves, and is reabsorbed as seasoned brine — pork seasoned all the way through and a dry surface that browns instead of hissing."
+  ],
+  "steps": [
+    {
+      "text": "Oven to 200°C fan. Potatoes with 1½ tbsp oil, salt and rosemary, <b>turned with your hands until every face is coated. Spread out so no two pieces touch</b> — a crowded tin steams.",
+      "min": 5,
+      "max": 6
+    },
+    {
+      "text": "Roast <b>until the undersides are crusted deep gold and a knife slides into the middle with no resistance, turning ONCE when the undersides have properly coloured</b> — usually ~25 min in. ⚠️ <b>Turning earlier pulls the forming crust off.</b>",
+      "min": 35,
+      "max": 45
+    },
+    {
+      "text": "<b>Salsa verde while they roast.</b> Chop the parsley finely, <b>stalks included.</b> Bowl with the mint sauce, garlic, mustard, plenty of pepper, 2½ tbsp oil and <b>HALF</b> the cider vinegar. ⭐ <b>Taste before adding the rest:</b> shop mint sauce is already vinegar and sugar, so this starts sharper than a from-scratch salsa verde. Capers or gherkin if you have them. <b>Leave it to sit — noticeably better after twenty minutes</b>, when the garlic softens into the oil.",
+      "min": 8,
+      "max": 10
+    },
+    {
+      "text": "Ten minutes before the potatoes are ready, pork out of the fridge and <b>pat it dry AGAIN</b> — the brine will have drawn beads to the surface and that water has to go. Heavy pan on medium-high with 1 tsp oil, <b>until it shimmers and just begins to send up the first wisp of smoke.</b>",
+      "min": 3,
+      "max": 4
+    },
+    {
+      "text": "⭐ <b>RENDER THE FAT EDGE FIRST.</b> With tongs, hold the steaks on their fatty edge against the pan — lean two together or wedge against the side — <b>until that strip has shrunk, gone translucent-golden and left a slick in the pan.</b> Skipping this leaves a band of rubbery white fat nobody eats, and the rendered fat then fries the steaks.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Lay them flat, <b>not touching</b> — two at a time if the pan is small. ⛔ <b>Do not move, press or poke them: leave them until they release from the pan without sticking and the underside is evenly deep brown</b> (2–3 min). <b>Flip ONCE</b>, 1½–2½ minutes for a 1.5–2 cm steak. <b>Pressing squeezes out the juice you spent 45 minutes brining in.</b>",
+      "min": 4,
+      "max": 6
+    },
+    {
+      "text": "⭐ <b>Judge by feel or thermometer, NOT clock.</b> A juicy steak feels springy with a little give, like the base of your relaxed thumb; well-done feels firm and bouncy. ⚠️ <b>UK FSA: 70°C held two minutes. USDA and most chefs: 63°C plus a rest, at which pork is safe and may still look faintly pink. Choose knowingly — but if cooking to 70°C, pull the pan at 66–67°C and let carryover finish.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "<b>Rest the pork 5–10 minutes</b>, tented loosely with foil, on a warm plate.",
+      "min": 5,
+      "max": 10
+    },
+    {
+      "text": "While it rests: pan off the heat, <b>pour in the juices collected under the resting pork plus 1 tbsp water, and swirl and scrape the browned residue until you have a dark glossy spoonful of glaze. Stir that straight into the salsa verde</b> — ⭐ it turns a fresh sauce into one that tastes of the meat.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Squeeze in a little lemon at the very last moment.</b> Earlier and the acid dulls the herbs to olive-green.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "Slice thickly across the grain or leave whole. Serve with the potatoes, salsa verde spooned generously over, lemon wedges. ⛔ <b>Maria's next-day lunch: do NOT reheat it, and that is fine.</b> Reheated lean pork loin goes grey and dry. <b>Slice her portion while warm, cool it, and keep it in the fridge with a spoonful of salsa verde over it.</b> Toss her potatoes in another teaspoon of salsa verde while still warm and eat them cold as a potato salad.",
+      "min": 2,
+      "max": 3
+    }
+  ]
+}

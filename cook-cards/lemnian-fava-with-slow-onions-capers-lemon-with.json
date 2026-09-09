@@ -1,0 +1,108 @@
+{
+  "recipe": "Lemnian fava with slow onions, capers & lemon, with fried halloumi",
+  "servesNote": "2 portions — 893 kcal / 50 g protein each, at £1.50/portion. ⭐ The halloumi does 45% of the protein for 40% of the calories, which is why the oil is capped at 25 ml: every extra tablespoon is 120 protein-free calories that has to come out of the fava.",
+  "estimatedMin": 60,
+  "handsOnMin": 20,
+  "adaptations": [
+    "⭐ THIS DISH EXISTS TO SPEND THE 500 g OF LEMNIAN FAVA, which is the most interesting orphan in the cupboard and has exactly one correct destiny. It takes 215 g, so there are two outings in the bag.",
+    "⚠️ CAPERS ARE A KNOWN AVAILABILITY PROBLEM — Aldi own-brand come and go and were unavailable across stores at the last check. Torn green olives are the stated alternative and do the same job: a salty sharp punctuation against the sweet purée.",
+    "⛔ THE HALLOUMI IS NOT IN THE HOUSE and was not on Tuesday's list. Without it this is fava alone, which cannot carry 50 g of protein inside 900 kcal. The stated fallback is a tin of chickpeas dried on a tea towel and fried hard in the onion pan until blistered, plus 30 g of the held flaked almonds — ~47 g protein, honest, but a real step down.",
+    "✅ OLIVE OIL IS FINE — there is a big bottle in the house. ⛔ Do not be generous with it anyway; see the servesNote."
+  ],
+  "ingredients": [
+    { "qty": "215 g", "item": "Lemnian fava (Lathyrus ochrus split peas)", "prep": "⛔ rinsed until the water runs clear — see prep", "held": true },
+    { "qty": "700 ml", "item": "cold water", "prep": "plus a kettle for topping up — ⛔ hot water only, never cold", "held": true },
+    { "qty": "2 (~250 g)", "item": "brown onions", "prep": "⭐ ONE roughly chopped for the pot, ONE thinly sliced for the topping", "held": false },
+    { "qty": "3 cloves", "item": "garlic", "prep": "lightly crushed, into the pot", "held": false },
+    { "qty": "1", "item": "lemon", "prep": "⛔ juice goes in LAST, off the heat — acid early stops the peas softening", "held": false },
+    { "qty": "2 tbsp", "item": "capers, or torn green olives", "prep": "scattered at the end", "held": false },
+    { "qty": "a handful", "item": "parsley", "prep": "", "held": false },
+    { "qty": "225 g", "item": "halloumi", "prep": "whole block, patted dry, 1 cm slices — ⭐ the LAST thing you cook", "held": false },
+    { "qty": "25 ml", "item": "extra virgin olive oil", "prep": "⭐ divided: 10 ml onions, 10 ml beaten into the purée, 5 ml drizzled raw", "held": true },
+    { "qty": "1", "item": "bay leaf", "prep": "⚠️ out again before beating", "held": true },
+    { "qty": "1 tsp", "item": "dried oregano", "prep": "⭐ crumbled between your fingers over the top — the warmth releases the oils", "held": true },
+    { "qty": "½ tsp", "item": "coarse black pepper", "prep": "", "held": true },
+    { "qty": "1 tsp + more", "item": "Maldon salt", "prep": "⭐ a teaspoon goes in at the START — salt does not stop pulses softening, acid does", "held": true }
+  ],
+  "equipment": [
+    { "item": "Saucepan with a lid", "why": "the lid sits AJAR for the long shiver" },
+    { "item": "Frying pan", "why": "the onions first, then wiped, then the halloumi dry" },
+    { "item": "Wooden spoon or masher", "why": "⭐ no blender needed — the peas are already collapsed" },
+    { "item": "A spoon", "why": "lifting the grey foam off as it rises" },
+    { "item": "A kettle", "why": "⛔ topping up with HOT water — cold stalls the cooking" },
+    { "item": "Two wide shallow bowls", "why": "the purée is spread with a dip in the middle for the onions" },
+    { "item": "Chopping board and knife", "why": "" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "⛔ <b>RINSE THE FAVA under cold running water, swirling with your hand, until the water running off is completely clear — usually three changes.</b> Not fussiness: the cloudy starch and field dust is what produces the grey scum later.",
+    "Chop one onion roughly for the pot and slice the other thinly for the topping. They are cooked in completely different ways and it is easy to use the wrong one."
+  ],
+  "steps": [
+    {
+      "text": "Fava into a saucepan with the 700 ml <b>cold</b> water, the roughly chopped onion, crushed garlic and bay. ⭐ <b>Add a teaspoon of salt NOW. Salt does not stop pulses softening — acid does</b>, which is why the lemon is held back to the very end.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Boil. <b>As it comes up, a layer of pale grey foam gathers at the edges — lift it off with a spoon.</b> Once or twice, until the surface is clean.",
+      "min": 5,
+      "max": 7
+    },
+    {
+      "text": "⭐ <b>Now turn the heat right down so the surface only SHIVERS, with the odd bubble breaking, and set the lid ajar. This is the single most important step.</b> A hard boil batters the outsides into sludge before the middles cook. Stir every ten minutes, scraping the base.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "<b>Cook until the peas have completely collapsed and lost their shape, the mixture looks like loose porridge, and a spoon dragged across the base leaves a trail that closes slowly.</b> ⚠️ Lemnian fava is a quick-cooking variety, so start checking early. Drying out? <b>Hot water a ladle at a time, never cold</b>, which stalls the cooking.",
+      "min": 40,
+      "max": 55
+    },
+    {
+      "text": "<b>Onion topping while it cooks.</b> 10 ml oil, low-medium, sliced onion and a pinch of salt, <b>until limp, then golden, then genuinely sweet and jammy at the edges.</b> ⚠️ Do not rush on high heat — sweetness, not scorch. Into a bowl; wipe the pan.",
+      "min": 15,
+      "max": 20
+    },
+    {
+      "text": "⚠️ <b>Bay leaf out</b>, pan off the heat.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "<b>Beat the purée smooth with a wooden spoon or masher, working hard against the side of the pan.</b> This is how it was done before blenders and it is genuinely enough — the peas are already collapsed, you are only breaking the last lumps. <b>Beat a good minute; the mixture visibly tightens and gains a sheen.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "⭐ <b>Still OFF the heat, pour in 10 ml of the oil in a thin stream while beating continuously.</b> The oil emulsifies into the pea starch — <b>this is what turns a pea mash into fava.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "<b>Now the lemon juice, beaten in.</b> Off the heat and last, so it neither dulls with cooking nor toughens the peas. <b>Taste and add more salt and pepper; it will need more salt than you expect.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "⚠️ <b>Leave it LOOSER than you want to eat it.</b> Fava thickens noticeably as it cools — a purée that looks perfect in the pan sets to putty on the plate.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "<b>Halloumi.</b> Pat the block completely dry, cut into 1 cm slices. <b>Dry non-stick or heavy pan, medium-high, NO oil</b> — halloumi releases its own fat. Lay the slices in without crowding.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "⛔ <b>Do not touch them until they release from the pan by themselves and lift with a deep golden blistered crust.</b> Turn, repeat. ⭐ <b>Halloumi seizes up and squeaks as it cools, so this is the LAST thing you do.</b>",
+      "min": 4,
+      "max": 5
+    },
+    {
+      "text": "<b>Assemble:</b> warm fava into two wide shallow bowls, spread with the back of the spoon <b>leaving a dip.</b> Jammy onions into the dip, capers scattered, <b>oregano crumbled between your fingers over the top</b> — warming it in your hands releases the oils so it lands as aroma rather than dust — pepper, and <b>the last 5 ml of oil drizzled RAW across the surface.</b> Halloumi on top or alongside, parsley, lemon wedges at the table.",
+      "min": 3,
+      "max": 4
+    }
+  ]
+}

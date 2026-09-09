@@ -1,0 +1,57 @@
+{
+  "recipe": "Beef & lentil bolognese, batch of 4",
+  "servesNote": "BATCH OF 4 — ~880 kcal / ~65 g protein a portion. ⭐ Two eaten on the night, two held for a later lunch. Portion the second two out and refrigerate before anyone goes back for seconds.",
+  "estimatedMin": 35,
+  "handsOnMin": 15,
+  "adaptations": [
+    "⛔ THE RED LENTILS ARE OUT — finished 26 Aug, and they are the ingredient this recipe is named for. ⭐ THE SIBLING RECIPE EXISTS FOR EXACTLY THIS: cook 'Weeknight beef ragù — no lentils' instead, which was written on 30 Aug for this situation and needs nothing you do not already have. This card stays live because the lentil version is still the better dish when there are lentils.",
+    "⚠️ BOTH PASTE SACHETS ARE OUT. Use 2 tbsp tomato double concentrate from the tube and 1 tbsp chopped garlic from the jar.",
+    "⛔ IGNORE THE OLD BB-DATE INSTRUCTION. This card used to say to use the roasted garlic paste sachet dated 03/09/2026 first. That pack is gone — it was one of the two pastes found missing at the pan on 3 Sep, and it would have expired that day anyway.",
+    "⚠️ THE VEGETABLE STOCK IS OUT. Chicken stock is a proven stand-in — the 26 Aug bolognese used it and was better than ever. ⛔ It stops the dish being vegetarian-adjacent, which matters here only if someone is counting.",
+    "⭐ THIS IS AN OLDER CARD and carries fewer state cues than the researched ones. Where it says 'until the sauce coats a spoon', trust that over any clock."
+  ],
+  "ingredients": [
+    { "qty": "500 g", "item": "beef mince", "prep": "⛔ browned to a real crust before breaking up", "held": false },
+    { "qty": "~150 g", "item": "red lentils", "prep": "⛔ out of stock — see the adaptations", "held": true },
+    { "qty": "2 tins", "item": "chopped tomatoes", "prep": "", "held": false },
+    { "qty": "2 tbsp", "item": "tomato double concentrate", "prep": "⚠️ from the tube — the 2 sachets are gone", "held": true },
+    { "qty": "1 tbsp", "item": "chopped garlic", "prep": "⚠️ from the jar — the roasted paste sachet is gone", "held": true },
+    { "qty": "1", "item": "onion", "prep": "diced, in AFTER the mince has browned", "held": false },
+    { "qty": "1 sachet", "item": "stock", "prep": "⚠️ vegetable is out; chicken is in", "held": true },
+    { "qty": "~400 g", "item": "dried pasta", "prep": "cooked separately", "held": true },
+    { "qty": "to taste", "item": "oregano, black pepper, olive oil", "prep": "", "held": true }
+  ],
+  "equipment": [
+    { "item": "A wide heavy pan", "why": "500 g of mince needs room to brown rather than stew" },
+    { "item": "Large pan", "why": "the pasta, cooked separately" },
+    { "item": "Two containers", "why": "⭐ half the batch is portioned out and refrigerated, not left in the pan" },
+    { "item": "Chopping board and knife", "why": "" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Dice the onion and open everything — the tins, the concentrate, the stock. The mince browns fast once it goes in and the onion follows straight after.",
+    "⚠️ <b>Check the lentils before you commit to this recipe rather than the no-lentil sibling.</b> This is where the dish's body comes from and there is no way to add it later."
+  ],
+  "steps": [
+    {
+      "text": "⭐ <b>Brown the mince properly — leave it alone until it has a REAL crust before you break it up.</b> Onion in after.",
+      "min": 8,
+      "max": 12
+    },
+    {
+      "text": "Tomato concentrate and garlic in, cook out for a minute <b>until it darkens and smells sweet rather than sharp.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Tinned tomatoes, lentils, stock, oregano. Simmer <b>until the lentils are soft and the sauce coats a spoon rather than running off it.</b>",
+      "min": 15,
+      "max": 22
+    },
+    {
+      "text": "Pasta cooked separately. ⭐ <b>Portion two out and refrigerate</b> before serving the other two.",
+      "min": 8,
+      "max": 12
+    }
+  ]
+}

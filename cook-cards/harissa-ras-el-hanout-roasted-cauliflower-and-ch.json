@@ -1,0 +1,111 @@
+{
+  "recipe": "Harissa & ras el hanout roasted cauliflower and chickpeas, bulgur, lemon yoghurt",
+  "servesNote": "2 portions — 907 kcal / 57 g protein each, the highest-protein dish in the set. ⭐ The trick is the yoghurt: 400 g of 0% Greek gives 41.5 g of protein for 229 calories, which is what lets a vegetable traybake hit 57 g without drowning in oil.",
+  "estimatedMin": 50,
+  "handsOnMin": 18,
+  "adaptations": [
+    "⚠️ THE TOMATO PASTE SACHET IS OUT — use 1 tbsp of the tomato double concentrate from the tube. It goes into the paste at prep 3 and never sees direct heat on its own here, so the swap is clean.",
+    "⚠️ THE VEGETABLE STOCK IS OUT. Tuesday bought chicken stock cubes and they are a proven stand-in — the 26 Aug bolognese used them and was better for it. ⛔ This makes the dish non-vegetarian; if that matters for who is eating, use plain salted water and toast the bulgur a shade longer.",
+    "⚠️ RAS EL HANOUT IS DOWN TO 2 SACHETS AND THERE IS NO JAR BEHIND THEM. This dish takes one. Good for one more outing after that.",
+    "✅ THE YOGHURT IS IN THE HOUSE — Tuesday bought 4 × 500 g of Greek style fat free, so the 400 g this needs is covered with room to spare. The cauliflower and the two tins of chickpeas are not; those are the shop.",
+    "⭐ COUSCOUS CAN REPLACE THE BULGUR and the house holds 240 g: skip the toasting entirely, equal volumes of couscous and boiling stock, 5 minutes covered off the heat. Broccoli works for cauliflower but roasts faster — pull it 5 minutes earlier."
+  ],
+  "ingredients": [
+    { "qty": "1 (~700 g, ~550 g trimmed)", "item": "cauliflower", "prep": "florets", "held": false },
+    { "qty": "2 × 400 g tins (~540 g)", "item": "chickpeas", "prep": "⛔ drained, rinsed and ROLLED DRY IN A TEA TOWEL — see prep 2", "held": false },
+    { "qty": "1 large", "item": "onion", "prep": "thick wedges THROUGH THE ROOT", "held": false },
+    { "qty": "1 clove", "item": "garlic", "prep": "grated, into the yoghurt", "held": false },
+    { "qty": "1", "item": "lemon", "prep": "⭐ zest and half the juice into the yoghurt, the other half squeezed over the HOT vegetables", "held": false },
+    { "qty": "a handful", "item": "parsley", "prep": "over at the end", "held": false },
+    { "qty": "400 g", "item": "Greek yoghurt, 0% fat", "prep": "⛔ kept COLD — 0% splits near a hot pan", "held": false },
+    { "qty": "1 sachet", "item": "harissa", "prep": "⭐ into the paste, and a third of that paste is held back for step 4", "held": true },
+    { "qty": "1 sachet", "item": "ras el hanout", "prep": "⚠️ 2 sachets left in the house, no jar behind them", "held": true },
+    { "qty": "1 tbsp", "item": "tomato double concentrate", "prep": "⚠️ from the tube — the sachet is gone", "held": true },
+    { "qty": "1 sachet", "item": "stock", "prep": "⚠️ vegetable is out; chicken is in — see the adaptations", "held": true },
+    { "qty": "110 g", "item": "bulgur", "prep": "⭐ toasted dry before any liquid — see step 6", "held": true },
+    { "qty": "30 g", "item": "flaked almonds", "prep": "toasted, straight out of the pan", "held": true },
+    { "qty": "20 ml", "item": "olive oil", "prep": "⭐ divided: 15 ml into the paste, 5 ml onto the chickpeas and onion", "held": true },
+    { "qty": "1 tsp", "item": "cumin seeds", "prep": "whole, into the paste", "held": true },
+    { "qty": "½ tsp", "item": "smoked paprika", "prep": "into the paste", "held": true },
+    { "qty": "to taste", "item": "salt and black pepper", "prep": "", "held": true }
+  ],
+  "equipment": [
+    { "item": "A large roasting tray — or two", "why": "⛔ if it does not fit in one layer, use two. Crowding is the commonest cause of a disappointing traybake" },
+    { "item": "A clean tea towel", "why": "⭐ drying the chickpeas. Two minutes of work that decides the texture of the whole dish" },
+    { "item": "Large mixing bowl", "why": "the paste, then the cauliflower, then the chickpeas — all in the same bowl" },
+    { "item": "Saucepan with a lid", "why": "the bulgur, on the lowest heat with the lid clamped on" },
+    { "item": "Kitchen paper", "why": "⭐ folded under the lid during the bulgur's rest, to catch condensation" },
+    { "item": "Small dry pan", "why": "the almonds" },
+    { "item": "A fork", "why": "fluffing the bulgur" },
+    { "item": "Two wide bowls", "why": "⭐ yoghurt on the base, bulgur, then the tray tipped over the top" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "<b>Oven to 220°C / 200°C fan. Deliberately hot</b> — below about 200°C and cauliflower sweats itself grey instead of caramelising.",
+    "⛔ <b>Drain and rinse the chickpeas, then tip them onto a clean tea towel and roll them about until properly dry.</b> Damp chickpeas never crisp — they steam inside their own skins and come out exactly as soft as they went in. <b>Two minutes of work that decides the texture of the whole dish.</b>",
+    "In a large bowl whisk the harissa, ras el hanout, tomato concentrate, <b>15 ml</b> of the oil, cumin seeds, smoked paprika and a good pinch of salt into a loose brick-red paste. ⭐ <b>Spoon out and reserve about a THIRD of it.</b>",
+    "Cauliflower into the bowl, <b>turned with your hands until every surface is coated</b>, getting into the cut faces where the paste sticks best."
+  ],
+  "steps": [
+    {
+      "text": "<b>Onto a large tray in a single layer with space between the pieces. If it does not fit in one layer, use two trays.</b> ⛔ Crowding is the most common cause of a disappointing traybake — the pieces trap each other's steam.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Roast until the florets have taken real colour on their undersides and the tips have started to char and frizzle.</b>",
+      "min": 15,
+      "max": 15
+    },
+    {
+      "text": "Meanwhile toss the dried chickpeas and onion wedges in the same bowl with the remaining 5 ml oil.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Pull the tray out, push the cauliflower to one side, add the chickpeas and onion in the free space. Spoon the RESERVED third of the paste over everything</b> and toss on the tray. ⭐ <b>Applying the harissa in two stages is deliberate</b> — the second dose goes on late so it flavours without having an extra fifteen minutes to scorch and turn bitter.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Back in until the chickpeas have wrinkled, tightened and RATTLE when you shake the tray, the onion wedges are collapsing and blackened at the tips, and the cauliflower is deeply browned.</b>",
+      "min": 20,
+      "max": 25
+    },
+    {
+      "text": "<b>Bulgur while it roasts.</b> Saucepan, medium heat, a splash of oil, bulgur in, <b>stirred around until the grains smell toasty and nutty and darken a shade.</b> ⭐ <b>This one step separates bulgur that tastes of something from bulgur that tastes of damp.</b>",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Stock and 220 ml boiling water</b> — 1:2 by volume for medium-coarse bulgur. Back to a bare simmer, <b>lowest heat, lid clamped on.</b> ⚠️ A rolling boil evaporates the water instead of letting the grain absorb it.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "<b>Until the surface liquid has all gone and small craters have opened across the top.</b> Off the heat, <b>lift the lid, lay a folded sheet of kitchen paper across the pan and put the lid back on. Rest 8–10 minutes</b> — the paper catches condensation that would otherwise drip back and make the top layer sodden. Fluff with a fork.",
+      "min": 18,
+      "max": 22
+    },
+    {
+      "text": "<b>Almonds</b> in a small dry pan, <b>shaken constantly until patchy gold and smelling of marzipan. Straight out of the pan</b> — gold to burnt in seconds.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Lemon yoghurt:</b> yoghurt, grated garlic, zest and juice of half the lemon, salt, pepper. <b>Loosen with a tablespoon of cold water until spoonable rather than stiff.</b> ⛔ <b>Keep it cold and do not heat it</b> — 0% yoghurt splits near a hot pan.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "⭐ <b>Assemble in this order, and the order matters.</b> Cold lemon yoghurt spread across the base of two wide bowls. Bulgur on top. <b>Tip the entire contents of the roasting tray straight over while blisteringly hot — including every scraping of spiced oil from the bottom of the tray</b>, which is where most of the flavour has ended up.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "⭐ <b>Squeeze the remaining half lemon over the hot vegetables immediately. Hot roasted cauliflower is a sponge; it will drink acid in a way cold cauliflower simply will not.</b> Almonds, parsley, serve. <b>Maria's next-day lunch:</b> keep the yoghurt separate, reheat the vegetables and bulgur in a hot oven or dry pan five minutes — ⛔ <b>do not microwave</b>, which turns the crisp chickpeas back to soft — and add a fresh squeeze of lemon, because the acid fades overnight.",
+      "min": 2,
+      "max": 3
+    }
+  ]
+}

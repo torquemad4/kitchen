@@ -1,0 +1,51 @@
+{
+  "recipe": "Pork steaks, sweet potato mash & greens",
+  "servesNote": "2 portions — ~900 kcal / ~70 g protein each, the highest protein-per-effort dish in the library at ~12 minutes hands-on.",
+  "estimatedMin": 30,
+  "handsOnMin": 12,
+  "adaptations": [
+    "⛔ DAY 4 — THE LAST FRESH-MEAT DAY, and pork loin steaks are the shortest-dated fresh meat in the shop. Check the use-by when you buy it and cook them on it, not after. Fresh pork smells of almost nothing and feels dry-ish and firm; sour or faintly ammoniac, or slippery and tacky, bin it.",
+    "✅ THE SWEET POTATO IS IN THE HOUSE — Tuesday bought 1 kg — and so are green beans (2 × 220 g). ⛔ The pork is not, and neither is broccoli.",
+    "⭐ THIS IS AN OLDER, LEANER CARD than the researched ones. If you want the full treatment of the same cut — the dry brine, rendering the fat edge, and the salsa verde — cook 'Pork loin steaks with mint & parsley salsa verde' instead. It is the same protein done properly and takes 25 minutes longer."
+  ],
+  "ingredients": [
+    { "qty": "2", "item": "pork loin steaks", "prep": "⛔ check the use-by — see the adaptations", "held": false },
+    { "qty": "~500 g", "item": "sweet potato", "prep": "on to boil first", "held": false },
+    { "qty": "as available", "item": "greens — broccoli or green beans", "prep": "steamed until bright and still firm", "held": false },
+    { "qty": "a little", "item": "olive oil", "prep": "in the pan, and a little into the mash", "held": true },
+    { "qty": "to taste", "item": "salt and pepper", "prep": "", "held": true }
+  ],
+  "equipment": [
+    { "item": "Saucepan", "why": "the sweet potato, on first" },
+    { "item": "A heavy frying pan", "why": "hot, for the pork" },
+    { "item": "Masher", "why": "" },
+    { "item": "A warm plate", "why": "⭐ the pork rests on it, and the rest matters more than the cooking time" },
+    { "item": "A steamer or a pan with a lid", "why": "the greens" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Peel and chunk the sweet potato. ⚠️ <b>Open the pork and check it before anything else</b> — the use-by is the whole decision on this day of the week."
+  ],
+  "steps": [
+    {
+      "text": "<b>Sweet potato on to boil.</b>",
+      "min": 15,
+      "max": 20
+    },
+    {
+      "text": "<b>Hot pan, oil, pork.</b> Leave it <b>until it releases cleanly from the pan</b> and is deep gold. <b>Turn once.</b>",
+      "min": 5,
+      "max": 8
+    },
+    {
+      "text": "⭐ <b>Rest it before serving. This matters more than the cooking time.</b>",
+      "min": 5,
+      "max": 8
+    },
+    {
+      "text": "Mash with a little olive oil, salt and pepper. Greens steamed <b>until bright and still firm.</b>",
+      "min": 4,
+      "max": 6
+    }
+  ]
+}

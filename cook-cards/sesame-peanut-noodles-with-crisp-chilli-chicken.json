@@ -1,0 +1,71 @@
+{
+  "recipe": "Sesame-peanut noodles with crisp chilli CHICKEN",
+  "servesNote": "2½ portions, split 3:2 — Karl 910 kcal / 59 g protein, Maria 607 kcal / 39 g protein. ⚠️ A SIBLING of the tofu-crumble version, not a replacement: that row stays live and stays the vegan option.",
+  "estimatedMin": 30,
+  "handsOnMin": 18,
+  "adaptations": [
+    "⛔ THE TOASTED SESAME OIL IS OUT, and step 4 exists only to add it. Without it this is a peanut noodle bowl — still good, but the sesame is what the dish is named for and there is no substitute that behaves the same way off the heat.",
+    "⚠️ SOY IS DOWN TO 4 SACHETS AND THERE IS NO BOTTLE, and PEANUT BUTTER IS LOW — one 340 g Meridian jar. Both are in the sauce, so check them before you start rather than halfway through letting the paste down.",
+    "⚠️ EGG NOODLES ARE DOWN TO ABOUT A THIRD OF A 250 g PACKET. Tuesday bought no noodles. Fusilli will carry the sauce if it comes to it, though it is not the same bowl.",
+    "⭐ WHY THIS DISH EXISTS, AND IT IS WORTH KNOWING: created 30 Aug when Karl asked for a meat version. The knock-on was better than the change — it pushed the veg traybake to Wednesday, put chicken on the afternoon it is bought (the lowest-risk cook available), kept fish on day 1 after the shop, and cut the week's protein overshoot from +12.4% to +8.2%."
+  ],
+  "ingredients": [
+    { "qty": "~450 g", "item": "chicken, diced", "prep": "⛔ ONE UNCROWDED LAYER, or two batches", "held": false },
+    { "qty": "1", "item": "cucumber", "prep": "raw, on top", "held": false },
+    { "qty": "4", "item": "spring onions", "prep": "⭐ half in at assembly, half over at the end", "held": false },
+    { "qty": "a handful", "item": "peanuts", "prep": "crushed, scattered last", "held": false },
+    { "qty": "50 g", "item": "smooth peanut butter", "prep": "⭐ let down ONE tablespoon of water at a time", "held": true },
+    { "qty": "~40 ml", "item": "soy sauce", "prep": "⚠️ sachets only, no bottle", "held": true },
+    { "qty": "1 sachet", "item": "toasted sesame oil", "prep": "⛔ out of stock — and it goes in OFF the heat", "held": true },
+    { "qty": "1 sachet", "item": "rice wine", "prep": "deglazes the pan at step 3", "held": true },
+    { "qty": "1 tsp", "item": "chilli flakes", "prep": "into the sauce", "held": true },
+    { "qty": "½", "item": "lemon", "prep": "into the sauce", "held": true },
+    { "qty": "150 g", "item": "noodles", "prep": "⛔ drained and rinsed COLD until no longer slippery", "held": true },
+    { "qty": "barely any", "item": "oil", "prep": "high heat, and very little of it", "held": true },
+    { "qty": "to taste", "item": "sriracha", "prep": "at the table, not in the pan", "held": true }
+  ],
+  "equipment": [
+    { "item": "🔴 REQUIRED — the widest pan you own", "why": "diced chicken in a crowded pan releases water and boils instead of catching. One uncrowded layer, or two batches" },
+    { "item": "🔴 REQUIRED — a mixing bowl and spoon", "why": "⭐ for letting the peanut butter down, used BEFORE anything goes in the pan" },
+    { "item": "🔴 REQUIRED — a colander in the sink and the cold tap", "why": "the noodles get rinsed cold" },
+    { "item": "A pan of water", "why": "the noodles" },
+    { "item": "Tongs", "why": "" },
+    { "item": "A wide serving bowl", "why": "⭐ sauce underneath, noodles on top, tossed up from the base at the table" }
+  ],
+  "equipmentDerived": false,
+  "prep": [
+    "⭐ <b>MIXING BOWL, SPOON — and this happens BEFORE anything goes in the pan.</b> Peanut butter, then soy. <b>Let it down one tablespoon of water at a time until it pours like double cream.</b> Chilli flakes, lemon. Set aside."
+  ],
+  "steps": [
+    {
+      "text": "<b>Pan of water.</b> Noodles to the packet, then ⛔ <b>drained and rinsed COLD until no longer slippery.</b> Leave to drain hard.",
+      "min": 5,
+      "max": 8
+    },
+    {
+      "text": "<b>Widest pan, high heat, barely any oil.</b> Diced chicken in one layer. ⛔ <b>Leave it alone until the pieces release and the undersides have browned and crisped at the corners.</b>",
+      "min": 6,
+      "max": 9
+    },
+    {
+      "text": "<b>Off the heat for a moment.</b> Rice wine in, <b>scrape the base while it bubbles.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "⭐ <b>Off the heat. Sesame oil now — never over heat.</b>",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "<b>Serving bowl. Sauce underneath, noodles on top</b>, then chicken, cucumber, half the spring onions. <b>Toss up from the base at the table.</b>",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Remaining spring onions and crushed peanuts over. ⭐ <b>Let it sit until no more than warm.</b> Sriracha at the table.",
+      "min": 2,
+      "max": 4
+    }
+  ]
+}

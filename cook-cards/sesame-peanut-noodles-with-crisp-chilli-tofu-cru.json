@@ -1,0 +1,105 @@
+{
+  "recipe": "Sesame-peanut noodles with crisp chilli tofu crumble",
+  "servesNote": "2 portions — 909 kcal / 54 g protein each, VEGAN. ⭐ The only dish in the set eaten at room temperature, which makes it the best of all of them for Maria's next-day lunch: cold sesame noodles are supposed to be cold.",
+  "estimatedMin": 30,
+  "handsOnMin": 18,
+  "adaptations": [
+    "⛔ THE TOASTED SESAME OIL IS OUT, and in this dish that is not a small thing. The whole justification for using peanut butter instead of sesame paste is that the sesame-oil sachet puts back the toasted aroma peanut butter lacks. Without it this becomes a peanut noodle bowl — still good, but it is a different dish, and no amount of extra peanut butter substitutes.",
+    "⛔ THE GINGER & GARLIC PASTE IS OUT TOO. Use a thumb of fresh ginger grated with an extra clove of garlic if you have ginger; if not, lean on the fresh garlic the recipe already calls for and accept a flatter sauce.",
+    "⚠️ SOY IS DOWN TO 4 SACHETS AND THERE IS NO BOTTLE — three Shoda 8 g and one Gousto 30 ml, about 54 ml in total. This recipe wants 40 ml, so it takes most of what is left. ⛔ The 8 g sachets will not cover the 25 ml the sauce needs on their own; the 30 ml sachet has to go into the sauce and the small ones onto the tofu.",
+    "⚠️ DRIED PASTA IS 'VERY LITTLE' and this wants 150 g of spaghetti. Tuesday bought fusilli and tagliatelle — neither is right for a noodle bowl, but fusilli will hold the sauce if it comes to it. Check the packet before you start.",
+    "⛔ THE TOFU IS NOT IN THE HOUSE — 540 g, three blocks, and it is the load-bearing decision. Two blocks drops this to 42 g protein a portion and it stops qualifying for the slot."
+  ],
+  "ingredients": [
+    { "qty": "540 g (3 × 180 g)", "item": "super-firm tofu", "prep": "⭐ crumbled, not cubed — see prep 2", "held": false },
+    { "qty": "1", "item": "cucumber", "prep": "matchsticks, raw, on top at the end", "held": false },
+    { "qty": "4", "item": "spring onions", "prep": "sliced on the diagonal, ⭐ GREENS AND WHITES SEPARATED", "held": false },
+    { "qty": "3 cloves", "item": "garlic", "prep": "finely grated — half into the chilli oil, half into the sauce", "held": false },
+    { "qty": "40 ml", "item": "soy sauce", "prep": "⭐ divided: 25 ml into the sauce, 15 ml onto the tofu", "held": false },
+    { "qty": "150 g", "item": "dried spaghetti", "prep": "⚠️ cooked just PAST al dente, then rinsed cold", "held": true },
+    { "qty": "50 g", "item": "smooth peanut butter", "prep": "⭐ let down one tablespoon of water at a time — see step 5", "held": true },
+    { "qty": "1 sachet", "item": "toasted sesame oil", "prep": "⛔ out of stock — see the adaptations", "held": true },
+    { "qty": "1 sachet", "item": "rice wine", "prep": "into the tofu at step 3", "held": true },
+    { "qty": "1 sachet", "item": "vinegar", "prep": "⭐ if the sauce tastes flat it is nearly always short of this or salt", "held": true },
+    { "qty": "1 sachet", "item": "ginger & garlic paste", "prep": "⛔ out of stock — see the adaptations", "held": true },
+    { "qty": "2 sachets", "item": "sriracha", "prep": "into the sauce", "held": true },
+    { "qty": "2 tsp", "item": "honey", "prep": "or sugar to keep it strictly vegan", "held": true },
+    { "qty": "1 tsp + 1 tsp", "item": "chilli powder", "prep": "1 tsp onto the tofu, 1 tsp into the chilli oil", "held": true },
+    { "qty": "½ tsp", "item": "smoked paprika", "prep": "onto the tofu", "held": true },
+    { "qty": "20 ml", "item": "oil", "prep": "⭐ divided: 10 ml for the tofu, 10 ml poured hot over the chilli", "held": true },
+    { "qty": "to taste", "item": "salt and black pepper", "prep": "", "held": true }
+  ],
+  "equipment": [
+    { "item": "Large frying pan", "why": "⛔ the tofu goes in with NO OIL AT ALL to begin with" },
+    { "item": "A plate", "why": "⭐ the crumble rests SPREAD OUT, never heaped, or it steams itself soft" },
+    { "item": "Small heatproof bowl", "why": "the chilli oil — the hot oil is poured onto the aromatics, not the other way round" },
+    { "item": "A mixing bowl", "why": "letting the peanut butter down" },
+    { "item": "Two wide serving bowls", "why": "⭐ the sauce goes in the BOTTOM and the noodles on top" },
+    { "item": "Large pan", "why": "the spaghetti" },
+    { "item": "Colander", "why": "⛔ and the noodles get rinsed COLD in it" },
+    { "item": "A cup", "why": "the reserved cooking water — save it before draining" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "<b>Drain the tofu and pat all three blocks thoroughly dry.</b> Super-firm needs no pressing — that is the whole point of buying it — but surface water will steam rather than fry.",
+    "⭐ <b>Crumble the tofu with your fingers</b>, from coarse-breadcrumb size up to small peas. <b>Uneven is good:</b> the small bits go crisp, the bigger bits stay chewy, and you want both.",
+    "Slice the spring onions on the diagonal and <b>keep the whites and greens in separate piles</b> — the whites go into the hot chilli oil, the greens go raw on top at the end. Grate the garlic. Cut the cucumber into matchsticks."
+  ],
+  "steps": [
+    {
+      "text": "Large frying pan, medium-high, ⛔ <b>NO OIL AT ALL.</b> Tofu in. <b>Dry-fry, stirring occasionally, until the pan stops hissing with steam and the crumbs start to squeak and colour.</b> ⭐ <b>Driving the water off before any fat goes in is what makes the difference</b> — oil added too early just seals the moisture in.",
+      "min": 6,
+      "max": 8
+    },
+    {
+      "text": "<b>NOW</b> 10 ml oil, the chilli powder, smoked paprika and a good pinch of salt, <b>frying and stirring more often, until the crumbs are browned at the edges and rattle loosely in the pan.</b>",
+      "min": 3,
+      "max": 4
+    },
+    {
+      "text": "<b>Pour in 15 ml soy and the rice wine and stir hard.</b> It will hiss and steam — the liquid seasons the crumble and lifts all the browned residue off the base into it. <b>Cook until the pan is dry again and the crumbs are glossy and dark.</b> Onto a plate, <b>spread out rather than heaped</b>, or it steams itself soft. Wipe the pan.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Chilli oil.</b> Spring onion whites and half the grated garlic in a small heatproof bowl with 1 tsp chilli powder. Heat the remaining 10 ml oil <b>until it shimmers and just begins to move quickly — NOT smoking</b> — then pour it over. It should sizzle immediately and smell nutty. ⚠️ <b>Burnt chilli is bitter and unfixable, so err cool.</b>",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "⭐ <b>THE SAUCE, IN THE RIGHT ORDER.</b> Peanut butter in a bowl. <b>Warm water ONE TABLESPOON AT A TIME, stirring smooth after each addition. It will get THICKER and claggier before it gets thinner — this is normal and is the step everyone gets wrong.</b> Keep going, ~3–4 tbsp, <b>until it loosens to the consistency of double cream.</b>",
+      "min": 2,
+      "max": 4
+    },
+    {
+      "text": "Into that: 25 ml soy, the vinegar, the sesame oil, the ginger & garlic paste, 2 sriracha, honey, the remaining garlic and black pepper. Then the chilli oil from the last step, aromatics and all. <b>Taste it NOW</b> — salty, nutty, sour and sweet in that order, and <b>slightly too strong on its own, because the noodles will dilute it.</b> Flat? Almost always short of vinegar or salt.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "⭐ <b>Divide the sauce between two wide bowls, spooning it into the BOTTOM.</b> Sauce underneath and noodles on top is the standard Sichuan noodle-bowl assembly — it means the sauce is tossed up from the base at the table rather than sitting on top going gluey.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "Spaghetti in well-salted water <b>until just PAST al dente — a shade softer than you would want for an Italian sauce</b>, because it firms up when rinsed. ⭐ <b>Save a cupful of the cooking water before draining.</b>",
+      "min": 8,
+      "max": 11
+    },
+    {
+      "text": "⛔ <b>Drain and IMMEDIATELY rinse under cold running water, moving them with your hand until they feel cool and no longer slippery.</b> This washes off the surface starch. <b>Skip it and the noodles glue themselves into a single mass and the sauce slides off.</b> Shake very dry.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "<b>Noodles onto the sauce. A tablespoon or two of the reserved HOT cooking water per bowl, and toss thoroughly FROM THE BOTTOM UP</b> until every strand is coated and the sauce has gone from paste to a clinging dressing.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Top with the tofu crumble, cucumber and spring onion greens. ⭐ <b>Serve at room temperature or barely warm</b> — this dish is actively worse piping hot, because heat thins the sesame sauce and dulls the vinegar. <b>Maria's next-day lunch:</b> store the noodles-in-sauce and the crumble in <b>separate</b> containers, eat straight from the fridge, ⛔ <b>do not microwave</b>, and stir a tablespoon of hot water through first — the sauce tightens overnight.",
+      "min": 2,
+      "max": 3
+    }
+  ]
+}

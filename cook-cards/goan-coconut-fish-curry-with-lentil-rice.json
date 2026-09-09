@@ -1,0 +1,111 @@
+{
+  "recipe": "Goan coconut fish curry with lentil rice",
+  "servesNote": "2 portions — 905 kcal / 50 g protein each at £3.03/portion. ⭐ A coconut curry sharpened with vinegar — the Portuguese inheritance that makes a Goan curry taste Goan rather than generically creamy. The entire spice bill is zero.",
+  "estimatedMin": 45,
+  "handsOnMin": 20,
+  "adaptations": [
+    "⛔ THE RED LENTILS ARE OUT — finished 26 Aug and not replaced. Without the 50 g the 'lentil rice' is just rice, which works but loses the protein and the texture the side was there for. Cook 160 g of rice instead of 140 g and expect a slightly lighter plate.",
+    "⛔ THE COCONUT MILK IS NOT IN THE HOUSE either, and the creamed coconut that might have stood in for it is also out. This dish needs a shop.",
+    "⭐ THE HELD GINGER & GARLIC PASTE WOULD SAVE TWO MINUTES OF CHOPPING — except it is out too. Use the fresh garlic Tuesday bought and buy a thumb of ginger.",
+    "⭐ COD OR POLLOCK HOLD TOGETHER BETTER than basa and taste cleaner — add 2 minutes to step 9 if you use them."
+  ],
+  "ingredients": [
+    { "qty": "4 fillets, ~500 g", "item": "basa", "prep": "⭐ LARGE 4–5 cm chunks, bigger than feels necessary", "held": false },
+    { "qty": "1", "item": "onion", "prep": "finely chopped", "held": false },
+    { "qty": "1 medium", "item": "tomato", "prep": "chopped, mashed into the masala", "held": false },
+    { "qty": "3 cloves", "item": "garlic", "prep": "finely chopped", "held": false },
+    { "qty": "a thumb", "item": "ginger", "prep": "finely chopped", "held": false },
+    { "qty": "1", "item": "green chilli", "prep": "split lengthways", "held": false },
+    { "qty": "200 ml (half a tin)", "item": "coconut milk", "prep": "⛔ never boiled hard — the surface should barely shiver", "held": false },
+    { "qty": "a handful", "item": "coriander", "prep": "⭐ leaves and stalks SEPARATED — stalks in early, leaves at the end", "held": false },
+    { "qty": "1", "item": "lemon", "prep": "half into the marinade, the rest at the end and in wedges", "held": false },
+    { "qty": "100 g", "item": "natural yoghurt", "prep": "⛔ COLD, on the side — stirred in during cooking it splits", "held": false },
+    { "qty": "2 tsp", "item": "oil", "prep": "", "held": false },
+    { "qty": "1 sachet", "item": "cider vinegar", "prep": "⭐ the souring agent, and the reason this tastes Goan", "held": true },
+    { "qty": "140 g", "item": "rice", "prep": "rinsed with the lentils until nearly clear", "held": true },
+    { "qty": "50 g", "item": "red lentils", "prep": "⛔ out of stock — see the adaptations", "held": true },
+    { "qty": "1", "item": "bay leaf", "prep": "into the rice", "held": true },
+    { "qty": "1½ tsp", "item": "turmeric", "prep": "⭐ divided: ½ on the fish, ½ in the rice, the rest in the masala", "held": true },
+    { "qty": "2 tsp", "item": "ground cumin", "prep": "", "held": true },
+    { "qty": "1 tsp", "item": "cumin seeds", "prep": "whole, first into the oil", "held": true },
+    { "qty": "1½ tsp", "item": "smoked paprika", "prep": "", "held": true },
+    { "qty": "½ tsp", "item": "cayenne", "prep": "", "held": true },
+    { "qty": "½ tsp", "item": "garam masala", "prep": "⭐ off the heat, at the very end", "held": true },
+    { "qty": "to taste", "item": "salt", "prep": "⚠️ the sauce should taste slightly too salty and too sharp before the fish goes in", "held": true }
+  ],
+  "equipment": [
+    { "item": "A wide pan with a lid", "why": "the fish goes in a SINGLE layer and is never stirred after" },
+    { "item": "A plate", "why": "the fish marinates on it 15 minutes" },
+    { "item": "Saucepan with a lid", "why": "the rice, left completely alone" },
+    { "item": "Sieve", "why": "rinsing the rice and lentils together" },
+    { "item": "Chopping board and knife", "why": "" },
+    { "item": "A spoon", "why": "⭐ to move the sauce you rotate or shake the PAN, not stir — the spoon is for mashing the tomato" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Cut the basa into <b>large 4–5 cm chunks, bigger than feels necessary</b> — ⛔ thin small pieces are the commonest cause of curry turning into fish soup. <b>Pat every piece dry;</b> basa carries a lot of water and wet fish thins your sauce.",
+    "Toss the fish with ½ tsp turmeric, a pinch of salt and the juice of half the lemon. <b>Leave on a plate, 15 min minimum.</b> ⭐ The salt firms the surface so pieces hold together, the turmeric seasons the flesh not just the sauce, and the acid takes the muddiness off farmed white fish."
+  ],
+  "steps": [
+    {
+      "text": "Rinse rice and lentils together <b>until the water runs from milky to almost clear.</b> Pan with 430 ml water, ½ tsp turmeric, bay, salt. Boil, <b>stir ONCE</b>, lid on, lowest heat, <b>leave alone until the water is gone and small craters show on the surface.</b> Off the heat, lid on, rest. Fluff before serving.",
+      "min": 11,
+      "max": 13
+    },
+    {
+      "text": "Heat the oil over medium. Add the cumin seeds and wait <b>until they sizzle steadily and smell toasty</b> (~30 sec) — ⚠️ if they darken fast the pan is too hot.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "Add the onion and cook <b>until completely floppy and translucent with brown at the edges, no crunch left at all.</b> ⭐ <b>Rushing this is why home curries taste raw and harsh.</b>",
+      "min": 8,
+      "max": 10
+    },
+    {
+      "text": "Garlic, ginger, coriander stalks, split chilli. Fry <b>until the raw garlic smell has gone and it smells sweet.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Ground cumin, remaining turmeric, paprika, cayenne. Stir into the oil <b>until they darken a shade and smell nutty rather than dusty</b> (30–45 sec), <b>then immediately splash in water to stop them scorching.</b> ⚠️ Burnt spice is bitter all the way to the plate.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "Tomato and a pinch of salt, mashing with the spoon, <b>until it has completely collapsed and you can see OIL GLISTENING AND SEPARATING at the edges of the masala.</b> ⭐ That oil separation is the doneness cue in every Goan source consulted.",
+      "min": 4,
+      "max": 6
+    },
+    {
+      "text": "Coconut milk, ~150 ml water, the cider vinegar. Bring to <b>a bare simmer — the surface should barely shiver. Never boil coconut milk hard.</b> Season: <b>it should taste slightly too salty and slightly too sharp, because the fish will dilute it.</b>",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Slide the fish in in a <b>single layer</b>, spoon sauce over each piece. ⛔ <b>Now STOP STIRRING.</b> To move the sauce, take the pan by the handle and rotate or shake it.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Cover and cook at that bare simmer <b>until the fish has turned from grey-translucent to solid white and a piece nudged with a spoon FLAKES rather than bends.</b> ⚠️ <b>Basa is done sooner than it looks</b>, and overcooking — not fish choice — is what makes this dish fall apart.",
+      "min": 5,
+      "max": 7
+    },
+    {
+      "text": "Off the heat: garam masala, coriander leaves, a little more lemon.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "⭐ <b>Stand 5 minutes with the lid on.</b> Every Goan source says the curry improves as it sits.",
+      "min": 5,
+      "max": 5
+    },
+    {
+      "text": "Serve over the lentil rice with <b>cold</b> yoghurt on the side and a lemon wedge. ⛔ Don't stir the yoghurt in during cooking — it splits, and its job is cold sour contrast. <b>Maria's next-day lunch:</b> the sauce is better on day two, the fish is not. Reheat gently in a pan with a splash of water, covered, <b>until just steaming</b> — do not microwave on full power, which boils the sauce and turns basa to cotton wool.",
+      "min": 2,
+      "max": 3
+    }
+  ]
+}

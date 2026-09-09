@@ -1,0 +1,115 @@
+{
+  "recipe": "Oven-baked panko katsu chicken with Japanese curry sauce",
+  "servesNote": "2 portions — 900 kcal / 66 g protein each, the highest-protein dinner in the set. ⭐ The one that finally uses the 180 g of panko, and baking rather than deep-frying is what makes it viable on a weeknight.",
+  "estimatedMin": 55,
+  "handsOnMin": 20,
+  "adaptations": [
+    "⛔ THE GINGER & GARLIC PASTE IS OUT. Grate a thumb of fresh ginger with two cloves from the garlic bulb Tuesday bought; it goes into the sauce at step 4 and gets 30 seconds in hot fat, which is what the sachet was doing anyway.",
+    "⚠️ THE TOMATO PASTE SACHET IS OUT — 1 tbsp of the tomato double concentrate from the tube instead. It goes in with the spices at step 4 and gets cooked out there.",
+    "⚠️ SOY IS DOWN TO 4 SACHETS AND THERE IS NO BOTTLE. This needs 1 tbsp (~15 ml), so two of the 8 g sachets cover it — leave the 30 ml Gousto one for a dish that needs the volume.",
+    "⛔ CHICKEN BREAST IS NOT IN THE HOUSE — Tuesday bought thighs and legs. Thigh fillets work and are more forgiving, but use 500 g and expect ~8 g less protein a portion. The white cabbage is not in the house either.",
+    "⭐ 2 TBSP OF REAL MILD CURRY POWDER REPLACES ALL SIX SPICES. The blend below is a reconstructed Japanese curry powder from the jars, not a preference."
+  ],
+  "ingredients": [
+    { "qty": "450 g (2 large)", "item": "chicken breast fillets", "prep": "⭐ butterflied and flattened to an even 1–1.5 cm — see prep 3", "held": false },
+    { "qty": "1", "item": "egg", "prep": "⭐ beaten with 1 tbsp oil — the Japanese fix for detaching breading", "held": false },
+    { "qty": "1 large (~180 g)", "item": "onion", "prep": "very finely chopped or grated on a box grater", "held": false },
+    { "qty": "1", "item": "carrot", "prep": "grated", "held": false },
+    { "qty": "½", "item": "eating apple", "prep": "⭐ grated, skin and all — NOT optional, see step 7", "held": false },
+    { "qty": "1 tbsp", "item": "light soy", "prep": "⚠️ sachets only, no bottle", "held": false },
+    { "qty": "2 tsp", "item": "sugar or honey", "prep": "", "held": false },
+    { "qty": "¼", "item": "white cabbage", "prep": "⭐ finely shredded, raw — not decoration, see step 9", "held": false },
+    { "qty": "2 tbsp", "item": "oil", "prep": "divided: 1 tbsp toasting the panko, 1 tbsp into the egg", "held": false },
+    { "qty": "60 g", "item": "panko", "prep": "⭐ toasted FIRST, before anything else — see prep 2", "held": true },
+    { "qty": "30 g + 1 tbsp", "item": "plain flour", "prep": "30 g to coat, 1 tbsp to thicken the sauce", "held": true },
+    { "qty": "1 sachet", "item": "ginger & garlic paste", "prep": "⛔ out of stock — see the adaptations", "held": true },
+    { "qty": "1 tbsp", "item": "tomato double concentrate", "prep": "⚠️ from the tube — the sachet is gone", "held": true },
+    { "qty": "1 sachet, to 400 ml", "item": "chicken stock", "prep": "⛔ added in three or four goes, not all at once", "held": true },
+    { "qty": "120 g", "item": "rice", "prep": "rinsed until the water runs clear", "held": true },
+    { "qty": "2 tsp", "item": "garam masala", "prep": "", "held": true },
+    { "qty": "1½ tsp", "item": "turmeric", "prep": "", "held": true },
+    { "qty": "1 tsp", "item": "cumin", "prep": "", "held": true },
+    { "qty": "½ tsp", "item": "ground ginger", "prep": "", "held": true },
+    { "qty": "¼ tsp", "item": "cinnamon", "prep": "", "held": true },
+    { "qty": "⅛ tsp", "item": "cayenne", "prep": "", "held": true },
+    { "qty": "1 tsp", "item": "vinegar", "prep": "at the end, to push it savoury", "held": true },
+    { "qty": "¾ tsp + more", "item": "salt and black pepper", "prep": "⚠️ do not over-salt the surface right before coating — salt pulls moisture and moisture breaks the bond", "held": true }
+  ],
+  "equipment": [
+    { "item": "A wire rack inside a baking tray", "why": "⭐ air underneath. On a flat tray the underside sits in its own steam and goes soft" },
+    { "item": "Frying pan", "why": "toasting the panko, then the sauce in the same pan" },
+    { "item": "Three wide bowls or plates", "why": "flour, egg, panko — the three stations" },
+    { "item": "A sharp knife", "why": "butterflying, and one confident stroke to slice at the end" },
+    { "item": "Greaseproof paper or clingfilm, and something to bash with", "why": "flattening to even thickness" },
+    { "item": "Box grater", "why": "⭐ onion, carrot and apple — gives a sauce with no lumps and skips the blender" },
+    { "item": "Small pan with a lid", "why": "rice" },
+    { "item": "Whisk or wooden spoon", "why": "the roux, and getting the stock in smoothly" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Oven to 200°C / 180°C fan. <b>Set a wire rack inside a baking tray</b> — or crumple foil into loose ridges. The point is air underneath.",
+    "⭐ <b>TOAST THE PANKO FIRST.</b> Panko and 1 tbsp oil in a frying pan, medium heat. <b>Stir more or less constantly — it sits pale for a while then goes from blond to golden very fast.</b> Take it off at an even light golden-brown that smells like toast; tip immediately into a wide bowl.",
+    "Lay a breast flat, palm on top, run a knife horizontally through from the long side stopping short of cutting through, and open it out like a book. Cover with paper and <b>press or bash to an even 1–1.5 cm.</b> ⭐ <b>Even thickness is why restaurant katsu is juicy in the middle and yours isn't</b> — a tapered breast overcooks at the thin end before the thick end is safe.",
+    "<b>Pat the flattened breasts thoroughly dry</b> both sides, season with ¾ tsp salt and pepper. ⭐ <b>Dry meat is the whole battle with breading</b> — moisture under a coating turns to steam and pushes it off in sheets.",
+    "Three stations: 30 g flour; egg beaten <b>with the remaining 1 tbsp oil</b> and a pinch of salt; toasted panko. <b>The oil in the egg is the standard Japanese fix for detaching breading</b> — a richer, more elastic glue.",
+    "Flour each breast, then <b>shake and pat off all the excess until it looks barely dusted.</b> Loose flour makes a gluey layer that lifts away with the crumb. Egg, let the excess run off, then <b>press the crumb on firmly, turning until no bare patch — press to SEAT it, not to crush it.</b>",
+    "⭐ Onto the rack and, if you have ten minutes, <b>into the fridge UNCOVERED</b> while you start the sauce. <b>This is what stops the coating shattering when you slice it</b> — it was tested side by side and the refrigerated cutlet sliced cleanly where the other did not."
+  ],
+  "steps": [
+    {
+      "text": "<b>Sauce.</b> Same pan, medium heat, a splash more oil. Grated onion and carrot with a pinch of salt, <b>until the onion has lost all rawness, collapsed, and turned properly golden with brown streaks on the pan bottom.</b> ⛔ <b>Do not rush this</b> — a Japanese curry gets almost all its sweetness and depth from thoroughly browned onion; stop while it is pale yellow and the sauce tastes thin and dusty whatever else goes in.",
+      "min": 8,
+      "max": 10
+    },
+    {
+      "text": "Meanwhile <b>get the cutlets into the oven</b>, and rinse the rice <b>until the water runs clear</b>, then start it cooking.",
+      "min": 2,
+      "max": 4
+    },
+    {
+      "text": "Bake the cutlets <b>until the coating is a deeper gold and the thickest part is firm and springs back, with clear juice if you cut the edge.</b> <b>No turning.</b>",
+      "min": 20,
+      "max": 25
+    },
+    {
+      "text": "Sauce: the ginger and garlic, ~30 sec <b>until it smells cooked rather than sharp.</b> Then all the spices plus the tomato concentrate, stirring constantly for a minute — <b>the spices should darken slightly and smell fragrant rather than raw.</b> Ground spices need fat and heat to open up.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Sprinkle over the 1 tbsp flour, stir <b>until it disappears and looks like a rough paste</b>, and keep it moving a minute to cook out the floury taste.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Stock and 400 ml water <b>in three or four goes, stirring hard to completely smooth before adding more.</b> ⚠️ All at once gives you lumps.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Grated apple, soy, sugar. Bare simmer <b>until it coats the back of a spoon and a finger drawn through leaves a line that doesn't immediately close.</b> ⭐ <b>The apple is not optional</b> — you will not taste apple, but without it the curry has a hole where the sweet-fruity note should be.",
+      "min": 10,
+      "max": 15
+    },
+    {
+      "text": "Taste. Vinegar, then salt in small pinches <b>until it tastes savoury rather than sweet.</b> Too thick? A splash of water — it thickens further as it cools.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Toss the shredded cabbage with salt and a squeeze of acid. ⭐ <b>Not decoration</b> — the dish is rich, breaded and starchy, and a raw cold crunchy thing is what stops it being heavy by the third mouthful.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Rest the cutlets on the rack 3–4 minutes</b>, then slice across into 2 cm strips <b>with one confident stroke</b> — sawing tears the crumb off.",
+      "min": 3,
+      "max": 4
+    },
+    {
+      "text": "Rice, katsu against it, ⭐ <b>sauce over the rice and around the chicken but NOT over the crumb</b>, cabbage alongside. <b>Maria's next-day lunch:</b> store the three components separately and never let the sauce touch the crumb overnight. Reheat the katsu in a hot dry pan a minute a side or a hot oven 6–8 min; ⛔ <b>never the microwave</b>, which turns the coating to wet cardboard.",
+      "min": 2,
+      "max": 3
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "recipe": "Tuna, spring onion & caper fishcakes with lemon yoghurt",
+  "servesNote": "2 portions, 4 large cakes — 890 kcal / 57 g protein each at £1.41/portion, the cheapest dinner in the fish rotation. ⭐ Most fishcakes are two-thirds potato and taste of it; this one runs fish-heavy, which tastes better and binds worse, and buys the structure back with a longer chill.",
+  "estimatedMin": 55,
+  "handsOnMin": 22,
+  "adaptations": [
+    "⚠️ THIS WANTS 4 TINS OF TUNA AND TUESDAY BOUGHT 2. The pantry had none before the shop. Two tins gives ~220 g drained instead of ~440 g, which halves the fish and turns this back into the potato-led fishcake the recipe is explicitly avoiding. ⭐ A tin of pink salmon replaces two tuna tins and makes a richer cake, if that is easier to get hold of than more tuna.",
+    "⚠️ CAPERS ARE A KNOWN AVAILABILITY PROBLEM at Aldi. Two cocktail gherkins, finely chopped, are the stated alternative and do the same job. ⭐ Whichever you use, chop some INTO the mix as well as into the sauce, so each bite is seasoned rather than each forkful being a cake plus a dip.",
+    "✅ THE YOGHURT, EGGS AND POTATOES ARE ALL IN THE HOUSE from Tuesday. The spring onions, parsley, mayo and salad are not.",
+    "⛔ NO FREEZER, BY DESIGN. Every source's 'freeze 15 minutes to firm up' is replaced by 20+ minutes in the fridge. It works identically but needs the lead time, so start the chill before you make the sauce."
+  ],
+  "ingredients": [
+    { "qty": "4 tins (~440 g drained)", "item": "tuna chunks", "prep": "⚠️ only 2 tins in the house — see the adaptations. Pressed dry, flaked CHUNKY not shredded", "held": true },
+    { "qty": "400 g", "item": "floury potatoes", "prep": "peeled, even 4 cm chunks, ⭐ COLD water start", "held": false },
+    { "qty": "4", "item": "spring onions", "prep": "finely sliced, green and white", "held": false },
+    { "qty": "1", "item": "lemon", "prep": "zest of the whole into the mix, half juiced into the sauce, the rest in wedges", "held": false },
+    { "qty": "1 tbsp", "item": "capers, or 2 cocktail gherkins", "prep": "finely chopped — ⭐ some in the MIX, some in the sauce", "held": false },
+    { "qty": "a handful", "item": "parsley", "prep": "", "held": false },
+    { "qty": "2", "item": "eggs", "prep": "⭐ 1 in the mix, 1 beaten to coat", "held": false },
+    { "qty": "100 g", "item": "yoghurt", "prep": "the sauce", "held": false },
+    { "qty": "1 tbsp", "item": "mayo", "prep": "the sauce", "held": false },
+    { "qty": "as needed", "item": "salad leaves, tomato, cucumber", "prep": "⛔ made but NOT dressed until serving", "held": false },
+    { "qty": "3 tbsp", "item": "oil", "prep": "3–4 mm depth for shallow frying", "held": false },
+    { "qty": "60 g", "item": "panko", "prep": "the third plate", "held": true },
+    { "qty": "3 tbsp", "item": "plain flour", "prep": "seasoned, the first plate", "held": true },
+    { "qty": "½ tsp", "item": "smoked paprika", "prep": "into the mix", "held": true },
+    { "qty": "a pinch", "item": "cayenne", "prep": "into the mix", "held": true },
+    { "qty": "1 sachet", "item": "white wine vinegar", "prep": "the salad dressing", "held": true },
+    { "qty": "a small pinch + Maldon", "item": "salt and plenty of black pepper", "prep": "⛔ go easy in the mix — tuna and capers are already salty. ⭐ Maldon on the hot crust", "held": true }
+  ],
+  "equipment": [
+    { "item": "Saucepan", "why": "potatoes, cold water start" },
+    { "item": "A sieve", "why": "⭐ draining the tuna — pressed with the back of a spoon until liquid stops running" },
+    { "item": "Masher", "why": "⛔ no butter, no milk, no cream" },
+    { "item": "A plate", "why": "spreading the mash to cool fast — cold dry mash holds its shape, warm mash does not" },
+    { "item": "Three plates", "why": "seasoned flour, beaten egg, panko" },
+    { "item": "A tray for the fridge", "why": "⭐ the cakes chill UNCOVERED at least 20 minutes" },
+    { "item": "Frying pan", "why": "3–4 mm of oil, medium" },
+    { "item": "Kitchen paper", "why": "and salt the crust the instant it lands" },
+    { "item": "A fork", "why": "⛔ mixing is lifting and folding with a fork, never beating" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "⏰ <b>The 20-minute chill is the load-bearing bit of the timing.</b> Read step 6 before you start so it does not surprise you — the cakes have to be made, shaped and in the fridge before the sauce and salad get made.",
+    "Slice the spring onions, chop the parsley and the capers or gherkins, and zest the lemon. All of it goes into the mix at once and none of it wants doing with potato-covered hands."
+  ],
+  "steps": [
+    {
+      "text": "Potatoes into <b>COLD</b> salted water, bring to the boil. ⭐ Cold start, not boiling — dropped into boiling water the outsides disintegrate before the middles cook, <b>and that is where wet mash comes from.</b> <b>Simmer until a knife slides in with no resistance but the chunk still holds its shape on the blade.</b>",
+      "min": 12,
+      "max": 15
+    },
+    {
+      "text": "Drain thoroughly, tip back into the empty hot pan off the heat, and <b>leave uncovered 2–3 minutes, shaking once: the surfaces should go from wet and shiny to dry and faintly chalky.</b> ⭐ <b>Steam-drying is the single most important step here.</b>",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Mash — ⛔ <b>no butter, no milk, no cream.</b> Spread the mash on a plate to cool fast; <b>cold dry mash holds its shape, warm mash does not.</b>",
+      "min": 3,
+      "max": 5
+    },
+    {
+      "text": "Drain the tuna properly: into a sieve, <b>press with the back of a spoon until liquid stops running out.</b> Flake into <b>chunky flakes, not shreds.</b>",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Combine cooled mash, tuna, spring onions, lemon zest, capers, parsley, paprika, cayenne, 1 egg, <b>a very generous amount of black pepper</b> and a small pinch of salt. ⚠️ Go easy on salt — tuna and capers are already salty.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "⛔ <b>Mix with a FORK, lifting and folding, only until it just holds when squeezed. Do not beat it smooth</b> — overworked potato turns gluey and the cakes come out dense and pasty. Divide into 4 and shape into <b>fat cakes ~3 cm thick and 9 cm across</b> — thick cakes stay moist while the outside crisps. <b>Press the sides in so there are no cracks for the crumb to fall off.</b>",
+      "min": 5,
+      "max": 7
+    },
+    {
+      "text": "⭐ <b>Chill UNCOVERED in the fridge until they feel firm and dry rather than tacky — at least 20 minutes</b>, up to a day ahead. This is what stops them disintegrating in the pan.",
+      "min": 20,
+      "max": 25
+    },
+    {
+      "text": "Sauce: yoghurt, mayo, juice of half the lemon, a little more caper and parsley, salt, pepper. <b>It should be sharp enough to make you blink slightly.</b>",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Salad made but ⛔ <b>NOT dressed</b> until serving — oil, the vinegar sachet, salt, pepper mixed separately.",
+      "min": 3,
+      "max": 5
+    },
+    {
+      "text": "Three plates: seasoned flour, beaten egg, panko. Coat each chilled cake flour → egg → panko, <b>pressing firmly and remembering the SIDES</b>, which is where they always fall short.",
+      "min": 4,
+      "max": 5
+    },
+    {
+      "text": "Heat 3–4 mm oil, medium. ⭐ <b>Test with a single crumb: it should sizzle immediately and steadily, fizzing gently rather than spitting furiously.</b> Too hot and the panko burns before the middle is warm; too cool and they drink oil and slump.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Lower them in and ⛔ <b>leave them completely alone. Do not press, poke or peek. When the visible bottom edge is deep gold and the cake releases with a gentle nudge rather than clinging, it is ready to turn. If it sticks, it is not ready.</b>",
+      "min": 3,
+      "max": 4
+    },
+    {
+      "text": "<b>Flip once — ONCE only</b> — and cook the second side to the same deep even gold. Colouring faster than that? Turn the heat down; the middle needs time.",
+      "min": 3,
+      "max": 4
+    },
+    {
+      "text": "Onto kitchen paper, and ⭐ <b>season the hot crust with Maldon straight away</b>, while the surface is still oily enough for it to stick. Salt at the mixing stage seasons the inside and does nothing for the outside, and the outside is the first thing you taste.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "Toss the salad, plate up, <b>squeeze a lemon wedge over the fishcakes at the table.</b> A fried breadcrumbed thing without acid tastes heavy. ⭐ <b>Maria's next-day lunch: the best of the four for this.</b> Fishcakes are excellent cold and need no reheating at all. If she would rather have them warm, 10 min in a hot oven on a rack restores the crust; ⛔ a microwave makes the panko soft and sad.",
+      "min": 2,
+      "max": 3
+    }
+  ]
+}

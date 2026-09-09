@@ -308,8 +308,15 @@ escapes (`\~880` → `~880`). Escapes HTML **before** introducing any tag.
 what to get out, what to get ready, prep, then steps with per-step timers.
 `saveCook()` → `POST /api/cook` → `cook_log`, and reports elapsed vs estimated.
 
-**8 of 38 recipes have a `cook` card** (`cook-cards/*.json`, mirrored into `recipes.cook`).
-The other 30 fall back to the verbatim method on the Recipes tab.
+**30 of 38 recipes have a `cook` card** (`cook-cards/*.json`, mirrored into `recipes.cook`)
+— ⭐ **every recipe that has a `method` now has one**, 294 steps in total. The 8 without
+are the 8 whose Notion pages are blank: there is nothing to restructure, and writing one
+would mean inventing the recipe rather than re-shaping it.
+
+> ⛔ **A cook card is a RESTRUCTURING of `method`, never a rewrite and never a
+> compression.** Every numbered step in the method lands in `prep` or in `steps`. Where
+> the house no longer holds what the method names, the substitution goes in
+> `adaptations` — the method itself is verbatim and is not edited (invariant 4).
 
 #### ⛔ Cook mode is offered only where a card exists
 

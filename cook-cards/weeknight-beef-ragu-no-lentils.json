@@ -1,0 +1,85 @@
+{
+  "recipe": "Weeknight beef ragù — no lentils",
+  "servesNote": "2½ portions — Karl 3/5 ≈ 990 kcal / 63 g protein, Maria 2/5 ≈ 660 kcal / 42 g protein. ⚠️ NOT the same dish as Ragù alla bolognese in this library, which is a 3 hr 20 min traditional version. This one is deliberately a ~50 minute weeknight build.",
+  "estimatedMin": 50,
+  "handsOnMin": 20,
+  "adaptations": [
+    "✅ EVERY INGREDIENT IS IN THE HOUSE. Tuesday bought the mince, onions, carrots, celery, garlic, tomato concentrate, milk, egg tagliatelle and Grana Padano. This is cookable tonight with no shop.",
+    "⭐ WRITTEN 30 AUG 2026 AS A SIBLING, NOT A REPLACEMENT. Karl: \"we've now run out of lentils, so our lentil bolognese can become a more traditional one now. Keep the lentil version around as a recipe, but create a lentil-less version too.\" Beef & lentil bolognese stays live.",
+    "⭐ STEP 1 IS WHAT REPLACES THE LENTILS. The lentils used to supply body; now the soffritto has to, and that means twelve to twenty minutes rather than eight. It is the step a rushed cook cuts and the one that matters most.",
+    "⚠️ BICARBONATE OF SODA is used on the mince at prep 2 to help it brown. It is not confirmed in the pantry — if there is none, skip it and just make sure the mince is dry, spread out, and unsalted until step 3."
+  ],
+  "ingredients": [
+    { "qty": "500 g", "item": "beef mince", "prep": "⛔ out of the fridge onto a plate in loose lumps, NOT salted until step 3", "held": false },
+    { "qty": "1", "item": "onion", "prep": "cut to about the size of grains of rice", "held": false },
+    { "qty": "1", "item": "carrot", "prep": "same — a piece must CRUSH not crunch by the end of step 1", "held": false },
+    { "qty": "1 stick", "item": "celery", "prep": "same", "held": false },
+    { "qty": "2–3 cloves", "item": "garlic", "prep": "⭐ kept SEPARATE from the other vegetables", "held": false },
+    { "qty": "1 tbsp", "item": "tomato concentrate", "prep": "fried alone on cleared metal — bright red to dull brick", "held": false },
+    { "qty": "100 ml", "item": "milk", "prep": "in at step 6, after the tomato has reduced", "held": false },
+    { "qty": "a few gratings", "item": "nutmeg", "prep": "over the milk", "held": false },
+    { "qty": "1 tsp", "item": "bicarbonate of soda", "prep": "⚠️ in a tbsp of water, through the mince — see the adaptations", "held": true },
+    { "qty": "1 × 400 g tin", "item": "chopped tomatoes", "prep": "⭐ HALF the tin, then 150 ml water swilled round it", "held": false },
+    { "qty": "160–180 g", "item": "tagliatelle", "prep": "⛔ weighed, not eyeballed — the thickness logic depends on the ratio", "held": true },
+    { "qty": "30 g", "item": "Grana Padano", "prep": "grated, ALL of it into the pan at step 7", "held": false },
+    { "qty": "1 tbsp", "item": "oil", "prep": "", "held": true },
+    { "qty": "to taste", "item": "salt and black pepper", "prep": "⭐ go slightly under at step 6 — the cheese is still to come", "held": true }
+  ],
+  "equipment": [
+    { "item": "🔴 REQUIRED — a wide, heavy 28 cm pan with a lid", "why": "the whole dish is cooked and finished in it. A tall narrow saucepan gives grey mince in pink water no matter how well every other step is followed" },
+    { "item": "🔴 REQUIRED — a mug or jug, on the hob BEFORE anything else happens", "why": "⭐ you dip it into the pasta water at step 5. Everybody forgets until the pasta is already in the colander, and by then the body of the dish has gone down the plughole" },
+    { "item": "🔴 REQUIRED — digital scales", "why": "eyeballing dried pasta is how a 'serves 2½' recipe quietly becomes 'serves 4, badly'" },
+    { "item": "🔴 REQUIRED — a flat-ended wooden spoon", "why": "you scrape browned film off the base twice. A round-bowled spoon rides straight over it" },
+    { "item": "The colander, in the sink, before you start cooking", "why": "" },
+    { "item": "A food processor or mini chopper, if you have one", "why": "saves 6–8 minutes on the soffritto. ⛔ Pulse, don't purée" },
+    { "item": "A box grater", "why": "the cheese" },
+    { "item": "Tongs", "why": "moving the pasta into the sauce" }
+  ],
+  "equipmentDerived": false,
+  "prep": [
+    "<b>Board and knife, or the processor.</b> Onion, carrot and celery cut to about the size of grains of rice. If pulsing, <b>stop while it is still crumbly and separate</b> — once it has gone wet and slurry-like it steams instead of frying and you lose the browning the whole recipe depends on. ⭐ <b>Keep the garlic separate.</b>",
+    "<b>Plate, out of the fridge.</b> Mince onto a plate in loose lumps, spread out. Bicarbonate of soda stirred into a tablespoon of water and mixed through; leave it while you do the vegetables. ⛔ <b>Don't salt it yet</b> — salt draws water out and delays browning."
+  ],
+  "steps": [
+    {
+      "text": "⭐ <b>28 cm pan, oil, medium heat, wooden spoon. THIS IS THE STEP THAT REPLACES THE LENTILS.</b> All the vegetables in. <b>Not finished until all four are true:</b> the onion has gone from white through translucent to <b>deep golden-tan</b>; a piece of carrot <b>crushes rather than crunches</b> against the pan side; the mass has <b>shrunk to about half</b> its starting volume; and <b>a brown film is forming on the base.</b> Sweet and jammy, not sharp and oniony. <b>This is the step a rushed cook cuts to eight minutes, and it is the one that matters most.</b>",
+      "min": 12,
+      "max": 20
+    },
+    {
+      "text": "<b>Same pan.</b> Vegetables pushed aside, garlic and all the concentrate into the cleared space. <b>Bright post-box red to dull brick</b>, thickening, smelling roasted rather than tinny. ⚠️ If it goes near-brown or smells acrid, get the liquid in immediately.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "<b>Same pan, heat up.</b> Mince in, spread across the base. ⛔ <b>Leave it alone until the pieces RELEASE when pushed.</b> If they stick and tear they aren't ready. Then break up and turn. <b>Good brown patches and some grey — chasing every particle dries it out.</b> Salt and pepper now.",
+      "min": 6,
+      "max": 9
+    },
+    {
+      "text": "<b>Same pan, flat spoon.</b> Half the tin, then 150 ml of water swilled round the tin. <b>Scrape the base until no brown film is left stuck to it.</b> Simmer, lid slightly ajar, <b>at a lazy bubble breaking the surface about once a second.</b> Done when <b>the spoon leaves a track across the base that stays open for a beat before closing over</b> and the colour has gone dull brick-orange.",
+      "min": 15,
+      "max": 20
+    },
+    {
+      "text": "<b>Pasta pan.</b> About 2 litres — deliberately less than usual, so the water ends up starchier. Salted. Tagliatelle in, <b>timer two minutes short of the packet.</b> ⭐ <b>THE JUG FIRST — 300 ml of the cloudy water out BEFORE the pasta goes near the colander.</b> Drain when a strand still has a firm chalky core.",
+      "min": 6,
+      "max": 8
+    },
+    {
+      "text": "<b>Back to the sauce.</b> Milk in, nutmeg grated over. It looks pale and slightly separated for a moment; fine. Bare simmer <b>until the surface is an even dull orange with no milky liquid pooling.</b> <b>Taste for salt and go slightly under</b> — the cheese is still to come.",
+      "min": 4,
+      "max": 6
+    },
+    {
+      "text": "⭐ <b>28 cm pan, tongs, the jug, the cheese. THIS IS WHAT MAKES IT A RAGÙ.</b> Drained pasta into the sauce, ~100 ml pasta water, all the cheese. Medium heat, tossing constantly. <b>For the first thirty to sixty seconds it looks WRONG</b> — loose, watery, sauce sliding off. <b>Keep going.</b> Then it <b>suddenly tightens, turns glossy, and clings to the ribbons.</b> That is the emulsion and it is the point.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "<b>Two bowls, warmed with a splash of pasta water and tipped out.</b> Serve immediately, <b>three parts to two.</b>",
+      "min": 1,
+      "max": 2
+    }
+  ]
+}

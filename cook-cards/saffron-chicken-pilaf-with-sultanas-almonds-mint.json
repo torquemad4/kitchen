@@ -1,0 +1,99 @@
+{
+  "recipe": "Saffron chicken pilaf with sultanas, almonds & mint yoghurt",
+  "servesNote": "2 portions — 890 kcal / 68 g protein each at £1.84/portion. ⭐ Converts the two cheapest things in the kitchen — bone-in thighs and the rice already on the shelf — into something that reads as special-occasion Persian rather than budget one-pot.",
+  "estimatedMin": 55,
+  "handsOnMin": 20,
+  "adaptations": [
+    "✅ THIS IS THE ONE YOU CAN VIRTUALLY COOK TONIGHT. Tuesday bought the bone-in thighs, onions, garlic, Greek yoghurt and lemons, and the saffron (4 sachets), chicken stock, mint sauce, flaked almonds and rice are all in the cupboard. Nothing here depends on a paste sachet that ran out.",
+    "⚠️ SULTANAS ARE DOWN TO 30 g, which is exactly what this takes and leaves none. ⛔ If they have gone, SKIP them — do not substitute jam-sweet dried fruit, which pushes the dish sweet in a way the mint yoghurt cannot pull back.",
+    "⚠️ MINT SAUCE: three sachets left after the lamb spends its three, and this takes one. Best before Sep–Oct, and this is one of only two dishes that uses them.",
+    "⭐ THE SKIN COMES OFF, and that is deliberate. Skin trapped under a lid goes flabby, so recipes that keep it have to rescue it under a grill afterwards. Removing it costs nothing in flavour here and takes ~250 kcal a portion off."
+  ],
+  "ingredients": [
+    { "qty": "1 kg (~6)", "item": "bone-in chicken thighs", "prep": "⭐ SKIN PULLED OFF, patted properly dry", "held": false },
+    { "qty": "1 large", "item": "onion", "prep": "halved and finely sliced", "held": false },
+    { "qty": "3 cloves", "item": "garlic", "prep": "sliced", "held": false },
+    { "qty": "120 g", "item": "Greek-style yoghurt", "prep": "the mint yoghurt — ⭐ served alongside so it stays white against the saffron", "held": false },
+    { "qty": "1", "item": "lemon", "prep": "half squeezed into the rice at the end, the rest in wedges", "held": false },
+    { "qty": "140 g", "item": "basmati or long-grain rice", "prep": "⛔ rinsed until nearly clear, and DO NOT SOAK", "held": true },
+    { "qty": "1 sachet", "item": "saffron", "prep": "⭐ bloomed FIRST — 15 minutes is more than 5", "held": true },
+    { "qty": "1 sachet, to 280 ml", "item": "chicken stock", "prep": "⚠️ taste and correct the liquid BEFORE the lid goes on", "held": true },
+    { "qty": "1 sachet", "item": "mint sauce", "prep": "into the yoghurt", "held": true },
+    { "qty": "1 sachet", "item": "flaked almonds", "prep": "toasted dry, straight out onto a plate", "held": true },
+    { "qty": "30 g", "item": "sultanas", "prep": "⚠️ this is all of them", "held": true },
+    { "qty": "1 tsp", "item": "cumin seeds", "prep": "whole", "held": true },
+    { "qty": "½ tsp", "item": "cinnamon", "prep": "", "held": true },
+    { "qty": "¼ tsp", "item": "turmeric", "prep": "", "held": true },
+    { "qty": "1", "item": "bay leaf", "prep": "", "held": true },
+    { "qty": "1 tbsp", "item": "oil", "prep": "", "held": true },
+    { "qty": "to taste", "item": "salt and black pepper", "prep": "", "held": true }
+  ],
+  "equipment": [
+    { "item": "A wide lidded pan, ~28 cm", "why": "⛔ the lid must sit TIGHT — foil under it if it is loose" },
+    { "item": "A mug", "why": "⭐ blooming the saffron in just-boiled water" },
+    { "item": "Sieve", "why": "rinsing the rice, raking with your fingers" },
+    { "item": "Kitchen paper", "why": "⭐ gripping the skin — it comes off each thigh in one" },
+    { "item": "A clean tea towel", "why": "⭐ laid flat over the pan under the lid for the 10-minute rest" },
+    { "item": "Small dry pan", "why": "the almonds" },
+    { "item": "A fork", "why": "⛔ forking the rice from the outside inwards — lifting and turning, never stirring" },
+    { "item": "Chopping board and knife", "why": "" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "⭐ <b>Crumble the saffron into a mug with 3 tbsp just-boiled water and leave it while you do everything else.</b> You want it to go from pale yellow to deep orange — <b>15 minutes is more than 5.</b> Dry threads stirred into a pot give colour to two grains and nothing to the rest.",
+    "Rice into a sieve, <b>rinse under cold water raking with your fingers until the water runs from milky to almost clear</b> (4–5 passes). Drain. ⛔ <b>Do NOT soak.</b>",
+    "Pull the skin off each thigh — grip it with kitchen paper and it comes away in one. <b>Pat the meat properly dry</b> and season all over. <b>A wet surface steams; a dry one browns.</b>"
+  ],
+  "steps": [
+    {
+      "text": "Heat the oil in the wide lidded pan over medium-high <b>until it shimmers and thins out.</b> Lay the thighs in smoothest side down, <b>in a single layer with gaps. Leave them completely alone until they release from the pan without tugging and the underside is deep gold</b> — lifting early tears the crust off. Turn, 2–3 min, out. ⚠️ They are not cooked through; they finish in the rice.",
+      "min": 8,
+      "max": 11
+    },
+    {
+      "text": "Drop to medium. Onion + a pinch of salt, <b>stirring and scraping the browned residue off the base as the onion's moisture loosens it, until the slices have collapsed, gone floppy and turned properly golden-brown at the edges — not merely translucent.</b> ⭐ This caramelised sweetness is the backbone, and it is the step most weeknight versions cut to four minutes.",
+      "min": 10,
+      "max": 12
+    },
+    {
+      "text": "Garlic, cumin seeds, cinnamon, turmeric. <b>One minute, until the cumin smells toasted and nutty and the onion is stained yellow.</b>",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "Drained rice in, <b>stir a further minute until every grain is coated in fat and glossy and the edges look chalky-opaque.</b> ⭐ This is what makes it a pilaf rather than boiled rice with things in it.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Sultanas, bay, then the saffron water <b>threads and all</b> and the hot stock. ⭐ <b>Taste the liquid and correct it NOW: it should taste slightly saltier than you would want to drink, because the rice will absorb all of it.</b> Bring to a visible simmer.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Nestle the thighs on top, browned side up, <b>pressed lightly into the surface but sitting ON the rice, not buried in it.</b> Lowest heat, lid on tight. ⛔ <b>No lifting and no stirring, until the liquid is gone</b> — to check, tilt the pan: no free liquid should pool at the edge. ⚠️ Still visibly wet late on? Poke steam holes to the base with a spoon handle.",
+      "min": 22,
+      "max": 25
+    },
+    {
+      "text": "⭐ <b>Off the heat entirely. Lay a clean tea towel flat across the top of the pan and put the lid back on over it. 10 minutes, undisturbed.</b>",
+      "min": 10,
+      "max": 10
+    },
+    {
+      "text": "Meanwhile: yoghurt + mint sauce + a squeeze of lemon + a pinch of salt, loosened with a teaspoon of water if stiff.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Separately toast the almonds in a dry pan, <b>shaking constantly until patchily gold and nutty — straight out onto a plate</b>, they keep colouring in the hot pan and go bitter.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Chicken onto a plate. ⭐ <b>Fork the rice from the outside inwards, lifting and turning rather than stirring, and scrape up whatever has caught on the base — the crisp layer is a prize, not a mistake.</b> Squeeze in half the lemon, check the salt. Serve with the chicken on top, almonds scattered, <b>mint yoghurt alongside</b>, lemon wedges at the table. ⚠️ <b>Maria's next-day lunch:</b> cool it fast — spread out, not in a deep sealed tub — fridge within the hour, and reheat piping hot. <b>Cooked rice is the one leftover worth being disciplined about.</b>",
+      "min": 3,
+      "max": 4
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "recipe": "Chilli con carne",
+  "servesNote": "2 portions — 850 kcal / 55 g protein each, and it doubles to 4 at £1.80. ⭐ The best batch dish in the library: one pot, no attention for an hour, better on day two. Almost the entire flavour is free, because the whole spice list is already in the cupboard.",
+  "estimatedMin": 95,
+  "handsOnMin": 18,
+  "adaptations": [
+    "⚠️ BOTH PASTE SACHETS ARE OUT. Use 1 tbsp chopped garlic from the jar and 1 tbsp tomato double concentrate from the tube. ⛔ Step 3 and step 4 are unchanged and still matter more than the container: the garlic goes into hot fat with the spices, and the concentrate has to fry from bright red to dull brick.",
+    "✅ THE MINCE IS IN THE HOUSE — Tuesday bought 3 × 500 g of 20% beef mince, so the batch-of-4 version is available without another shop. The red pepper, kidney beans, chocolate and lime are not.",
+    "⭐ BATCHING TO 4: 750 g mince, 2 tins tomatoes, 2 tins beans, a whole onion and pepper, 1½× spices, 300 ml stock. £1.80 a portion, brown in three batches, hands-on rises about 3 minutes. This is the way to cook it.",
+    "⛔ HEAT IS THE DIAL, NOT THE RECIPE. Start at 1 tsp chilli powder, taste at step 7, and let people add sriracha at the table — one pot serving two heat preferences.",
+    "⚠️ WATCH THE SPICES AT STEP 3: they go from fragrant to burnt in about 15 seconds. Have everything open and within reach before you start."
+  ],
+  "ingredients": [
+    { "qty": "500 g", "item": "beef mince, 20% fat", "prep": "⛔ browned in TWO batches, and NOT salted until step 5", "held": false },
+    { "qty": "1", "item": "onion", "prep": "diced ~5 mm", "held": false },
+    { "qty": "½", "item": "red pepper", "prep": "diced small — ⛔ not optional, and it does NOT go in later", "held": false },
+    { "qty": "1 × 400 g tin", "item": "chopped tomatoes", "prep": "", "held": false },
+    { "qty": "1 × 240 g tin", "item": "kidney beans", "prep": "⭐ drained, rinsed, and in LATE at step 7", "held": false },
+    { "qty": "15 g", "item": "dark chocolate 70%", "prep": "not identifiable in the finished dish — it reads as depth", "held": false },
+    { "qty": "1", "item": "lime", "prep": "⭐ half juiced off the heat — the step home cooks skip", "held": false },
+    { "qty": "1 tbsp", "item": "oil", "prep": "", "held": false },
+    { "qty": "1 tbsp", "item": "chopped garlic", "prep": "⚠️ from the jar — the roasted paste sachet is gone", "held": true },
+    { "qty": "1 tbsp", "item": "tomato double concentrate", "prep": "⚠️ from the tube — the sachet is gone", "held": true },
+    { "qty": "1 sachet, to 200 ml", "item": "chicken stock", "prep": "", "held": true },
+    { "qty": "2 tsp", "item": "cumin", "prep": "", "held": true },
+    { "qty": "2 tsp", "item": "smoked paprika", "prep": "⭐ bloomed in fat, this supplies the fruity smoky note ancho would", "held": true },
+    { "qty": "1–2 tsp", "item": "chilli powder", "prep": "⭐ start at 1 tsp — this is the dial", "held": true },
+    { "qty": "¼ tsp", "item": "cayenne", "prep": "", "held": true },
+    { "qty": "¼ tsp", "item": "cinnamon", "prep": "", "held": true },
+    { "qty": "1 tsp", "item": "oregano", "prep": "", "held": true },
+    { "qty": "110 g", "item": "rice", "prep": "cooked fresh each time, even for leftovers", "held": true },
+    { "qty": "to serve", "item": "sriracha", "prep": "at the table, not in the pan", "held": true },
+    { "qty": "½ tsp + more", "item": "salt and black pepper", "prep": "⛔ none on the meat while it browns", "held": true }
+  ],
+  "equipment": [
+    { "item": "A wide heavy pan", "why": "surface area is what lets the mince brown instead of stew" },
+    { "item": "A lid", "why": "it sits SLIGHTLY AJAR for the hour" },
+    { "item": "A plate", "why": "the browned mince rests out of the pan between batches" },
+    { "item": "A spoon for skimming", "why": "⭐ pouring off the rendered fat, leaving about a tablespoon" },
+    { "item": "Sieve", "why": "draining and rinsing the kidney beans" },
+    { "item": "Small pan with a lid", "why": "rice" },
+    { "item": "Chopping board and knife", "why": "" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Dice the onion to about 5 mm and the red pepper small. Open the tin of tomatoes, the beans and the stock, and have the spices measured into one small bowl. ⚠️ <b>The spices at step 3 go from fragrant to burnt in about 15 seconds</b>, and that is not a moment to be opening a tin."
+  ],
+  "steps": [
+    {
+      "text": "Oil in the wide heavy pan, <b>medium-high, until it shimmers. HALF the mince as a single pressed-down slab, left entirely alone until a deep brown crust forms underneath.</b> Flip, brown, break up roughly, out. Repeat with the second half. ⛔ <b>Do not season the meat at this stage</b> — salt draws water out by osmosis and that water has to boil off before anything can brown.",
+      "min": 8,
+      "max": 12
+    },
+    {
+      "text": "⭐ <b>Pour off the rendered fat, leaving about 1 tablespoon.</b> A 20% mince gives up 40–50 g; leave it all in and the chilli is greasy and 200 kcal a portion heavier for no flavour gain.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Medium heat. Onion and red pepper with a pinch of salt, scraping the base, <b>until the onion is soft and translucent with browned edges and the pepper has slumped.</b> ⛔ <b>The pepper is not optional and it does not go in later</b> — cooked down this far it stops being a vegetable and becomes sweetness and body, which is most of what stops a mince chilli tasting one-dimensional.",
+      "min": 7,
+      "max": 8
+    },
+    {
+      "text": "Clear a space. <b>Garlic, then all the ground spices and the oregano straight into the hot fat. Stir CONSTANTLY 30–60 seconds until they darken very slightly and the smell changes from dusty to fragrant and toasty.</b> ⚠️ Do not let them catch — <b>burnt cumin is bitter and unrecoverable.</b>",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "<b>Tomato concentrate, still stirring, until it turns from bright red to dull brick.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Mince and its juices back in. Tomatoes, stock, chocolate, and <b>NOW</b> ½ tsp salt. Stir, scraping the base.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Lazy blip, lid slightly ajar, stirring every 20 minutes or so, until the sauce is glossy, orange fat has separated at the edges, and a spoon dragged through the middle leaves a trail that closes slowly.</b> Reducing too fast? A splash of water.",
+      "min": 55,
+      "max": 65
+    },
+    {
+      "text": "Drain and rinse the kidney beans and stir them in. <b>Uncovered until heated through and the sauce clings to them thickly rather than pooling around them.</b> ⭐ <b>Beans go in late on purpose</b> — an hour of simmering turns them to mush and clouds the sauce with their starch.",
+      "min": 10,
+      "max": 15
+    },
+    {
+      "text": "⭐ <b>Off the heat. Juice of half the lime, stirred in. Taste.</b> It should be savoury, deep and slightly sweet, with warmth that builds rather than a raw hit. <b>Adjust in this order: SALT first, then ACID, then HEAT.</b> The acid is the step home cooks skip and the one that makes the difference between fine and good — an hour of reduction dulls everything and lime lifts it back.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Cover and let it sit 10–15 minutes before serving.</b> It thickens and settles noticeably.",
+      "min": 10,
+      "max": 15
+    },
+    {
+      "text": "Rice meanwhile. Serve with lime wedges and sriracha on the table. ⭐ <b>Storing: 4 days, and days 2 and 3 are the best of it</b> — reduction continues in the fridge, the fat re-emulsifies as it sets, and the spice compounds keep dissolving in. Reheat gently with a splash of water, and <b>cook the rice fresh each time.</b>",
+      "min": 15,
+      "max": 18
+    }
+  ]
+}

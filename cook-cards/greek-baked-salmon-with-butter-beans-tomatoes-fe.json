@@ -1,0 +1,90 @@
+{
+  "recipe": "Greek baked salmon with butter beans, tomatoes & feta",
+  "servesNote": "2 portions — Karl 1, Maria dinner plus next-day lunch. 890 kcal / 51 g protein each. ⭐ The beans do three jobs: carb, a third of the protein, and they catch the salmon fat and tomato juice so nothing is wasted.",
+  "estimatedMin": 50,
+  "handsOnMin": 15,
+  "adaptations": [
+    "✅ THE SALMON IS IN THE HOUSE — Tuesday bought two 2-packs. The butter beans, olives, feta, baby plum tomatoes and parsley are not.",
+    "⚠️ THE TOMATO PASTE SACHET IS OUT — 1 tbsp of the tomato double concentrate from the tube, squeezed straight into the tin at step 1. It only ever gets tossed through here, so the swap is clean.",
+    "⭐ VINE TOMATOES ARE IN THE HOUSE instead of baby plum. They will not burst the same way — halve them all rather than leaving half whole, and expect more juice and less pop. A drained tin of cherry tomatoes is the recipe's own stated fallback: you lose the burst and keep the sauce.",
+    "⭐ CANNELLINI OR HARICOT WORK IDENTICALLY if butter beans are not on the shelf.",
+    "⚠️ 120 g ALDI FILLETS ARE THINNER than the 170 g American ones most recipes are timed for. Err early at step 6 — this is where dry chalky salmon comes from."
+  ],
+  "ingredients": [
+    { "qty": "2 fillets, ~120 g each", "item": "salmon, skin on", "prep": "⭐ brined 10–15 min, then patted VERY dry", "held": false },
+    { "qty": "2 × 400 g tins (~470 g)", "item": "butter beans", "prep": "drained and rinsed", "held": false },
+    { "qty": "250 g", "item": "baby plum tomatoes", "prep": "⭐ half halved, half left whole", "held": false },
+    { "qty": "1", "item": "red onion", "prep": "thin wedges", "held": false },
+    { "qty": "3 cloves", "item": "garlic", "prep": "thinly sliced", "held": false },
+    { "qty": "60 g", "item": "pitted black olives", "prep": "torn in half", "held": false },
+    { "qty": "100 g", "item": "feta", "prep": "⛔ crumbled AROUND the salmon, not on it, so the fish stays fish", "held": false },
+    { "qty": "1", "item": "lemon", "prep": "zest of half, juice of half, the rest in wedges", "held": false },
+    { "qty": "2½ tbsp", "item": "olive oil", "prep": "⭐ 1½ tbsp into the tin, a little on the skin, and the last trickled RAW at the end", "held": false },
+    { "qty": "a small handful", "item": "flat-leaf parsley", "prep": "chopped", "held": false },
+    { "qty": "1 tbsp", "item": "tomato double concentrate", "prep": "⚠️ from the tube — the sachet is gone", "held": true },
+    { "qty": "1 tsp", "item": "dried oregano", "prep": "", "held": true },
+    { "qty": "½ tsp", "item": "Greek herbs", "prep": "", "held": true },
+    { "qty": "a pinch", "item": "ground cinnamon", "prep": "⭐ traditional in Greek baked beans — reads as depth, not cinnamon", "held": true },
+    { "qty": "1 tbsp", "item": "fine salt", "prep": "⭐ for the brine, in ~400 ml cold water", "held": true },
+    { "qty": "to finish", "item": "Maldon and black pepper", "prep": "", "held": true }
+  ],
+  "equipment": [
+    { "item": "A roasting tin big enough for one rough layer", "why": "⛔ crowded beans steam instead of colouring" },
+    { "item": "A bowl for the brine", "why": "⭐ 1 tbsp salt in ~400 ml cold water — this is what stops the white curd" },
+    { "item": "Kitchen paper", "why": "patting the salmon very dry after the brine" },
+    { "item": "A thin knife", "why": "⭐ held in the centre of the fillet five seconds, it should come out just warm against your lip" },
+    { "item": "Chopping board and knife", "why": "" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Oven to <b>200°C fan / 220°C conventional</b>, shelf in the <b>upper-middle third.</b>",
+    "⭐ <b>BRINE THE SALMON WHILE THE OVEN HEATS.</b> Dissolve 1 tbsp salt in ~400 ml cold water, slide the fillets in, leave 10–15 minutes. <b>Not fussiness:</b> it firms the outer layer so far less white albumin weeps out, and it seasons the flesh through rather than just the surface."
+  ],
+  "steps": [
+    {
+      "text": "Tip the beans, onion, garlic, all the tomatoes and olives into the roasting tin. Squeeze in the tomato concentrate, add 1½ tbsp oil, oregano, Greek herbs, the pinch of cinnamon, pepper and 2 tbsp water. <b>Toss with your hands until every bean is slicked and faintly orange.</b>",
+      "min": 4,
+      "max": 5
+    },
+    {
+      "text": "Roast <b>until the tomato skins have split and slumped, the onion wedges are floppy with browned tips, and the beans sitting proudest have gone matte and slightly crusted.</b> Splash in more water and shake if it looks dry.",
+      "min": 18,
+      "max": 22
+    },
+    {
+      "text": "Lift the salmon from the brine and <b>pat it VERY dry both sides</b> — a wet surface steams rather than colours. Rub the skin with a little oil and a pinch of Maldon.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Stir the beans, push them aside to make two hollows, and settle the salmon in <b>skin-side up, sitting ON the beans rather than in the juices.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Roast <b>until the thickest part turns from glassy-translucent to matte-opaque and the flakes separate cleanly under a fork tip with a little resistance.</b> A thin knife held in the centre five seconds should come out just warm against your lip. ⚠️ <b>Err early — it carries on cooking in the tin.</b>",
+      "min": 10,
+      "max": 12
+    },
+    {
+      "text": "⭐ <b>Stand 5 minutes, undisturbed.</b> The fish finishes on residual heat and the bean juices thicken.",
+      "min": 5,
+      "max": 5
+    },
+    {
+      "text": "Crumble the feta over the beans and tomatoes — ⛔ <b>around the salmon, not on it</b>, so the fish stays fish. Scatter the lemon zest.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "⭐ <b>Squeeze over the juice of half the lemon, then trickle the last of the oil over RAW. Do both.</b> Ten sources roast salmon perfectly well and then serve it flat; <b>the raw oil and the acid are what make the tin taste seasoned rather than merely cooked.</b>",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "Parsley, a last pinch of Maldon on the skin, serve from the tin with lemon wedges. ⭐ <b>Maria's next-day lunch: excellent, and better COLD than reheated.</b> ⛔ Do not reheat the salmon — it overcooks and the albumin comes back. Flake it through the beans cold with a fresh squeeze of lemon and a trickle of oil; the feta and tomato juices soak into the beans overnight, which is a gain.",
+      "min": 1,
+      "max": 2
+    }
+  ]
+}

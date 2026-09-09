@@ -1,0 +1,43 @@
+{
+  "recipe": "Ras el hanout sweet potato & chickpea traybake",
+  "servesNote": "2 portions — ~800 kcal / ~40 g protein each. ⭐ Day 7, long-life ingredients only, and the lowest hands-on time of the week at ~8 minutes.",
+  "estimatedMin": 35,
+  "handsOnMin": 8,
+  "adaptations": [
+    "⛔ RAS EL HANOUT IS SACHETS ONLY — two in the house and NO JAR BEHIND THEM. This dish takes one. It is good for exactly two outings ever, and the harissa cauliflower traybake and the brisket tagine both want the same sachets. ⛔ DO NOT PUT IT IN THE STANDING ROTATION until a jar is bought.",
+    "✅ THE SWEET POTATO AND EGGS ARE IN THE HOUSE — Tuesday bought 1 kg and 15 eggs. The chickpeas and peppers are not.",
+    "⭐ THIS IS THE VEGETARIAN SIBLING OF THE HARISSA CAULIFLOWER TRAYBAKE, which is the same idea done properly — dried chickpeas, two-stage spicing, bulgur and lemon yoghurt, and 57 g of protein instead of 40. Cook that one when there is time; cook this one when there is not.",
+    "⚠️ DRY THE CHICKPEAS ON A TEA TOWEL BEFORE THEY GO IN. This card does not say to, but it is the same two minutes of work that decides whether they crisp or steam, and it is what the sibling recipe proves."
+  ],
+  "ingredients": [
+    { "qty": "~600 g", "item": "sweet potato", "prep": "cubed", "held": false },
+    { "qty": "2 tins", "item": "chickpeas", "prep": "⭐ drained — and rolled dry on a tea towel, see the adaptations", "held": false },
+    { "qty": "3", "item": "peppers", "prep": "chunked", "held": false },
+    { "qty": "1 sachet", "item": "ras el hanout", "prep": "⛔ 2 in the house, no jar behind them", "held": true },
+    { "qty": "4", "item": "eggs", "prep": "⭐ cracked into wells at the end, not at the start", "held": false },
+    { "qty": "to taste", "item": "olive oil and salt", "prep": "", "held": true }
+  ],
+  "equipment": [
+    { "item": "A large roasting tray", "why": "everything in one layer — a crowded tray steams instead of crisping" },
+    { "item": "A clean tea towel", "why": "⭐ drying the chickpeas" },
+    { "item": "A spoon", "why": "making the four wells" },
+    { "item": "Chopping board and knife", "why": "" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Oven hot. Cube the sweet potato and chunk the peppers.",
+    "Drain the chickpeas and <b>roll them dry on a tea towel.</b> ⭐ Two minutes, and it is the difference between chickpeas that crisp at the edges and chickpeas that come out exactly as soft as they went in."
+  ],
+  "steps": [
+    {
+      "text": "Everything tossed in oil, ras el hanout and salt. <b>Roast until the sweet potato is tender and the chickpeas have crisped at the edges.</b>",
+      "min": 25,
+      "max": 32
+    },
+    {
+      "text": "⭐ <b>Make four wells, crack an egg into each.</b> Back in until the <b>whites are set and the yolks still move.</b>",
+      "min": 5,
+      "max": 8
+    }
+  ]
+}

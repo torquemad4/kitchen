@@ -1,0 +1,113 @@
+{
+  "recipe": "Beef brisket tagine with apricots, sultanas & almonds",
+  "servesNote": "2 portions — 895 kcal / 58 g protein each, and it doubles to 4 in the same pot. ⭐ This dish spends nine pantry items and buys six, which is why it earns its place.",
+  "estimatedMin": 205,
+  "handsOnMin": 20,
+  "adaptations": [
+    "⚠️ THE TOMATO PASTE AND ROASTED GARLIC PASTE SACHETS ARE NOT IN THE HOUSE — both recorded OUT on 3 Sep. Use 1 tbsp tomato double concentrate from the tube and 1 tbsp chopped garlic from the jar. Step 5 (frying the garlic in hot fat) and step 6 (frying the concentrate to brick) both still matter and do the mellowing.",
+    "⚠️ SULTANAS ARE DOWN TO 30 g, which is exactly what this recipe wants and leaves none. Check the tub before you commit — this is the only dish that would take the lot.",
+    "⚠️ RAS EL HANOUT IS NOT IN THIS DISH, but BAHARAT is, and the house holds one sachet. If it has gone: 1 tsp cumin, ½ tsp cinnamon, ½ tsp pepper, ¼ tsp cayenne and a pinch of ginger stands in.",
+    "⛔ THE BRISKET AND THE APRICOTS ARE NOT IN THE HOUSE and were not on Tuesday's list. This is a shop-first dish. Buy the smallest Aldi brisket joint (~0.9 kg), trim it, and use the lot at double quantities — per-portion drops to ~£3.30 and hands-on barely moves.",
+    "⭐ CORNFLOUR IS OUT, so the step-12 shortcut for a thin sauce is unavailable. Reduce it properly instead: lift the meat with a slotted spoon and boil the liquid down. Brisket's collagen is largely insoluble and does NOT self-thicken its braising liquid the way chuck does, so expect to do this."
+  ],
+  "ingredients": [
+    { "qty": "450 g", "item": "beef brisket", "prep": "hard outer fat trimmed, cut ACROSS the grain into 4 cm chunks", "held": false },
+    { "qty": "2", "item": "onions", "prep": "halved and finely sliced", "held": false },
+    { "qty": "50 g", "item": "dried apricots", "prep": "halved, in LATE at step 7", "held": false },
+    { "qty": "½", "item": "lemon", "prep": "⭐ the correction at step 9, and it goes in FIRST of the three", "held": false },
+    { "qty": "a handful", "item": "coriander", "prep": "scattered at the table", "held": false },
+    { "qty": "1 tbsp", "item": "olive oil", "prep": "", "held": false },
+    { "qty": "1 tsp", "item": "honey", "prep": "⛔ ONLY if it needs it, and last of all", "held": false },
+    { "qty": "1 sachet", "item": "saffron", "prep": "⭐ bloomed FIRST, before anything else — see prep 1", "held": true },
+    { "qty": "1 sachet", "item": "baharat", "prep": "⚠️ one sachet left in the house", "held": true },
+    { "qty": "1 sachet", "item": "harissa", "prep": "⭐ HALF at step 4, half held back for the balancing at step 9", "held": true },
+    { "qty": "1 tbsp", "item": "tomato double concentrate", "prep": "⚠️ from the tube — the sachet is gone", "held": true },
+    { "qty": "1 tbsp", "item": "chopped garlic", "prep": "⚠️ from the jar — the roasted paste sachet is gone", "held": true },
+    { "qty": "1 sachet, to 350 ml", "item": "chicken stock", "prep": "⛔ only two-thirds up the meat — a tagine is not a stew in broth", "held": true },
+    { "qty": "30 g", "item": "sultanas", "prep": "⚠️ this is all of them", "held": true },
+    { "qty": "20 g", "item": "almonds", "prep": "toasted separately, scattered at the table, NEVER cooked in", "held": true },
+    { "qty": "130 g", "item": "couscous", "prep": "", "held": true },
+    { "qty": "1 tsp", "item": "ground ginger", "prep": "", "held": true },
+    { "qty": "1 tsp", "item": "cumin", "prep": "", "held": true },
+    { "qty": "½ tsp", "item": "turmeric", "prep": "", "held": true },
+    { "qty": "½ tsp", "item": "cinnamon", "prep": "", "held": true },
+    { "qty": "to taste", "item": "salt and black pepper", "prep": "", "held": true }
+  ],
+  "equipment": [
+    { "item": "Heavy lidded casserole", "why": "browns, sweats and braises — the lid comes OFF for the last half hour" },
+    { "item": "A cup", "why": "⭐ blooming the saffron in hot, not boiling, water" },
+    { "item": "Plate", "why": "the browned brisket rests out of the pot" },
+    { "item": "Small dry pan", "why": "toasting the almonds" },
+    { "item": "Heatproof bowl with a tight cover", "why": "the couscous, left completely undisturbed" },
+    { "item": "A fork", "why": "⛔ fluffing the couscous — never a spoon" },
+    { "item": "Slotted spoon", "why": "lifting the meat out if the sauce needs reducing" },
+    { "item": "Chopping board and knife", "why": "" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "⭐ <b>BLOOM THE SAFFRON FIRST, BEFORE ANYTHING ELSE.</b> Crumble it into a cup with 3 tbsp <b>hot — not boiling —</b> water and leave it while you cook. Boiling water scalds the delicate aromatics; <b>you want the liquid deep orange and smelling of honey and hay before it goes in.</b> Saffron added dry to a braise contributes colour and almost nothing else.",
+    "<b>Trim the hard waxy fat cap but LEAVE THE SOFT INTERNAL MARBLING ALONE</b> — that marbling is the whole point of the cut. Cut <b>across the grain</b> into 4 cm chunks, pat dry, season."
+  ],
+  "steps": [
+    {
+      "text": "Oil in the casserole, medium-high, until it shimmers. <b>Brown in TWO batches, single layer with space, until each has a deep even crust on at least two sides.</b> Out to a plate. ⭐ Browning is not traditional Moroccan practice, but with a cut this lean-tasting on its own it is worth the ten minutes.",
+      "min": 8,
+      "max": 12
+    },
+    {
+      "text": "Medium heat. Onions and a good pinch of salt, <b>stirring and scraping, until they have collapsed to about a third of their volume and turned soft and golden, with the browned meat residue lifted off the base.</b> ⭐ <b>This is the body of the sauce. Do not rush them.</b>",
+      "min": 10,
+      "max": 12
+    },
+    {
+      "text": "Push aside. <b>Chopped garlic, then baharat, ginger, cumin, turmeric and cinnamon straight into the hot fat, stirring constantly until fragrant and slightly darkened.</b> ⚠️ Do not let them catch.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "<b>Tomato concentrate, fried until brick-coloured.</b> <b>Then HALF the harissa — hold the rest back for the end</b>, when you can taste what you actually have.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Brisket and its juices back in. <b>Saffron water — swill the cup out with a splash of stock so none is left behind — and enough stock that the liquid comes only about TWO-THIRDS up the meat.</b> ⭐ A tagine is a braise that reduces to a thick clinging sauce, not a stew in broth.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Surface barely shivering, LID ON, oven at 150°C / 130°C fan, until a chunk gives way completely under a spoon with no springiness.</b> Check halfway; a splash of hot water if the meat stands proud and dry.",
+      "min": 150,
+      "max": 150
+    },
+    {
+      "text": "<b>Apricots and sultanas in, then back into the oven UNCOVERED until the fruit is plump and swollen and the sauce has reduced to a glossy coating that clings to the meat rather than a liquid it sits in.</b> ⭐ <b>The fruit goes in late on purpose</b> — a full three hours and it dissolves entirely, taking its texture and most of its tartness with it.",
+      "min": 30,
+      "max": 30
+    },
+    {
+      "text": "Meanwhile <b>toast the almonds in a dry pan, shaking often, until nutty and patchily golden. Straight out onto a plate</b> — they carry on colouring and go from toasted to acrid very quickly.",
+      "min": 3,
+      "max": 4
+    },
+    {
+      "text": "⭐ <b>Now balance it, OFF THE HEAT, tasting after each addition, and in this order: a good squeeze of LEMON FIRST</b> (the correction that stops it tasting like a pudding), <b>then SALT, then the remaining HARISSA</b> if you want more heat, <b>and only then the HONEY IF it needs sweetness.</b> ⚠️ Most of the time, with apricots and sultanas already in, it will not.",
+      "min": 2,
+      "max": 4
+    },
+    {
+      "text": "Still thin? <b>Lift the meat out with a slotted spoon and boil the liquid until it coats the back of a spoon</b>, then return the meat. ⚠️ Expect to do this — brisket's collagen is largely insoluble and it does not thicken its own braising liquid the way chuck does.",
+      "min": 3,
+      "max": 8
+    },
+    {
+      "text": "<b>Couscous:</b> in a heatproof bowl with a pinch of salt and a teaspoon of oil, <b>rubbed through with your fingers so the grains are coated.</b> Pour over <b>an equal volume of boiling stock or water</b> (130 ml for 130 g), <b>cover tightly and leave completely undisturbed 10 minutes. Then fluff with a FORK, never a spoon.</b> Stirring it while it absorbs is what makes couscous clump.",
+      "min": 10,
+      "max": 12
+    },
+    {
+      "text": "Serve over the couscous, scattered with the toasted almonds and coriander, lemon wedges alongside. <b>Maria's next-day lunch:</b> reheat gently with a splash of water — the sauce sets solid when chilled and loosens back. ⛔ <b>Keep the almonds and coriander separate</b>; toasted almonds left in the sauce overnight go soft and there is nothing to be done about it. <b>Couscous fresh each time.</b>",
+      "min": 2,
+      "max": 3
+    }
+  ]
+}

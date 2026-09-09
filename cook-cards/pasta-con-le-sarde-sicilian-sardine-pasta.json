@@ -1,0 +1,102 @@
+{
+  "recipe": "Pasta con le sarde — Sicilian sardine pasta",
+  "servesNote": "2 portions — 885 kcal / 51 g protein each at £2.15/portion, or £1.72 without the fennel. ⭐ The notably cheap one, and it does not taste it: four tins of sardines deliver more protein than a salmon fillet for a third of the money.",
+  "estimatedMin": 35,
+  "handsOnMin": 20,
+  "adaptations": [
+    "⚠️ THE HOUSE HAS ONE TIN OF SARDINES AND IT IS IN TOMATO SAUCE, NOT OIL. The recipe covers this: drain them well and use them, and you have cooked the ENNA variant instead of the Palermo one. That is a real dish, not a compromise. ⛔ But one tin is not four — this needs ~350 g drained, so it is a shop either way.",
+    "✅ THE ANCHOVIES ARE IN THE HOUSE — Tuesday bought a 50 g tin for the lamb. ⭐ Do not skip them: they appear in five of the eleven sources, they are the first thing a shortened version drops, and melted into the oil they are the whole difference between sardines-with-pasta and a sauce with a savoury floor under it.",
+    "⚠️ SULTANAS ARE DOWN TO 30 g AND THIS WANTS 40 g. Both this and the tagine and the pilaf compete for the same tub. Raisins work identically.",
+    "⚠️ NO FENNEL BULB AT ALDI — it comes and goes. Make it without; you lose the aniseed and 85p, and the recipe is costed both ways.",
+    "⚠️ SPAGHETTI: dried pasta was down to 'very little' before the shop, and Tuesday bought fusilli and tagliatelle rather than spaghetti. Fusilli will carry this sauce."
+  ],
+  "ingredients": [
+    { "qty": "4 tins (~350 g drained)", "item": "sardines in oil", "prep": "⭐ oil from ONE tin reserved for the sauce. Broken into 2–3 LARGE pieces by hand, never mashed", "held": false },
+    { "qty": "4 fillets", "item": "anchovy", "prep": "⭐ finely chopped and dissolved completely into the oil — see step 4", "held": false },
+    { "qty": "1 small bulb", "item": "fennel", "prep": "⚠️ optional. Finely diced, fronds reserved", "held": false },
+    { "qty": "1", "item": "onion", "prep": "finely chopped", "held": false },
+    { "qty": "2 cloves", "item": "garlic", "prep": "sliced", "held": false },
+    { "qty": "40 g", "item": "raisins or sultanas", "prep": "⭐ steeped with the saffron so they arrive plump, not as hard beads", "held": false },
+    { "qty": "1", "item": "lemon", "prep": "⭐ zest and half the juice at the end — NOT decoration, see step 10", "held": false },
+    { "qty": "a handful", "item": "parsley", "prep": "", "held": false },
+    { "qty": "3 tbsp", "item": "olive oil", "prep": "divided: 1 tbsp for the pangrattato, 1½ tbsp for the sauce, a trickle to serve", "held": false },
+    { "qty": "1 sachet", "item": "saffron", "prep": "⭐ steeped 10 min minimum with the raisins", "held": true },
+    { "qty": "200 g", "item": "spaghetti", "prep": "1 minute short of al dente", "held": true },
+    { "qty": "40 g", "item": "panko", "prep": "⭐ the pangrattato — this is the cheese", "held": true },
+    { "qty": "30 g", "item": "flaked almonds", "prep": "toasted dry", "held": true },
+    { "qty": "½ tsp", "item": "chilli powder", "prep": "", "held": true },
+    { "qty": "sparingly", "item": "salt and black pepper", "prep": "⚠️ salt the pasta water LESS heavily than you normally would", "held": true }
+  ],
+  "equipment": [
+    { "item": "A wide pan", "why": "pangrattato, then almonds, then wiped for the sauce — all in the same one" },
+    { "item": "A mug", "why": "⭐ steeping the saffron and raisins together in just-boiled water" },
+    { "item": "Big pasta pan", "why": "⚠️ salted LESS than usual — this is the one dish where hard-salted water tips the plate over" },
+    { "item": "Tongs", "why": "lifting the pasta straight into the sauce" },
+    { "item": "A plate", "why": "the toasted crumbs and almonds, out of the hot pan immediately" },
+    { "item": "A board", "why": "draining and breaking the sardines" },
+    { "item": "Warm bowls", "why": "the dish dries out before it reaches the table otherwise" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Put the saffron and raisins in a mug with 4 tbsp just-boiled water. ⭐ <b>Steep for the rest of the prep, 10 min minimum.</b> Saffron dropped dry into a pan does almost nothing, and the raisins need this to arrive plump rather than as hard beads.",
+    "⭐ <b>PANGRATTATO.</b> Panko and 1 tbsp oil into a <b>COLD</b> wide dry pan, medium heat. Stir almost constantly <b>until an even deep golden brown that smells like hot toast</b> — ⚠️ the colour change happens all at once near the end, <b>so do not walk away.</b> Tip out immediately, salt, cool. Crumbs left in the hot pan keep cooking and turn bitter.",
+    "Same pan, still dry: toast the flaked almonds, shaking often, <b>until patchy gold and nutty.</b> Onto the plate with the crumbs. Wipe the pan."
+  ],
+  "steps": [
+    {
+      "text": "Big pan of water on, ⚠️ <b>salted LESS heavily than you normally would.</b> This is the one pasta dish where hard-salted water routinely tips the plate over.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "<b>If using fennel:</b> simmer the dice in the pasta water <b>until a piece squashes against the side of the pan</b>, scoop out, keep the water. Traditional, and the pasta picks up the aniseed.",
+      "min": 6,
+      "max": 8
+    },
+    {
+      "text": "Heat 1½ tbsp oil <b>plus the reserved sardine oil</b> in the wiped pan, medium-low. Onion, blanched fennel, pinch of salt. <b>Until completely soft, sweet and translucent with no bite left at all.</b> ⚠️ Anything still crunchy reads as raw onion in the finished dish.",
+      "min": 8,
+      "max": 10
+    },
+    {
+      "text": "Garlic, chopped anchovies, chilli powder. ⭐ <b>Press the anchovies against the base with the spoon until they have COMPLETELY dissolved into the oil and you can see no pieces.</b> They will not taste of anchovy; they will taste of savoury depth.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Pour in the saffron-and-raisin liquid, <b>raisins and all. Bubble down until the pan is slack and glossy rather than swimming.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Start the pasta, <b>1 minute short of al dente.</b>",
+      "min": 8,
+      "max": 10
+    },
+    {
+      "text": "Drain the sardines onto a board. <b>Bone-in? The spines are soft, edible and where the calcium is — leave them.</b> ⭐ <b>Break each sardine into two or three LARGE pieces with your fingers. Do not mash them.</b>",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "Add the sardines to the pan, heat to low, <b>fold through ONCE, and leave them to warm without further stirring.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Lift the pasta straight in with tongs plus a ladle of its water. Raise the heat and <b>TOSS continuously — actually toss, don't stir — until the sauce clings and looks glossy</b>, adding water a splash at a time. <b>It should flow slowly when you tip the pan.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Off the heat: lemon zest, juice of half the lemon, half the pangrattato, half the almonds, most of the parsley. ⭐ <b>The lemon is not decoration</b> — acid neutralises the trimethylamine that makes tinned fish taste fishy.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Serve immediately in <b>warm bowls</b> with the rest of the crumbs and almonds on top, fennel fronds, pepper, a last trickle of oil. ⛔ <b>No cheese — the breadcrumbs are the cheese.</b> <b>Maria's next-day lunch:</b> reheats better than most pasta because the sauce is oil-based — a frying pan with a splash of water, not the microwave. <b>Keep the leftover pangrattato and almonds in a separate twist of foil</b>; stirred through and refrigerated they go soft and the whole point of them is lost.",
+      "min": 2,
+      "max": 3
+    }
+  ]
+}

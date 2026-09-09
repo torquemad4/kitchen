@@ -1,0 +1,126 @@
+{
+  "recipe": "Sri Lankan coconut dhal (parippu) with turmeric-crisped tofu",
+  "servesNote": "2 portions — 904 kcal / 51 g protein each, VEGAN, and the cheapest dinner in the set at £1.43/portion. ⭐ Not another generic dahl: parippu is built on coconut and a hot-oil tempering poured over at the end.",
+  "estimatedMin": 40,
+  "handsOnMin": 18,
+  "adaptations": [
+    "⛔ THIS NEEDS A SHOP BEFORE IT CAN BE COOKED. Three things it treats as HELD are not in the house as of the 7 Sep stock check and were not on Tuesday's list: RED LENTILS (finished 26 Aug), CREAMED COCONUT, and CORNFLOUR. There is no working substitute for the lentils, and the tofu is not on the list either.",
+    "⭐ IF A TIN OF COCONUT MILK IS WHAT YOU HAVE: 150 ml replaces the creamed coconut sachet — half early at step 8, half off the heat at step 9. Skip the mug-and-boiling-water step entirely.",
+    "⚠️ WITHOUT CORNFLOUR THE TOFU WILL NOT CRISP, it will brown. The starch is what forms the crust. Plain flour is a poor stand-in here and rice flour is not in the house. If you are cooking this without it, accept browned tofu and do not extend the frying time trying to force a crust that cannot form.",
+    "⛔ THE HELD VEGETABLE STOCK STAYS OUT OF THIS ON PURPOSE, and not because it is missing — the lentils are cooked in plain water deliberately. Stock overpowers the lentil. Do not 'improve' it with the chicken stock cubes."
+  ],
+  "ingredients": [
+    { "qty": "170 g", "item": "red split lentils", "prep": "⛔ rinsed until the water runs clear — see prep 2", "held": false },
+    { "qty": "360 g (2 × 180 g)", "item": "super-firm tofu", "prep": "patted dry, 2 cm cubes. Super-firm needs no pressing", "held": false },
+    { "qty": "1", "item": "onion", "prep": "⭐ HALF finely diced for the dhal, HALF thinly sliced for the tempering", "held": false },
+    { "qty": "4 cloves", "item": "garlic", "prep": "⭐ 2 for the dhal, 2 for the tempering", "held": false },
+    { "qty": "1", "item": "lemon or lime", "prep": "juice of half, off the heat at the end", "held": false },
+    { "qty": "1 sachet", "item": "creamed coconut", "prep": "⚠️ not in the house — see the adaptations", "held": true },
+    { "qty": "1 sachet", "item": "cornflour", "prep": "⚠️ not in the house — see the adaptations", "held": true },
+    { "qty": "1 tsp", "item": "turmeric", "prep": "⭐ divided: ¾ into the dhal, ¼ onto the tofu", "held": true },
+    { "qty": "1 tsp", "item": "cumin seeds", "prep": "into the tempering, whole", "held": true },
+    { "qty": "½ tsp", "item": "chilli powder", "prep": "into the tempering", "held": true },
+    { "qty": "a small piece", "item": "cinnamon stick", "prep": "into the cooking water", "held": true },
+    { "qty": "½ tsp", "item": "black pepper", "prep": "", "held": true },
+    { "qty": "15 ml", "item": "oil", "prep": "⭐ divided: 7 ml for the tofu, 8 ml for the tempering", "held": true },
+    { "qty": "90 g", "item": "rice", "prep": "⚠️ drop to 70 g if the coconut sachet turns out to be 50 g not 25 g", "held": true },
+    { "qty": "to taste, at three points", "item": "salt", "prep": "⭐ flat dhal is short of salt first and acid second", "held": true }
+  ],
+  "equipment": [
+    { "item": "Saucepan with a lid", "why": "the lentils, and the lid goes on after the tempering" },
+    { "item": "Small pan", "why": "⭐ the tempering — thel dala, and it is done LAST" },
+    { "item": "Frying pan", "why": "the tofu, in a single layer with gaps" },
+    { "item": "A plate or rack", "why": "⛔ the fried tofu spreads out — never a bowl or a heap, it steams itself soft" },
+    { "item": "A mug", "why": "melting the creamed coconut in just-boiled water" },
+    { "item": "Small pan with a lid", "why": "rice" },
+    { "item": "Sieve", "why": "rinsing the lentils" },
+    { "item": "Chopping board and knife", "why": "" }
+  ],
+  "equipmentDerived": true,
+  "prep": [
+    "Split the onion and the garlic before you start — <b>half the onion diced and 2 cloves sliced for the dhal, half the onion sliced thinly and 2 cloves for the tempering.</b> They go in at opposite ends of the cook and it is easy to use it all up front.",
+    "⛔ <b>RINSE THE LENTILS, rubbing them between your fingers, until the water runs clear</b> — about three changes. <b>Unrinsed red lentils throw starchy scum and cook to a gluey rather than a creamy texture.</b>"
+  ],
+  "steps": [
+    {
+      "text": "Lentils into a pan with <b>500 ml COLD water</b>, the diced half onion, 2 sliced garlic cloves, ¾ tsp turmeric, the cinnamon, black pepper and a good teaspoon of salt. Boil, <b>skim the foam</b>, then <b>a gentle simmer with the lid ajar.</b>",
+      "min": 3,
+      "max": 4
+    },
+    {
+      "text": "<b>Cook, stirring now and then and scraping the base, until the lentils have completely lost their shape and a spoon dragged through the middle leaves a channel that fills back slowly.</b> Top up with hot water if it tightens before the lentils have gone. ⚠️ Undercooked lentils keep a raw chalky bite — this is the one unanimous rule in the sources.",
+      "min": 15,
+      "max": 20
+    },
+    {
+      "text": "<b>Tofu while they cook.</b> Drain, <b>pat both blocks thoroughly dry</b>, cut into 2 cm cubes.",
+      "min": 3,
+      "max": 4
+    },
+    {
+      "text": "Toss the cubes with <b>the cornflour, ¼ tsp turmeric and a good pinch of salt until each face is dusted and dry-looking. The starch is what forms the crust</b> — without it you get browned tofu, not crisp tofu.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "7 ml oil, medium-high, <b>until it shimmers and flows easily.</b> Tofu in <b>a single layer with gaps</b> — two batches if the pan is small.",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "⛔ <b>Do not touch them.</b> The tofu sticks at first and then releases itself once a crust has formed. <b>Only turn each cube once it lifts cleanly and shows a deep golden face</b> (2–3 min a side); do all the main faces. <b>Onto a plate or rack, spread out — never a bowl or a heap</b>, where it steams itself soft within a minute.",
+      "min": 8,
+      "max": 12
+    },
+    {
+      "text": "<b>Coconut milk.</b> Chop or crumble the creamed coconut into a mug, pour over 120 ml just-boiled water, <b>stir until it has completely melted with no waxy specks left.</b> ⛔ <b>Creamed coconut set into a solid block will not dissolve in a simmering pan — it goes grainy.</b>",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>HALF the coconut milk into the lentils</b>, stirred through, <b>bubbled very gently a minute or two to thicken.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "⛔ <b>Now take the pan OFF the heat and stir in the rest. From this point do not let it boil.</b> Coconut milk added at the end and then boiled separates into oil and grain — <b>the single failure mode Sri Lankan cooks warn about most.</b>",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "<b>Mash lightly — three or four presses with the back of a spoon, no more.</b> Creamy with some texture remaining, not homogenised. <b>Season; it will need more than you think.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "⭐ <b>THE TEMPERING (thel dala) — the step that makes it Sri Lankan, and it is done LAST.</b> 8 ml oil in a small pan, medium. Sliced onion and the 2 remaining garlic cloves, <b>until the onion is limp and its edges have gone properly brown and frizzled.</b>",
+      "min": 4,
+      "max": 5
+    },
+    {
+      "text": "<b>Cumin seeds and chilli powder, swirled about 20 seconds — ONLY until the seeds start to pop and smell toasty — then straight off the heat.</b> ⚠️ Whole seeds and chilli go from fragrant to bitter in seconds; residual pan heat finishes them.",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "text": "⭐ <b>Pour the whole sizzling contents over the surface of the dhal, put a lid on the saucepan immediately, and leave it two minutes.</b> Covering traps the aromatic steam and drives it down into the dhal instead of letting it escape into the kitchen. Then stir through, leaving a little on top.",
+      "min": 2,
+      "max": 3
+    },
+    {
+      "text": "<b>Juice of half the lemon, off the heat.</b> Taste again for salt and acid — <b>dhal that tastes flat is nearly always short of salt first and acid second.</b>",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "text": "Rice: 90 g dry, 180 ml water, lidded, lowest heat <b>until the water is gone and the surface is pitted with small holes</b>, then 5 minutes off the heat still covered.",
+      "min": 15,
+      "max": 18
+    },
+    {
+      "text": "⭐ <b>Serve the dhal over the rice with the crisp tofu scattered on top AT THE VERY LAST MOMENT, not stirred in.</b> Stir it in early and it softens within a couple of minutes. Lemon wedges alongside. <b>Maria's next-day lunch:</b> reheat gently with a splash of water, stirring, and <b>do not let it boil</b> — the coconut can still split on the reheat. Keep the tofu in a separate container.",
+      "min": 2,
+      "max": 3
+    }
+  ]
+}
