@@ -103,8 +103,79 @@ CREATE TABLE IF NOT EXISTS profiles (
   policy_accepted_on  TEXT,
   health_data_consent INTEGER NOT NULL DEFAULT 0,
   notes               TEXT,
-  updated_at          TEXT DEFAULT CURRENT_TIMESTAMP
+  updated_at          TEXT DEFAULT CURRENT_TIMESTAMP,
+  -- ⛔ ASK-ONCE (Karl, 10 Sep 2026). NULL = nobody has asked this person; a date =
+  -- the restrictions question was answered, "none" included. Nobody can be ticked
+  -- into any slot while this is NULL — enforced by the triggers on eater_ticks.
+  restrictions_asked_on TEXT,
+  morning_slots       TEXT,        -- JSON array; NULL = ["breakfast"]. Karl's comes from Clophie.
+  email               TEXT         -- the Cloudflare Access login; NULL for guests
 );
+CREATE UNIQUE INDEX IF NOT EXISTS idx_profiles_email ON profiles(email COLLATE NOCASE);
+
+-- ---------------------------------------------------------------------------
+-- eater_ticks: the week grid, one row per week × person × day × slot
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS eater_ticks (
+  week_start TEXT    NOT NULL,     -- YYYY-MM-DD, the first day of the grid
+  profile_id TEXT    NOT NULL REFERENCES profiles(id),
+  day        INTEGER NOT NULL CHECK (day BETWEEN 0 AND 6),   -- 0 = week_start
+  slot       TEXT    NOT NULL CHECK (slot IN ('morning','lunch','dinner')),
+  ticked     INTEGER NOT NULL CHECK (ticked IN (0,1)),
+  ts         INTEGER NOT NULL,     -- ms epoch; last write wins, as in picks
+  device     TEXT,
+  by_email   TEXT,                 -- the Access login that made the tick
+  PRIMARY KEY (week_start, profile_id, day, slot)
+);
+
+-- ⛔ ASK-ONCE. A tick needs an answered restrictions question. A profile that
+-- does not exist has no answer, so it is refused by the same test.
+CREATE TRIGGER IF NOT EXISTS eater_ticks_ask_once_ins
+BEFORE INSERT ON eater_ticks
+WHEN NEW.ticked = 1
+ AND (SELECT restrictions_asked_on FROM profiles WHERE id = NEW.profile_id) IS NULL
+BEGIN
+  SELECT RAISE(ABORT, 'ask-once: restrictions not answered for this eater');
+END;
+
+CREATE TRIGGER IF NOT EXISTS eater_ticks_ask_once_upd
+BEFORE UPDATE ON eater_ticks
+WHEN NEW.ticked = 1
+ AND (SELECT restrictions_asked_on FROM profiles WHERE id = NEW.profile_id) IS NULL
+BEGIN
+  SELECT RAISE(ABORT, 'ask-once: restrictions not answered for this eater');
+END;
+
+-- ...and the answer cannot be un-asked while that person is ticked anywhere.
+CREATE TRIGGER IF NOT EXISTS profiles_ask_once_keep
+BEFORE UPDATE OF restrictions_asked_on ON profiles
+WHEN NEW.restrictions_asked_on IS NULL
+ AND EXISTS (SELECT 1 FROM eater_ticks WHERE profile_id = OLD.id AND ticked = 1)
+BEGIN
+  SELECT RAISE(ABORT, 'ask-once: cannot clear restrictions_asked_on while ticked');
+END;
+
+-- ---------------------------------------------------------------------------
+-- week_demand: what the menu build plans from
+-- ---------------------------------------------------------------------------
+-- ⛔ Dinner: ONE row per night anyone has it ticked; `portions` = ticks.
+--    Two ticked eaters are two portions of one dish, never two dinners.
+-- Morning and lunch: one row per person — each is a separate thing to buy.
+-- `slots` is what the row expands into: a person's morning block, or itself.
+CREATE VIEW IF NOT EXISTS week_demand AS
+SELECT t.week_start, t.day, 'dinner' AS slot, NULL AS profile_id,
+       COUNT(*) AS portions, '["dinner"]' AS slots,
+       group_concat(t.profile_id) AS eaters
+FROM eater_ticks t JOIN profiles p ON p.id = t.profile_id
+WHERE t.slot = 'dinner' AND t.ticked = 1 AND p.restrictions_asked_on IS NOT NULL
+GROUP BY t.week_start, t.day
+UNION ALL
+SELECT t.week_start, t.day, t.slot, t.profile_id, 1 AS portions,
+       CASE t.slot WHEN 'morning' THEN COALESCE(p.morning_slots, '["breakfast"]')
+                   ELSE '["lunch"]' END AS slots,
+       t.profile_id AS eaters
+FROM eater_ticks t JOIN profiles p ON p.id = t.profile_id
+WHERE t.slot IN ('morning','lunch') AND t.ticked = 1 AND p.restrictions_asked_on IS NOT NULL;
 
 -- Everything ever generated. `method` is VERBATIM and full: compressing a
 -- recipe is a defect, not tidying — week 2 lost the peppers from the stir-fry

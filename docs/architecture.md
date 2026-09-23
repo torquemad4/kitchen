@@ -357,8 +357,15 @@ recipe_ingredients(recipe_id, ingredient_key, qty, unit, source, origin, note)
   -- 90 rows `origin='week'` are authoritative (hand-authored, quantified).
   -- 207 are `origin='prose'`; a NULL qty means the source stated no number.
 
-params(key, value, kind, note, ruling_url, updated_at)          -- 0 rows
-profiles(id, name, household, status, …, restrictions_stated, …)-- 0 rows
+params(key, value, kind, note, ruling_url, updated_at)
+  -- Populated since 21 Sep 2026 (week_start_day and others). Query it; don't count here.
+profiles(id, name, household, status, …, restrictions_stated, …,
+         restrictions_asked_on, morning_slots, email)
+  -- One row per eater, migrated from Notion 👤 Profiles 21 Sep 2026. See §5.6.
+  -- UNIQUE INDEX idx_profiles_email (NOCASE) — the Access login, NULL for guests.
+eater_ticks(week_start, profile_id, day, slot, ticked, ts, device, by_email)
+  -- PK (week_start, profile_id, day, slot). The week grid. See §5.6.
+week_demand   -- VIEW over eater_ticks: what the menu build plans from. See §5.6.
 cart_history(week_id, store, shopped_on, predicted_total, actual_total, notes)
                                                                  -- 0 rows
 ```
@@ -435,7 +442,7 @@ record of what a human saw; `qty` is the machine's running balance. When they di
 
 ### 5.4 Standing rules belong in `params` 🔴 NOT BUILT
 
-`params` exists and is empty. It is the right home for every number a machine enforces,
+`params` exists and is the right home for every number a machine enforces,
 each pointing at the Notion ruling that set it:
 
 | key | example value | why |
@@ -547,6 +554,41 @@ Anything relying on that endpoint to catch a malformed week will not catch it.
 
 ---
 
+### 5.6 Eaters and the week grid 🟡 PARTIAL — schema live 23 Sep 2026, screen not built
+
+Karl's rulings, 10 Sep 2026 (week-shape spec §6), and 23 Sep 2026 (per-week grid,
+Access identity). Migration: `migrate-eaters.sql`.
+
+- **The grid is per week.** 7 days from `params.week_start_day` × one row per eater ×
+  three slots. `eater_ticks` holds one row per week × person × day × slot, last write
+  wins on `ts`, like `picks`.
+- **Slots are fixed and hierarchical:** `morning` · `lunch` · `dinner`. `morning` is a
+  block: it expands into `profiles.morning_slots` (NULL = `["breakfast"]`). Karl's is
+  Clophie's slots, filled by the menu build's mismatch check — never guessed.
+- ⛔ **A ticked dinner is a PORTION, not a meal.** Karl: *"Same meal for everyone… If
+  someone needs a special portion made due to restrictions Clousto can just handle that
+  in the recipe."* `week_demand` returns **one** dinner row per night with
+  `portions` = ticks. Morning and lunch return one row per person — two ticks are two
+  things to buy. The bug this designs out: buying two dinners when two people are ticked.
+- ⛔ **ASK-ONCE.** Karl: *"Ask-once."* Nobody can be ticked into any slot until the
+  restrictions question is answered, even if the answer is "none".
+  `profiles.restrictions_asked_on` NULL means *nobody asked*; a date means *answered*,
+  with the answer verbatim in `restrictions_stated`. Enforced by **triggers**, so every
+  write path hits it — the app, Cowork's direct SQL, a future scheduled build:
+  - `eater_ticks_ask_once_ins` / `_upd` refuse `ticked = 1` for an unasked (or
+    nonexistent) eater;
+  - `profiles_ask_once_keep` refuses clearing `restrictions_asked_on` while that eater
+    is ticked anywhere.
+- **Identity.** `profiles.email` is matched against the Access login so a phone opens on
+  its owner's row; `eater_ticks.by_email` records who ticked.
+- `restrictions_asked_on` was backfilled for the two existing eaters: Maria's from the
+  date in her `restrictions_source`; Karl's source carries no date, so the migration
+  date (21 Sep 2026) stands in.
+
+🔴 **Not built yet:** the screen and its endpoint; `clousto-menu` reading `week_demand`
+and restrictions (a skill change, to be proposed to Karl); the Clophie day-type
+mismatch check in the menu-build pass.
+
 ## 6. Runtime architecture ✅ BUILT
 
 ```
@@ -608,6 +650,10 @@ reason. A library that only works on a good connection is not a library.
 12. ⛔ **`effectiveCart()` never drops an aisle group.** Known aisles keep walking order,
     unknown ones are appended. A cart that walks only the aisles it recognises silently
     loses the second shop — on the live week, the £40 lamb and the wines.
+13. ⛔ **Ask-once.** Nobody is ticked into any slot until their restrictions question is
+    answered — `profiles.restrictions_asked_on` not NULL. Enforced by triggers (§5.6);
+    never drop or bypass them. A guest nobody asked and a guest with no restrictions
+    are otherwise the same empty field.
 
 ---
 
