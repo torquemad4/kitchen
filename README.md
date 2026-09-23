@@ -56,7 +56,9 @@ from the shop, so its rows drift until someone restates them out loud. Stage E �
 receipt loop — is the next piece of real work, and the pre-cook checks and post-cook
 decrement sit behind it.
 
-Profiles, the Access service token and `GET /api/planning-export` are still outstanding.
+🟡 **Eater profiles** are in D1 with the ask-once floor and the per-week grid schema
+(23 Sep 2026, `docs/architecture.md` §5.6), with the *Who's eating* tab to fill it in. The Access
+service token and `GET /api/planning-export` are still outstanding.
 
 **Stages 4–5.** Receipt loop into R2, then the Clophie macro feed and the
 scheduled build that starts the consecutive-automatic-weeks count.

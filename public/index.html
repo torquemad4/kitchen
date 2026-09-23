@@ -350,6 +350,29 @@ td.cert-recalled,td.cert-inferred{color:var(--warn)}
 .syncdot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ink-3);margin-right:6px;vertical-align:1px}
 .syncdot.live{background:var(--accent)}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+/* Who's eating: one card per eater, three slot rows × seven day columns. */
+.eatnav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
+.eatnav .wk{font-weight:700;font-size:15.5px;text-align:center;flex:1}
+.eatnav button,.eatbtn{appearance:none;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);
+  border-radius:8px;min-width:44px;min-height:40px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;padding:0 12px}
+.eatbtn.go{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.eatnav button:focus-visible,.eatbtn:focus-visible,.eg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table.eg{border-collapse:collapse;width:100%;min-width:0;table-layout:fixed}
+table.eg th,table.eg td{border-bottom:0;white-space:normal;letter-spacing:0;text-transform:none}
+table.eg th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:400;color:var(--ink-3);
+  text-align:center;padding:4px 0 6px;line-height:1.25}
+table.eg th:first-child,table.eg td:first-child{width:54px;text-align:left;font-size:12.5px;color:var(--ink-2);font-weight:500}
+table.eg td{text-align:center;padding:3px 1px}
+#p-eat .card-b{padding:12px 10px}
+.eg button{appearance:none;width:100%;max-width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line-2);
+  background:var(--surface);cursor:pointer;font-size:17px;line-height:1;color:var(--surface);padding:0}
+.eg button[aria-checked="true"]{background:var(--accent);border-color:var(--accent)}
+.eg tr.portions td{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2)}
+.eatask label{display:block;font-weight:600;font-size:14.5px;margin:0 0 8px}
+.eatask input,.eatadd input{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:10px 11px;
+  border:1px solid var(--line-2);border-radius:8px;background:var(--surface);color:var(--ink);margin:0 0 8px}
+.eatask .row,.eatadd .row{display:flex;gap:8px}
+.eatask .row .eatbtn,.eatadd .row .eatbtn{flex:1}
 </style>
 
 <script type="application/json" id="clousto-data">
@@ -1358,6 +1381,195 @@ function viewPantry(){
 }
 
 
+/* ------------------------------------------------------------ who's eating
+   Karl, 10 Sep 2026: a grid in the app, 7 days × one row per eater, a tick per
+   slot per person per day; ticked = Clousto plans that slot. Per week (23 Sep).
+   Slots are fixed: morning (a block — Karl's expands into Clophie's), lunch,
+   dinner. ⛔ A ticked dinner is a PORTION of the one dish that night, which is
+   why the grid counts portions under the dinner row rather than dishes.
+
+   ⛔ ASK-ONCE. An eater whose restrictions question is unanswered gets the
+   question, not checkboxes. The database refuses the tick regardless.
+
+   Ticks queue locally and drain to /api/eaters exactly as the shopping list
+   drains to /api/state: last write wins on the phone's clock. Adding an eater
+   and answering the question need signal — they are not aisle work. */
+let EAT = null, EAT_WEEK = null, EAT_ERR = "", eatFlushing = false;
+const EAT_DRAFT = {};   /* typed-but-unsaved text survives a re-render */
+const EATQ = "clousto.eatq";
+const EAT_SLOTS = [["morning","Morning"],["lunch","Lunch"],["dinner","Dinner"]];
+
+function eatQueue(){ try{ return JSON.parse(localStorage.getItem(EATQ)) || []; }catch(e){ return []; } }
+function eatSaveQueue(q){ try{ localStorage.setItem(EATQ, JSON.stringify(q)); }catch(e){} }
+function eatKey(p, d, s){ return p + "|" + d + "|" + s; }
+function eatTicked(p, d, s){ const t = EAT && EAT.ticks[eatKey(p, d, s)]; return !!(t && t.v === 1); }
+
+function eatOverlay(){
+  /* Anything still queued for this week is newer than the server's copy. */
+  if(!EAT) return;
+  eatQueue().filter(e => e.week === EAT.week).forEach(e => {
+    EAT.ticks[eatKey(e.profile, e.day, e.slot)] = {v: e.value, ts: e.ts};
+  });
+}
+
+async function loadEaters(week){
+  const want = week || EAT_WEEK;
+  const ck = "clousto.eaters." + (want || "next");
+  try{
+    const res = await fetch("/api/eaters" + (want ? "?week=" + encodeURIComponent(want) : ""), {cache:"no-store"});
+    const body = await res.json().catch(() => null);
+    if(!res.ok) throw new Error((body && body.error) || ("HTTP " + res.status));
+    EAT = body; EAT_WEEK = body.week; EAT_ERR = "";
+    cachePut(ck, body); cachePut("clousto.eaters." + body.week, body);
+  }catch(err){
+    const c = cacheGet(ck);
+    if(c){ EAT = c; EAT_WEEK = c.week; }
+    else EAT_ERR = "The grid could not be loaded — " + String((err && err.message) || err) + ".";
+  }
+  eatOverlay();
+  if(active === "eat") render();
+}
+
+async function flushEaters(){
+  if(eatFlushing) return;
+  const q = eatQueue();
+  if(!q.length) return;
+  if(typeof navigator !== "undefined" && navigator.onLine === false) return;
+  eatFlushing = true;
+  try{
+    const weeks = [...new Set(q.map(e => e.week))];
+    for(const w of weeks){
+      const evs = q.filter(e => e.week === w);
+      const res = await fetch("/api/eaters", {
+        method: "POST", headers: {"content-type": "application/json"},
+        body: JSON.stringify({week: w, device: DEVICE, events: evs})
+      });
+      if(!res.ok) throw new Error("HTTP " + res.status);
+      const out = await res.json();
+      const sent = new Set(evs.map(e => eatKey(e.profile, e.day, e.slot) + "|" + e.ts));
+      eatSaveQueue(eatQueue().filter(e => !(e.week === w && sent.has(eatKey(e.profile, e.day, e.slot) + "|" + e.ts))));
+      /* A refused tick is dropped, not retried: the server's copy is the truth. */
+      if(out.refused && out.refused.length && EAT && EAT.week === w) await loadEaters(w);
+    }
+  }catch(e){ /* stays queued; drains on the next tap, on reconnect, or on return */ }
+  finally{ eatFlushing = false; }
+}
+
+function eatTap(p, d, s){
+  const prof = EAT && EAT.profiles.find(x => x.id === p);
+  if(!prof || !prof.asked) return;
+  const v = eatTicked(p, d, s) ? 0 : 1;
+  const ts = Date.now();
+  EAT.ticks[eatKey(p, d, s)] = {v: v, ts: ts};
+  const q = eatQueue().filter(e => !(e.week === EAT.week && e.profile === p && e.day === d && e.slot === s));
+  q.push({week: EAT.week, profile: p, day: d, slot: s, value: v, ts: ts});
+  eatSaveQueue(q);
+  render();
+  flushEaters();
+}
+
+async function eatPut(body){
+  try{
+    const res = await fetch("/api/eaters", {
+      method: "PUT", headers: {"content-type": "application/json"}, body: JSON.stringify(body)
+    });
+    const out = await res.json().catch(() => null);
+    if(!res.ok) throw new Error((out && out.error) || ("HTTP " + res.status));
+    EAT_ERR = "";
+    return out;
+  }catch(err){
+    EAT_ERR = "Not saved — " + String((err && err.message) || err) + ".";
+    render();
+    return null;
+  }
+}
+
+function eatDate(week, i){
+  const d = new Date(week + "T00:00:00Z");
+  d.setUTCDate(d.getUTCDate() + i);
+  return d;
+}
+function eatShift(week, n){ return eatDate(week, n).toISOString().slice(0, 10); }
+
+function viewEaters(){
+  if(!EAT) return EAT_ERR ? '<div class="note stop">' + esc(EAT_ERR) + "</div>" : "";
+  const DN = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const MN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const days = [0,1,2,3,4,5,6].map(i => eatDate(EAT.week, i));
+  const fmt = d => DN[d.getUTCDay()] + " " + d.getUTCDate() + " " + MN[d.getUTCMonth()];
+
+  let h = '<div class="eatnav"><button id="eatprev" aria-label="Previous week">‹</button>' +
+          '<span class="wk">' + esc(fmt(days[0]) + " – " + fmt(days[6])) + "</span>" +
+          '<button id="eatnext" aria-label="Next week">›</button></div>';
+  if(EAT_ERR) h += '<div class="note stop">' + esc(EAT_ERR) + "</div>";
+
+  const head = "<tr><th></th>" + days.map(d =>
+    "<th>" + DN[d.getUTCDay()].slice(0,2) + "<br>" + d.getUTCDate() + "</th>").join("") + "</tr>";
+
+  EAT.profiles.forEach(p => {
+    h += '<div class="card"><div class="card-h"><h3>' + esc(p.name) + "</h3></div><div class=\"card-b\">";
+    if(!p.asked){
+      const dr = EAT_DRAFT[p.id] || {};
+      h += '<div class="eatask"><label for="eatr-' + esc(p.id) + '">Any food restrictions or allergies?</label>' +
+           '<input id="eatr-' + esc(p.id) + '" data-eatdraft="' + esc(p.id) + '" data-field="r" value="' + esc(dr.r || "") + '" placeholder="In their words">' +
+           '<input data-eatdraft="' + esc(p.id) + '" data-field="by" value="' + esc(dr.by || "") + '" placeholder="Who said so (default: ' + esc(p.name) + ')">' +
+           '<div class="row"><button class="eatbtn" data-eatnone="' + esc(p.id) + '">None</button>' +
+           '<button class="eatbtn go" data-eatsave="' + esc(p.id) + '">Save</button></div></div>';
+    } else {
+      h += '<table class="eg">' + head + EAT_SLOTS.map(sl =>
+        "<tr><td>" + sl[1] + "</td>" + days.map((d, i) => {
+          const on = eatTicked(p.id, i, sl[0]);
+          return '<td><button role="checkbox" aria-checked="' + on + '" aria-label="' + esc(p.name + " " + sl[1] + " " + fmt(d)) +
+                 '" data-eat="' + esc(p.id) + '" data-day="' + i + '" data-slot="' + sl[0] + '">' + (on ? "✓" : "") + "</button></td>";
+        }).join("") + "</tr>").join("") + "</table>";
+    }
+    h += "</div></div>";
+  });
+
+  /* One dish a night; the ticks are portions of it. */
+  const counts = days.map((d, i) => EAT.profiles.filter(p => p.asked && eatTicked(p.id, i, "dinner")).length);
+  h += '<div class="card"><div class="card-h"><h3>Dinner portions</h3></div><div class="card-b"><table class="eg">' + head +
+       '<tr class="portions"><td>Portions</td>' + counts.map(n => "<td>" + (n || "–") + "</td>").join("") + "</tr></table></div></div>";
+
+  const ad = EAT_DRAFT._add || {};
+  h += '<div class="card"><div class="card-h"><h3>Add someone</h3></div><div class="card-b eatadd">' +
+       '<input data-eatdraft="_add" data-field="name" value="' + esc(ad.name || "") + '" placeholder="Name" aria-label="Name">' +
+       '<div class="row"><button class="eatbtn go" id="eatadd">Add</button></div></div></div>';
+  return h;
+}
+
+document.addEventListener("input", e => {
+  const t = e.target.closest("[data-eatdraft]");
+  if(!t) return;
+  const k = t.dataset.eatdraft;
+  (EAT_DRAFT[k] = EAT_DRAFT[k] || {})[t.dataset.field] = t.value;
+});
+
+document.addEventListener("click", async e => {
+  const cell = e.target.closest("[data-eat]");
+  if(cell){ eatTap(cell.dataset.eat, parseInt(cell.dataset.day, 10), cell.dataset.slot); return; }
+  if(e.target.closest("#eatprev") && EAT){ await flushEaters(); loadEaters(eatShift(EAT.week, -7)); return; }
+  if(e.target.closest("#eatnext") && EAT){ await flushEaters(); loadEaters(eatShift(EAT.week, 7)); return; }
+  const none = e.target.closest("[data-eatnone]");
+  const save = e.target.closest("[data-eatsave]");
+  if(none || save){
+    const id = (none || save).dataset[none ? "eatnone" : "eatsave"];
+    const dr = EAT_DRAFT[id] || {};
+    const answer = none ? "none" : String(dr.r || "").trim();
+    if(!answer){ EAT_ERR = "Type what they said, or tap None."; render(); return; }
+    if(await eatPut({id: id, restrictions: answer, saidBy: String(dr.by || "").trim()})){
+      delete EAT_DRAFT[id]; loadEaters(EAT.week);
+    }
+    return;
+  }
+  if(e.target.closest("#eatadd")){
+    const name = String((EAT_DRAFT._add || {}).name || "").trim();
+    if(!name){ EAT_ERR = "Type a name first."; render(); return; }
+    if(await eatPut({name: name})){ delete EAT_DRAFT._add; loadEaters(EAT.week); }
+    return;
+  }
+});
+
 /* ---------- render ---------- */
 const TABS = [
   {id:"shop",  label:"Shop",     fn:viewShop},
@@ -1365,7 +1577,8 @@ const TABS = [
   {id:"pick",  label:"Choose",   fn:viewChoose},
   {id:"opts",  label:"Slots",    fn:viewSlots},
   {id:"cook",  label:"Recipes",  fn:viewRecipes},
-  {id:"pan",   label:"Pantry",   fn:viewPantry}
+  {id:"pan",   label:"Pantry",   fn:viewPantry},
+  {id:"eat",   label:"Who's eating", fn:viewEaters}
 ];
 let active = "shop";
 
@@ -1401,7 +1614,9 @@ document.addEventListener("keydown", e => {
 
 document.addEventListener("click", e => {
   const tab = e.target.closest("[data-tab]");
-  if(tab){ active = tab.dataset.tab; render(); window.scrollTo(0,0); return; }
+  if(tab){ active = tab.dataset.tab; render(); window.scrollTo(0,0);
+    if(active === "eat"){ flushEaters(); loadEaters(); }
+    return; }
 
   const rt = e.target.closest("[data-recipe]");
   if(rt){ recipeKey = rt.dataset.recipe; render(); window.scrollTo(0,0); return; }
@@ -1497,10 +1712,11 @@ document.addEventListener("click", e => {
     loadLibrary();
     loadPantry();
     loadStock();
+    flushEaters();
 
-    addEventListener("online", function(){ flush(); pullState(); loadLibrary(); loadPantry(); loadStock(); });
+    addEventListener("online", function(){ flush(); pullState(); loadLibrary(); loadPantry(); loadStock(); flushEaters(); });
     document.addEventListener("visibilitychange", function(){
-      if(!document.hidden){ flush(); pullState(); }
+      if(!document.hidden){ flush(); pullState(); flushEaters(); if(active === "eat") loadEaters(); }
     });
   }catch(err){
     /* No week, no list. Say so plainly rather than rendering an empty shop. */

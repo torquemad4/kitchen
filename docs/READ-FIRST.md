@@ -111,6 +111,8 @@ Read `~/projects/skills/clousto/SKILL.md`. Short version:
 8. No second database, no `_v2` tables — alter the existing schema.
 9. Nothing writes back to Clophie (R41).
 10. `deploy.sh`, `access.mjs`, `domain.mjs` are identical across all three apps.
+11. Ask-once: nobody is ticked into a slot until their restrictions question is answered
+    (triggers on `eater_ticks`, `architecture.md` §5.6).
 
 ---
 
