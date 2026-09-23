@@ -587,9 +587,13 @@ Access identity). Migration: `migrate-eaters.sql`.
 
 ✅ **The screen:** the *Who's eating* tab, served by `/api/eaters` (`code.md` §2).
 
-🔴 **Not built yet:** `clousto-menu` reading `week_demand`
-and restrictions (a skill change, to be proposed to Karl); the Clophie day-type
-mismatch check in the menu-build pass.
+🟡 **The menu build — revisions written 23 Sep 2026, pending upload to the account.**
+`clousto-menu` §0a reads `week_demand` and every ticked eater's restrictions verbatim,
+and gates each option on them; §0b is the **Clophie check**: in the same pass that
+reads Clophie's macros (💪 Hypertrophy Programme → Nutrition), compare the macro line
+and the day shape against `profiles` and put any mismatch to Karl **before drafting**.
+`profiles` is updated only on his yes. The `clousto` skill gains the new tables and the
+ask-once rule. Until the revised skills are uploaded, the menu build does none of this.
 
 ## 6. Runtime architecture ✅ BUILT
 
