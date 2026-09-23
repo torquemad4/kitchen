@@ -155,6 +155,21 @@ and a list of absences is not something you can shop or cook from.
   correct when it was made; nothing had decremented it since. That is what the receipt
   step (§4) and the cook confirm (§5) are for.
 
+## 6a. **Who's eating** ✅
+
+One card per person, seven days across (from Monday), three rows: **Morning**,
+**Lunch**, **Dinner**. Tick a box and Clousto plans that meal for that person that day.
+Each week has its own grid; a new week opens with last week's ticks already in.
+
+- **Your own card is on top** on your own phone.
+- **Dinner is one dish.** Ticking two people for Tuesday dinner means two portions of
+  the same dish, not two dinners. The *Dinner portions* card shows the count per night.
+  Morning and lunch are per person — two ticks are two things to buy.
+- **Adding someone:** type a name under *Add someone*. Before they can be ticked into
+  anything, their card asks **"Any food restrictions or allergies?"** Type what they
+  said, or tap **None**. It is asked once — to change an answer later, ask Claude.
+- Ticks work offline and sync when signal comes back, like the shopping list.
+
 ---
 
 ## 7. When something looks wrong

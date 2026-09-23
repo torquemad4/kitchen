@@ -58,6 +58,9 @@ page and an aisle list must never be stale.
 | `GET` | `/api/stock` | ⭐ stage B: `ingredients` ⋈ `pantry`, keyed by every name a week might use |
 | `GET` | `/api/recipe?name=` | the structured **cook card** (`recipes.cook`) |
 | `POST` | `/api/cook` | a finished cook → `cook_log` |
+| `GET` | `/api/eaters?week=` | the week grid: eaters, `asked` per eater, ticks; opens on the week being planned |
+| `POST` | `/api/eaters` | a batch of grid ticks from one phone; names any the ask-once floor refused |
+| `PUT` | `/api/eaters` | `{name}` adds a guest; `{id, restrictions, saidBy}` answers their question, once |
 
 ### `week.js`
 
@@ -91,6 +94,24 @@ in SQL rather than by read-then-write, so two phones draining simultaneously can
 interleave into a lost update. `ts` is the **client's** clock, in ms.
 
 Batched (`MAX_EVENTS = 500`): a drain after a dead spot is one request, not thirty.
+
+### `eaters.js` (added 23 Sep 2026)
+
+The Who's eating grid (`architecture.md` §5.6). Same last-write-wins upsert as
+`state.js`, on `eater_ticks`.
+
+- ⛔ **Ask-once lives in the database, not here.** The triggers refuse a tick for an
+  unasked eater. A D1 batch is one transaction, so one refusal sinks the batch; the
+  endpoint then replays the events one at a time, lands the good ones and returns the
+  refused ones in `refused` so the phone drops them instead of retrying forever.
+- **Identity** is the `cf-access-authenticated-user-email` header. It sorts the phone's
+  owner to the top (`me`) and is written to `eater_ticks.by_email`. Locally there is no
+  header, so `me` is false for everyone.
+- **Pre-fill.** Opening a current-or-future week with no rows copies the latest earlier
+  week's rows in at `ts = 1`, so any real tap beats them. Past weeks are never filled.
+- **The restrictions text never leaves the server** — the grid gets `asked` only.
+- An answer can be given once; a second one is `409`. Changing an answer is a
+  conversation, not a tap. Adding a name already on the grid is `409` (double taps).
 
 ### `recipes.js` and `pantry.js` (added 7 Sep 2026)
 

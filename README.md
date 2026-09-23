@@ -57,7 +57,7 @@ receipt loop — is the next piece of real work, and the pre-cook checks and pos
 decrement sit behind it.
 
 🟡 **Eater profiles** are in D1 with the ask-once floor and the per-week grid schema
-(23 Sep 2026, `docs/architecture.md` §5.6); the grid screen is not built yet. The Access
+(23 Sep 2026, `docs/architecture.md` §5.6), with the *Who's eating* tab to fill it in. The Access
 service token and `GET /api/planning-export` are still outstanding.
 
 **Stages 4–5.** Receipt loop into R2, then the Clophie macro feed and the

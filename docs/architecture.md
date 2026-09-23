@@ -554,7 +554,7 @@ Anything relying on that endpoint to catch a malformed week will not catch it.
 
 ---
 
-### 5.6 Eaters and the week grid 🟡 PARTIAL — schema live 23 Sep 2026, screen not built
+### 5.6 Eaters and the week grid 🟡 PARTIAL — schema and screen built 23 Sep 2026
 
 Karl's rulings, 10 Sep 2026 (week-shape spec §6), and 23 Sep 2026 (per-week grid,
 Access identity). Migration: `migrate-eaters.sql`.
@@ -585,7 +585,9 @@ Access identity). Migration: `migrate-eaters.sql`.
   date in her `restrictions_source`; Karl's source carries no date, so the migration
   date (21 Sep 2026) stands in.
 
-🔴 **Not built yet:** the screen and its endpoint; `clousto-menu` reading `week_demand`
+✅ **The screen:** the *Who's eating* tab, served by `/api/eaters` (`code.md` §2).
+
+🔴 **Not built yet:** `clousto-menu` reading `week_demand`
 and restrictions (a skill change, to be proposed to Karl); the Clophie day-type
 mismatch check in the menu-build pass.
 
