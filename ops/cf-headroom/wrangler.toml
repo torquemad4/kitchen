@@ -1,0 +1,19 @@
+name = "cf-headroom"
+main = "src/index.js"
+compatibility_date = "2026-09-24"
+# No public URL: the only way in is the daily cron.
+workers_dev = false
+
+[vars]
+ACCOUNT_ID = "5aec8edddfb132803331b110c4f448a6"
+# Workers Paid started 4 Sep 2026, so each billing cycle runs from the 4th.
+BILLING_DAY = "4"
+
+[triggers]
+# 06:30 UTC = 07:30 BST / 06:30 GMT, ahead of the ~09:00 daily check-in.
+crons = ["30 6 * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ops"
+database_id = "a2998dfb-407f-4bd4-b543-f45d1e595a23"
