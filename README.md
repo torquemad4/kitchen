@@ -90,3 +90,11 @@ bash deploy.sh
 `deploy.sh`, `access.mjs` and `domain.mjs` are identical across every app on the
 platform; everything specific to this one is in `app.conf`. There is no build
 integration and no CI — pushing to `main` deploys nothing.
+
+## Hosting and access (read from the Cloudflare account, 25 Oct 2026)
+
+- **Pages project** `kitchen-torquemada` → https://kitchen.torquemada.uk (and kitchen-torquemada.pages.dev)
+- **D1** `clousto` = `e1268405-4322-460d-9635-6e004c4061dd`
+- **Access** (kitchen.torquemada.uk, kitchen-torquemada.pages.dev, *.kitchen-torquemada.pages.dev): csainzmartinez@gmail.com, csainzmartinez@pm.me, mfsecades@gmail.com
+- ⚠️ **No waiver recorded** for mfsecades@gmail.com (the SOP says Karl only unless one is). Karl to decide; record it here either way.
+- Note: branch `claude/funny-franklin-9m0ryd` holds the source of the `cf-headroom` Worker (D1 `ops`), which is deployed but never merged here.
