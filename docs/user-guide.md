@@ -27,6 +27,15 @@ too.
 
 ---
 
+### Home-day lunch, always on **The week**
+
+The top card on **The week** is the tuna, pasta & cheddar that replaces yfood on days
+you are not in the office: how much of each goes in the pan, the ⅔ at S3 / ⅓ at S4
+split, and a Cook mode button. It is there every week, so you never have to remember
+the amounts. It comes from the recipe card, so if the recipe changes, so does this.
+
+---
+
 ## 1. Building the week ✅
 
 Done in a **Cowork conversation**, not the app.

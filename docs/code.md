@@ -148,6 +148,12 @@ state it produces byte-identical output — a useful property when testing.
 
 ⚠️ **`esc()` everything.** Text originates in Notion and goes in via `innerHTML`.
 
+⭐ **The home-day lunch card** (added 23 Nov 2026) heads **The week**. `loadHomeLunch()`
+fetches `/api/recipe?id=home-s3-s4-tuna-pasta-cheese` at boot and on reconnect, caches
+it under `clousto.homelunch.v1`, and `homeLunchCard()` renders the cook card's
+`ingredients` (qty · item · prep) and `servesNote`, with a Cook mode button. The amounts
+are never written in the page. No cached copy and no network → no card.
+
 **The tabs, in order: Shop · The week · Choose · Slots · Recipes · Pantry.** There is
 no Receipt tab — stage E is a Cowork conversation, not a screen.
 

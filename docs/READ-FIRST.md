@@ -94,7 +94,8 @@ Read `~/projects/skills/clousto/SKILL.md`. Short version:
 - ⛔ **Never touch `weeks`, `picks` or `cart_state`** as part of library or pantry work.
   Verify after any bulk write: `weeks` = 1 live row, `doc` length unchanged.
 - ⛔ **The three original stub ids** — `poulet-basquaise`, `stir-fry`, `beef-stout-stew`
-  — keep their ids forever. `weeks.doc` and `picks` may reference them.
+  — keep their ids forever. `weeks.doc` and `picks` may reference them. Likewise
+  `home-s3-s4-tuna-pasta-cheese`, which the app reads by id (architecture §7, inv. 3).
 - ⛔ **`recipes.method` is verbatim.** No truncation, no reformatting, no "tidying".
 
 ---

@@ -364,6 +364,13 @@ table.eg th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:4
 table.eg th:first-child,table.eg td:first-child{width:54px;text-align:left;font-size:12.5px;color:var(--ink-2);font-weight:500}
 table.eg td{text-align:center;padding:3px 1px}
 #p-eat .card-b{padding:12px 10px}
+/* The home-day lunch reference card at the top of The week. */
+ul.hl{list-style:none;margin:0;padding:0}
+ul.hl li{display:grid;grid-template-columns:minmax(64px,36%) minmax(0,1fr);gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--line)}
+ul.hl li:last-child{border-bottom:0}
+ul.hl .q{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--accent-ink);overflow-wrap:anywhere}
+ul.hl .p{display:block;font-size:13px;color:var(--ink-3)}
+.hlnote{font-size:13.5px;color:var(--ink-2);margin:10px 0 0}
 .eg button{appearance:none;width:100%;max-width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line-2);
   background:var(--surface);cursor:pointer;font-size:17px;line-height:1;color:var(--surface);padding:0}
 .eg button[aria-checked="true"]{background:var(--accent);border-color:var(--accent)}
@@ -987,7 +994,7 @@ function dayParts(set){
    `schedule` is what turns that into "here is Tuesday". */
 function viewWeek(){
   const sched = CONTENT.schedule;
-  let h = "", order = [], byDay = {};
+  let h = homeLunchCard(), order = [], byDay = {};
   (CONTENT.choices || []).forEach(ch => {
     const d = dayParts(ch).day;
     if(!byDay[d]){ byDay[d] = []; order.push(d); }
@@ -1267,6 +1274,47 @@ function mdToHtml(md){
    So the card stays the WEEK's, untouched, and only its Method section is
    swapped for this. Nothing week-specific can go missing, because nothing
    week-specific is rebuilt. */
+/* ⭐ HOME-DAY LUNCH, always on The week. Karl, 23 Nov 2026: "The Kitchen site
+   should show the Tuna Pasta Cheese amounts somewhere for reference on WFH
+   days" — and, asked where, "Fixed reference card".
+
+   On home days S3 + S4 are the tuna, pasta & cheddar stand-in for yfood. The
+   week buys it through `fixed` because a slot cannot yet vary by day, so until
+   now nothing on the page said how much of each goes in the pan.
+
+   The amounts are READ from the recipe's cook card, never written here, so a
+   change to the recipe reaches the page by itself. ⛔ The recipe id below is
+   therefore load-bearing: keep it stable (docs/architecture.md §7). Cached for
+   the aisle like the library; no card when it has never loaded. */
+const HOME_LUNCH_ID = "home-s3-s4-tuna-pasta-cheese";
+const HOME_LUNCH_KEY = "clousto.homelunch.v1";
+let HOME_LUNCH = null;
+
+async function loadHomeLunch(){
+  HOME_LUNCH = cacheGet(HOME_LUNCH_KEY);
+  if(HOME_LUNCH) render();
+  try{
+    const res = await fetch("/api/recipe?id=" + encodeURIComponent(HOME_LUNCH_ID), {cache:"no-store"});
+    if(!res.ok) return;
+    const p = await res.json();
+    if(p && p.cook && Array.isArray(p.cook.ingredients)){
+      HOME_LUNCH = {id: p.id, name: p.name, note: p.cook.servesNote || "", ingredients: p.cook.ingredients};
+      cachePut(HOME_LUNCH_KEY, HOME_LUNCH); render();
+    }
+  }catch(e){ /* offline: the cached copy stands */ }
+}
+
+function homeLunchCard(){
+  if(!HOME_LUNCH) return "";
+  return '<div class="card"><div class="card-h"><h3>' + esc(HOME_LUNCH.name) + "</h3>" +
+    '<button class="cookbtn" data-cook="' + esc(HOME_LUNCH.id) + '">Cook mode</button></div>' +
+    '<div class="card-b"><ul class="hl">' + HOME_LUNCH.ingredients.map(i =>
+      '<li><span class="q">' + esc(i.qty || "") + '</span><span>' + esc(i.item || "") +
+      (i.prep ? '<span class="p">' + esc(i.prep) + "</span>" : "") + "</span></li>").join("") +
+    "</ul>" + (HOME_LUNCH.note ? '<p class="hlnote">' + esc(HOME_LUNCH.note) + "</p>" : "") +
+    "</div></div>";
+}
+
 function libraryBody(r){
   const facts = [];
   /* ⚠️ PER PORTION — not Karl's plate. The week card's plates block above is the
@@ -1712,9 +1760,10 @@ document.addEventListener("click", e => {
     loadLibrary();
     loadPantry();
     loadStock();
+    loadHomeLunch();
     flushEaters();
 
-    addEventListener("online", function(){ flush(); pullState(); loadLibrary(); loadPantry(); loadStock(); flushEaters(); });
+    addEventListener("online", function(){ flush(); pullState(); loadLibrary(); loadPantry(); loadStock(); loadHomeLunch(); flushEaters(); });
     document.addEventListener("visibilitychange", function(){
       if(!document.hidden){ flush(); pullState(); flushEaters(); if(active === "eat") loadEaters(); }
     });

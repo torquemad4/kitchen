@@ -633,6 +633,9 @@ reason. A library that only works on a good connection is not a library.
    under new id slugs, quietly.
 3. ⛔ **The three original stub ids — `poulet-basquaise`, `stir-fry`, `beef-stout-stew`
    — must keep their ids.** `weeks.doc` and `picks` may reference them.
+   ⛔ **So must `home-s3-s4-tuna-pasta-cheese`** (23 Nov 2026): the app reads it by id
+   for the home-day lunch card on The week. Renaming it does not error — the card just
+   disappears.
 4. ⛔ **`recipes.method` is VERBATIM.** Every step, every ingredient, in full. The bold
    emphasis is load-bearing: it marks what ruins the dish. Compressing a recipe is a
    defect, not tidying — week 2 was cooked from a compressed card, lost the peppers
